@@ -1,0 +1,3 @@
+[submodule "rsrc"]
+	path = rsrc
+	url = git@github.com:Jar387/OpenSTG-data.git
