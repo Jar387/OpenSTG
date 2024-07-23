@@ -4,4 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <graphic.h>
+#include <util.h>
+
+
 #endif
