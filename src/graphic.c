@@ -1,6 +1,4 @@
-#include <SDL2/SDL.h>
 #include <openstg.h>
-#include <log4c.h>
 
 // global renderer info
 int window_w = 640;

@@ -9,7 +9,7 @@ link_libraries(log4c)
 link_libraries(SDL2)
 link_libraries(SDL2_image)
 
-add_definitions(-g -std=c99)
+add_definitions(-std=c99 -ggdb)
 
 add_executable(openstg ${DIR_SRCS})
 

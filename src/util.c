@@ -1,7 +1,4 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <openstg.h>
-#include <log4c.h>
 
 SDL_Texture* texture_slot[MAX_SLOTS];
 

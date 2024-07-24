@@ -1,7 +1,4 @@
-#include <log4c.h>
 #include <openstg.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 #define FRAME_DELAY 1000/1
 
@@ -16,12 +13,13 @@ int main(){
 
     init_graphic();
     
-    load_texture("../rsrc/pl00.png", 1);
+    load_texture("../data/etama.png", 1);
+    load_texture("../data/etama2.png", 1);
 
     while(!should_close()){
         pre_frame();
+        free(gen_bullet((bullet_color){RED, 0}, LARGE, (pos){32, 128}));
         post_frame();
-        info("FPS: %f", get_fps());
     }
     return 0;
 }
