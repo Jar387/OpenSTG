@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -12,6 +13,7 @@
 #include <util.h>
 
 #include <bullet.h>
+#include <ui.h>
 
 
 #endif

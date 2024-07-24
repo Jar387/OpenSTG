@@ -2,6 +2,9 @@
 
 static int id; // always id of next bullet
 
+static bullet* head = NULL;
+static bullet* last = NULL;
+
 bullet* gen_bullet(bullet_color color, char type, pos xy){
     bullet* bu = (bullet*)malloc(sizeof(bullet));
     memset(bu, 0, sizeof(bullet));
@@ -72,6 +75,71 @@ bullet* gen_bullet(bullet_color color, char type, pos xy){
     bu->wh = wh;
     bu->id = id;
     id++;
-    draw_texture_uv(0, xy, uv, wh);
+    // add it to bullet list
+    if(head==NULL){
+        head = bu;
+    }else{
+        bu->prev = last;
+        last->next = bu;
+    }
+    last = bu;
     return bu;
+}
+
+static void tick_bullet(bullet* bu){
+    bu->tick++;
+    bu->vx += bu->dvx;
+    bu->vy += bu->dvy;
+    bu->xy.x += bu->vx;
+    bu->xy.y += bu->vy;
+    draw_texture_transform(BULLET_TEXTURE, bu->xy, bu->uv, bu->wh, bu->angle, 1.0f);
+}
+
+void delete_bullet(bullet* bu){
+    if(bu==NULL){
+        warn("trying to free null bullet");
+        return;
+    }
+    if (bu->prev != NULL) {
+        bu->prev->next = bu->next;
+    } else {
+        head = bu->next; // Update head if deleting the first bullet
+    }
+
+    if (bu->next != NULL) {
+        bu->next->prev = bu->prev;
+    } else {
+        last = bu->prev; // Update last if deleting the last bullet
+    }
+    free(bu);
+}
+
+bullet* query_bullet(int id){
+    if(head == NULL){
+        warn("not bullets exist for operation");
+        return NULL;
+    }
+    bullet* index = head;
+    while(index->id!=id){
+        if(index->next==NULL){
+            warn("cannot find bullet id %i", id);
+            return NULL;
+        }
+        index = index->next;
+    }
+}
+
+void delete_bullet_id(int id){
+    bullet* bu = query_bullet(id);
+    if(bu!=NULL){
+        delete_bullet(bu);
+    }
+}
+
+void tick_bullets(){
+    bullet* index = head;
+    while(index!=NULL){
+        tick_bullet(index);
+        index = index->next;
+    }
 }

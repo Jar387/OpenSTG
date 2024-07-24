@@ -8,19 +8,17 @@ typedef struct bullet_t{
     int id;
     pos xy;
 
-    char harmful;
-
     int tick;
     float vx;
     float vy;
     float dvx;
-    float dxy;
+    float dvy;
     float angle; // angle between bullet forward direction and negtive Y axis
     /*  
               |
-        90~180|180~270
+       270~360|0~90
     ----------|----------    support >360 warp
-        0~90  |270~360
+       180~270|90~180
               |
     */
     // calculated texture info

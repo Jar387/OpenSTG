@@ -5,6 +5,11 @@ SDL_Texture* texture_slot[MAX_SLOTS];
 static char usage_bitmap[MAX_SLOTS] = {0};
 static char texture_index = 0;
 
+void load_basic_texture(){
+    load_texture(TEX0, 1);
+    load_texture(TEX1, 1);
+}
+
 void load_texture(char* path, int solid){
     SDL_Texture* texture = IMG_LoadTexture(renderer, path);
     if(!texture){

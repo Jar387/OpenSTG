@@ -12,13 +12,15 @@ int main(){
     IMG_Init(IMG_INIT_PNG);
 
     init_graphic();
-    
-    load_texture("../data/etama.png", 1);
-    load_texture("../data/etama2.png", 1);
 
+    load_basic_texture();
+
+    
+    
     while(!should_close()){
         pre_frame();
-        free(gen_bullet((bullet_color){RED, 0}, LARGE, (pos){32, 128}));
+        tick_ui();
+        tick_bullets();
         post_frame();
     }
     return 0;
