@@ -1,7 +1,5 @@
 #include <openstg.h>
 
-#define FRAME_DELAY 1000/1
-
 int main(){
     init_logger(DEBUG, NULL);
     info("starting openstg engine");
