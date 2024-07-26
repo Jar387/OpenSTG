@@ -39,10 +39,28 @@ static inline pos add_y(pos p, int delta){
 #define POWER_SZ (pos){64, 16}
 #define GRAZE_SZ (pos){64, 16}
 #define POINT_SZ (pos){64, 16}
+#define ICON_SZ (pos){16, 16}
 
 #define ASCII_SHRINK 12
 #define ASCII 16
 // background size can up to (128, 32)
+
+// plxx.png (for both RM,MR and SY)
+#define PLAYER_DEFAULT_ANIMATION_UV (pos){1, 1}
+#define PLAYER_DEFAULT_ANIMATION_COUNT 8
+#define PLAYER_LEFT_ANIMATION_UV (pos){1, 49}
+#define PLAYER_LEFT_ANIMATION_COUNT 8
+#define PLAYER_RIGHT_ANIMATION_UV (pos){1, 97}
+#define PLAYER_RIGHT_ANIMATION_COUNT 8
+#define PLAYER_TEXTURE_SZ (pos){30, 46}
+
+// RM AB bullet info
+#define RM_A_BULLET_UV (pos){200, 146}
+#define RM_A_BULLET_SZ (pos){56, 13}
+#define RM_B_BULLET_1_UV (pos){200, 162}
+#define RM_B_BULLET_1_SZ (pos){56, 12}
+#define RM_B_BULLET_2_UV (pos){68, 179}
+#define RM_B_BULLET_2_SZ (pos){56, 10}
 
 // ui render position
 #define HISCORE_POS (pos){432, 48}

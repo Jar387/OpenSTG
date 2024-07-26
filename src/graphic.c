@@ -1,10 +1,12 @@
 #include <openstg.h>
 
 // global renderer info
-int window_w = 640;
-int window_h = 480;
+int window_w = WIDTH;
+int window_h = HEIGHT;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
+
+Uint8* keyboard_status;
 
 // global texture part
 static SDL_Rect src = {0, 0, 0, 0};
@@ -17,7 +19,7 @@ static int last_frame; // this may loopback after 47 days
 static SDL_Event e;
 
 void init_graphic(){
-    window = SDL_CreateWindow("OpenSTG", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_HIDDEN);
+    window = SDL_CreateWindow("OpenSTG", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_HIDDEN);
     if(window==NULL){
         error("cannot create window");
         exit(-1);
@@ -37,6 +39,8 @@ void pre_frame(){
             should_exit = 1;
         }
     }
+    keyboard_status = SDL_GetKeyboardState(NULL);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 }
 
@@ -109,4 +113,8 @@ void draw_texture_transform(int index, pos xy, pos uv, pos wh, float rotation, f
     dst.w = wh.x*scale;
     dst.h = wh.y*scale;
     SDL_RenderCopyEx(renderer, texture, &src, &dst, rotation, NULL, 0);
+}
+
+int is_key_pressed(int scancode){
+    return keyboard_status[scancode];
 }

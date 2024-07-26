@@ -48,3 +48,22 @@ void unload_texture(char idx){
     SDL_DestroyTexture(texture_slot[idx]);
     usage_bitmap[idx] = TEXTURE_UNUSED;
 }
+
+char check_collision(pos axy, pos awh, pos bxy, pos bwh){
+    if(axy.x<=bxy.x+bwh.x&&
+       axy.x+awh.x>=bxy.x&&
+       axy.y<=bxy.y+bwh.y&&
+       axy.y+awh.y>=bxy.y){
+        return 1;
+       }
+    return 0;
+}
+char check_out_of_screen(pos p, pos sz){
+    if(p.x<=-sz.x||
+       p.x>=WIDTH||
+       p.y<=-sz.y||
+       p.y>=HEIGHT){
+        return 1;
+       }
+    return 0;
+}

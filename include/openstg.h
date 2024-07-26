@@ -15,6 +15,8 @@
 #include <util.h>
 
 #include <bullet.h>
+#include <ecl.h>
+#include <player.h>
 #include <ui.h>
 
 

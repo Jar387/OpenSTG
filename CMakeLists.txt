@@ -10,7 +10,7 @@ link_libraries(SDL2)
 link_libraries(SDL2_image)
 link_libraries(m)
 
-add_definitions(-std=c99 -ggdb)
+add_definitions(-std=c99 -ggdb -Wno-discarded-qualifiers)
 
 add_executable(openstg ${DIR_SRCS})
 

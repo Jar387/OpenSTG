@@ -6,6 +6,9 @@
 #define FPS 60
 #define DELAY 1000/FPS
 
+#define WIDTH 640
+#define HEIGHT 480
+
 typedef struct pos_t{
     int x;
     int y;
@@ -15,6 +18,8 @@ extern int window_w;
 extern int window_h;
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
+
+extern Uint8* keyboard_status;
 
 void init_graphic();
 
@@ -27,5 +32,7 @@ float get_fps();
 void draw_texture(int index, pos xy);
 void draw_texture_uv(int index, pos xy, pos uv, pos wh);
 void draw_texture_transform(int index, pos xy, pos uv, pos wh, float rotation, float scale);
+
+int is_key_pressed(int scancode);
 
 #endif

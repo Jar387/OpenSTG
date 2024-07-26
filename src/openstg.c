@@ -13,11 +13,12 @@ int main(){
 
     load_basic_texture();
 
-    
+    init_player();
     
     while(!should_close()){
         pre_frame();
         tick_ui();
+        tick_player();
         tick_bullets();
         post_frame();
     }

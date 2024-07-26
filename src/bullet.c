@@ -92,7 +92,11 @@ static void tick_bullet(bullet* bu){
     bu->vy += bu->dvy;
     bu->xy.x += bu->vx;
     bu->xy.y += bu->vy;
-    draw_texture_transform(BULLET_TEXTURE, bu->xy, bu->uv, bu->wh, bu->angle, 1.0f);
+    if(check_out_of_screen(bu->xy, (pos){16, 16})==1){
+        delete_bullet(bu);
+        return;
+    }
+    draw_game_object(BULLET_TEXTURE, bu->xy, bu->uv, bu->wh, bu->angle, 1.0f);
 }
 
 void delete_bullet(bullet* bu){

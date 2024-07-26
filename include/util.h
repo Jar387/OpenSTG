@@ -25,4 +25,7 @@ void load_basic_texture();
 void load_texture(char* path, int solid);
 void unload_texture(char idx);
 
+char check_collision(pos axy, pos awh, pos bxy, pos bwh);
+char check_out_of_screen(pos p, pos sz);
+
 #endif
