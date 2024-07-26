@@ -8,6 +8,7 @@ static char texture_index = 0;
 void load_basic_texture(){
     load_texture(TEX0, 1);
     load_texture(TEX1, 1);
+    load_texture(TEX2, 1);
 }
 
 void load_texture(char* path, int solid){
@@ -59,10 +60,10 @@ char check_collision(pos axy, pos awh, pos bxy, pos bwh){
     return 0;
 }
 char check_out_of_screen(pos p, pos sz){
-    if(p.x<=-sz.x||
-       p.x>=WIDTH||
-       p.y<=-sz.y||
-       p.y>=HEIGHT){
+    if(p.x<=OFFSET_X-sz.x||
+       p.x>=LENGTH_X||
+       p.y<=OFFSET_Y-sz.y||
+       p.y>=LENGTH_Y){
         return 1;
        }
     return 0;

@@ -1,5 +1,7 @@
 #include <openstg.h>
 
+int tick = 0;
+
 int main(){
     init_logger(DEBUG, NULL);
     info("starting openstg engine");
@@ -16,6 +18,7 @@ int main(){
     init_player();
     
     while(!should_close()){
+        tick++;
         pre_frame();
         tick_ui();
         tick_player();

@@ -19,5 +19,6 @@
 #include <player.h>
 #include <ui.h>
 
+extern int tick;
 
 #endif

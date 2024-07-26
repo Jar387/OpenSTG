@@ -18,6 +18,8 @@ extern pos player_position;
 #define GRAZEBOX 2.8
 #define INITIAL_LIFE 2
 #define INITIAL_BOMB 3
+#define SPEED 4
+#define SPEED_SLOW SPEED/2
 
 // key config
 #define SHOOT SDL_SCANCODE_Z

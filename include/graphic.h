@@ -19,7 +19,7 @@ extern int window_h;
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
 
-extern Uint8* keyboard_status;
+extern const Uint8 * keyboard_status;
 
 void init_graphic();
 

@@ -45,6 +45,18 @@ static inline pos add_y(pos p, int delta){
 #define ASCII 16
 // background size can up to (128, 32)
 
+// etama2.png
+#define FOCUS_BORDER_UV (pos){0+256, 112}
+#define FOCUS_BORDER_SZ (pos){64, 64}
+
+// etama3.png
+#define SPELL_RING_UV (pos){0, 0+256}
+#define SPELL_RING_SZ (pos){256, 256}
+
+// etama4.png
+#define SUPERNATURAL_BORDER_UV (pos){0+256, 0+256}
+#define SUPERNATURAL_BORDER_SZ (pos){256, 256}
+
 // plxx.png (for both RM,MR and SY)
 #define PLAYER_DEFAULT_ANIMATION_UV (pos){1, 1}
 #define PLAYER_DEFAULT_ANIMATION_COUNT 8

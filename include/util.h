@@ -6,10 +6,12 @@
 // solid texture names
 #define TEX0 "../data/ascii.png"
 #define TEX1 "../data/etama.png"
+#define TEX2 "../data/pl00.png"
 
 // solid texture id
 #define UI_TEXTURE 0
 #define BULLET_TEXTURE 1
+#define PLAYER_TEXTURE 2
 
 #define MAX_SLOTS 16
 

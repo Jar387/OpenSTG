@@ -6,7 +6,7 @@ int window_h = HEIGHT;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
-Uint8* keyboard_status;
+const Uint8 * keyboard_status;
 
 // global texture part
 static SDL_Rect src = {0, 0, 0, 0};
