@@ -73,12 +73,17 @@ static void draw_widget(){
 }
 
 static void draw_background(){
+    // draw upper and down frame
     for(int i=0;i<WIDTH/128;i++){
-        for(int j=0;j<HEIGHT/32;j++){
-            draw_texture_uv(UI_TEXTURE, (pos){i*128, j*32}, BACKGROUND_UV, (pos){128, 32});
-        }
+        draw_texture_uv(UI_TEXTURE, (pos){i*128, 0}, BACKGROUND_UV, (pos){128, 16});
+        draw_texture_uv(UI_TEXTURE, (pos){i*128, HEIGHT-16}, BACKGROUND_UV, (pos){128, 16});
     }
-    SDL_RenderFillRect(renderer, &rect);
+    // draw left frame
+    for(int i=0;i<HEIGHT/32;i++){
+        draw_texture_uv(UI_TEXTURE, (pos){0, i*32}, BACKGROUND_UV, (pos){32, 32});
+        draw_texture_uv(UI_TEXTURE, (pos){OFFSET_X+LENGTH_X, i*32}, BACKGROUND_UV, (pos){128, 32});
+        draw_texture_uv(UI_TEXTURE, (pos){OFFSET_X+LENGTH_X+128, i*32}, BACKGROUND_UV, (pos){192, 32});
+    }
 }
 
 void tick_ui(){

@@ -24,6 +24,8 @@ typedef struct bullet_t{
     pos uv;
     pos wh;
 
+    pos hitbox_sz;
+
     list_node node;
 }bullet;
 

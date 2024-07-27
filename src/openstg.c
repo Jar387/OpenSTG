@@ -22,17 +22,9 @@ int main(){
     while(!should_close()){
         tick++;
         pre_frame();
-        bullet* bu = gen_bullet((bullet_color){BLUE, 1}, CIRCLE, (pos){LENGTH_X/2, LENGTH_Y/2});
-        bu->vx = -10;
-        bu = gen_bullet((bullet_color){RED, 1}, CIRCLE, (pos){LENGTH_X/2, LENGTH_Y/2});
-        bu->vx = 10;
-        bu = gen_bullet((bullet_color){GREEN, 1}, CIRCLE, (pos){LENGTH_X/2, LENGTH_Y/2});
-        bu->vy = 10;
-        bu = gen_bullet((bullet_color){YELLOW, 1}, CIRCLE, (pos){LENGTH_X/2, LENGTH_Y/2});
-        bu->vy = -10;
-        tick_ui();
         tick_player();
         tick_bullets();
+        tick_ui();
         post_frame();
     }
     return 0;

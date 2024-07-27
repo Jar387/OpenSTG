@@ -18,6 +18,8 @@ static inline void draw_focus_border(){
     static float focus_border_angle;
     draw_game_object(BULLET_TEXTURE, (pos){player_position.x+PLAYER_TEXTURE_SZ.x/2-FOCUS_BORDER_SZ.x/2, \
     player_position.y+PLAYER_TEXTURE_SZ.y/2-FOCUS_BORDER_SZ.y/2}, FOCUS_BORDER_UV, FOCUS_BORDER_SZ, focus_border_angle, 1.0f);
+    draw_game_object(BULLET_TEXTURE, (pos){player_position.x+PLAYER_TEXTURE_SZ.x/2-FOCUS_BORDER_SZ.x/2, \
+    player_position.y+PLAYER_TEXTURE_SZ.y/2-FOCUS_BORDER_SZ.y/2}, FOCUS_BORDER_UV, FOCUS_BORDER_SZ, -focus_border_angle, 1.0f);
     focus_border_angle+=1.0f;
 }
 
@@ -39,19 +41,19 @@ void tick_player(){
     }
     if(is_key_pressed(UP)){
         player_position.y-=speed;
-        if(player_position.y<=0){
+        if(player_position.y+6<=0){
             player_position.y+=speed;
         }
     }
     if(is_key_pressed(DOWN)){
         player_position.y+=speed;
-        if(player_position.y>=LENGTH_Y-PLAYER_TEXTURE_SZ.y){
+        if(player_position.y-6>=LENGTH_Y-PLAYER_TEXTURE_SZ.y){
             player_position.y-=speed;
         }
     }
     if(is_key_pressed(LEFT)){
         player_position.x-=speed;
-        if(player_position.x<=0){
+        if(player_position.x+14<=0){
             player_position.x+=speed;
         }
         lr_uv = PLAYER_LEFT_ANIMATION_UV;
@@ -68,7 +70,7 @@ void tick_player(){
     }
     if(is_key_pressed(RIGHT)){
         player_position.x+=speed;
-        if(player_position.x>=LENGTH_X-PLAYER_TEXTURE_SZ.x){
+        if(player_position.x-14>=LENGTH_X-PLAYER_TEXTURE_SZ.x){
             player_position.x-=speed;
         }
         lr_uv = PLAYER_RIGHT_ANIMATION_UV;

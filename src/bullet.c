@@ -14,12 +14,13 @@ bullet* gen_bullet(bullet_color color, char type, pos xy){
         wh.y = 64;
         uv.y = 0;
         switch(color.color){
-            case RED: uv.x = 0; break;
-            case BLUE: uv.x = 64; break;
-            case GREEN: uv.x = 128; break;
-            case YELLOW: uv.x = 192; break;
+            case RED: uv.x = 0+256; break;
+            case BLUE: uv.x = 64+256; break;
+            case GREEN: uv.x = 128+256; break;
+            case YELLOW: uv.x = 192+256; break;
             default: warn("illegal bullet color"); free(bu); return NULL;
         }
+        bu->hitbox_sz = (pos){32, 32};
     }else if (type==MIDDLE||type==LEGACY||type==SAIGYOJI){
         wh.x = 32;
         wh.y = 32;
@@ -34,6 +35,7 @@ bullet* gen_bullet(bullet_color color, char type, pos xy){
             uv.x = color.color*32;
         }
         uv.y = 112+32*(type-MIDDLE);
+        bu->hitbox_sz = (pos){16, 16};
     }else{
         wh.x = 16;
         wh.y = 16;
@@ -65,7 +67,9 @@ bullet* gen_bullet(bullet_color color, char type, pos xy){
                 break;
             }
         }
+        bu->hitbox_sz = (pos){8, 8};
     }
+    // calculate bullet hitbox
     bu->uv = uv;
     bu->wh = wh;
     // add it to bullet list
@@ -81,7 +85,7 @@ static void tick_bullet(void* data, int id){
     bu->vy += bu->dvy;
     bu->xy.x += bu->vx;
     bu->xy.y += bu->vy;
-    if(check_out_of_screen(bu->xy, (pos){16, 16})==1){
+    if(check_out_of_screen((pos){bu->xy.x+bu->wh.x/2-bu->hitbox_sz.x/2, bu->xy.y+bu->wh.y/2-bu->hitbox_sz.y/2}, bu->wh)==1){
         delete_bullet(bu);
         return;
     }
