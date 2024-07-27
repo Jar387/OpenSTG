@@ -60,10 +60,10 @@ char check_collision(pos axy, pos awh, pos bxy, pos bwh){
     return 0;
 }
 char check_out_of_screen(pos p, pos sz){
-    if(p.x<=OFFSET_X-sz.x||
-       p.x>=LENGTH_X||
-       p.y<=OFFSET_Y-sz.y||
-       p.y>=LENGTH_Y){
+    if(p.x<=0||
+       p.x>=LENGTH_X-sz.x||
+       p.y<=0||
+       p.y>=LENGTH_Y-sz.y){
         return 1;
        }
     return 0;

@@ -5,7 +5,6 @@
 
 typedef struct bullet_t bullet;
 typedef struct bullet_t{
-    int id;
     pos xy;
 
     int tick;
@@ -24,9 +23,8 @@ typedef struct bullet_t{
     // calculated texture info
     pos uv;
     pos wh;
-    // chain
-    bullet* prev;
-    bullet* next;
+
+    list_node node;
 }bullet;
 
 typedef struct bullet_color_t bullet_color;

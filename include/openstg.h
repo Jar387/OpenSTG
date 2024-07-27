@@ -11,6 +11,8 @@
 #include <log4c.h>
 
 #include <graphic.h>
+#include <list.h>
+#include <sched.h>
 #include <texture_offset.h>
 #include <util.h>
 
