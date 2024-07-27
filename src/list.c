@@ -1,9 +1,11 @@
 #include <openstg.h>
 
 list_head* bullet_list;
+list_head* sched_list;
 
 void create_all_instances(){
     bullet_list = create_list();
+    sched_list = create_list();
 }
 
 list_head* create_list(){

@@ -46,8 +46,8 @@ void unload_texture(char idx){
         error("illegal texture index: %i", idx);
         return;
     }
-    SDL_DestroyTexture(texture_slot[idx]);
-    usage_bitmap[idx] = TEXTURE_UNUSED;
+    SDL_DestroyTexture(texture_slot[(int)idx]);
+    usage_bitmap[(int)idx] = TEXTURE_UNUSED;
 }
 
 char check_collision(pos axy, pos awh, pos bxy, pos bwh){
@@ -61,7 +61,7 @@ char check_collision(pos axy, pos awh, pos bxy, pos bwh){
 }
 char check_out_of_screen(pos p, pos sz){
     if(p.x<=-sz.x||
-       p.x>=LENGTH_X|
+       p.x>=LENGTH_X||
        p.y<=-sz.y||
        p.y>=LENGTH_Y){
         return 1;

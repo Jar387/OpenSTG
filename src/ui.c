@@ -4,8 +4,6 @@
 #define BUF_LEN 1024
 static char buffer[BUF_LEN];
 
-static SDL_Rect rect = (SDL_Rect){OFFSET_X, OFFSET_Y, LENGTH_X, LENGTH_Y};
-
 void draw_ascii(char c, char highlight, pos position){
     char off = c - ' ';
     char row = off/16;

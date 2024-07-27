@@ -24,6 +24,7 @@ int main(){
         pre_frame();
         tick_player();
         tick_bullets();
+        tick_sched();
         tick_ui();
         post_frame();
     }

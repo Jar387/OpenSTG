@@ -15,6 +15,7 @@ typedef struct list_head_t{
 }list_head;
 
 extern list_head* bullet_list;
+extern list_head* sched_list;
 
 void create_all_instances();
 
