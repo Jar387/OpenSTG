@@ -30,18 +30,17 @@ extern pos player_position;
 #define LEFT SDL_SCANCODE_LEFT
 #define RIGHT SDL_SCANCODE_RIGHT
 
-
-typedef struct shooter_config_t{
-    int fire_rate;
-    pos offset;
-    pos hitbox;
-    int speed;
-    int dmg;
-    pos uv;
-    pos wh;
-    float rotation;
-    int is_trace;
-}shooter_config;
+typedef struct shooter_config_t {
+	int fire_rate;
+	pos offset;
+	pos hitbox;
+	int speed;
+	int dmg;
+	pos uv;
+	pos wh;
+	float rotation;
+	int is_trace;
+} shooter_config;
 
 void init_player();
 void tick_player();

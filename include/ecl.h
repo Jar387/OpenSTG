@@ -13,13 +13,12 @@
 #define RANDOM 3
 #define RANDOM_SPEED 4
 
-typedef struct bullet_manager_t{
-    
-}bullet_manager;
+typedef struct bullet_manager_t {
 
+} bullet_manager;
 
 // bullet functions
-void create_bullet(int id); // have id from 0 to 15
+void create_bullet(int id);	// have id from 0 to 15
 void fire(int id);
 
 void bshape(int id, int color, int type);
@@ -29,6 +28,5 @@ void bamount(int id, int way, int count);
 void bstyle(int id, int style);
 
 void btransform(int id, int channel, int mode, int a, int b, int r, int s);
-
 
 #endif

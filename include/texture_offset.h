@@ -4,14 +4,16 @@
 #include <openstg.h>
 
 // convenient inlines to process pos_t
-static inline pos add_x(pos p, int delta){
-    p.x += delta;
-    return p;
+static inline pos add_x(pos p, int delta)
+{
+	p.x += delta;
+	return p;
 }
 
-static inline pos add_y(pos p, int delta){
-    p.y += delta;
-    return p;
+static inline pos add_y(pos p, int delta)
+{
+	p.y += delta;
+	return p;
 }
 
 // ascii.png
@@ -94,7 +96,5 @@ static inline pos add_y(pos p, int delta){
 #define ENGLISH_TITLE_POS (pos){448, 336}
 
 #define FPS_POS (pos){513, 464}
-
-
 
 #endif

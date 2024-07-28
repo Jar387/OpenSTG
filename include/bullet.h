@@ -4,54 +4,54 @@
 #include <openstg.h>
 
 typedef struct bullet_t bullet;
-typedef struct bullet_t{
-    pos xy;
+typedef struct bullet_t {
+	pos xy;
 
-    int tick;
-    double vx;
-    double vy;
-    double dvx;
-    double dvy;
-    float angle; // angle between bullet forward direction and negtive Y axis
-    /*  
-              |
-       270~360|0~90
-    ----------|----------    support >360 warp
-       180~270|90~180
-              |
-    */
-    // calculated texture info
-    pos uv;
-    pos wh;
+	int tick;
+	double vx;
+	double vy;
+	double dvx;
+	double dvy;
+	float angle;		// angle between bullet forward direction and negtive Y axis
+	/*  
+	   |
+	   270~360|0~90
+	   ----------|----------    support >360 warp
+	   180~270|90~180
+	   |
+	 */
+	// calculated texture info
+	pos uv;
+	pos wh;
 
-    pos hitbox_sz;
+	pos hitbox_sz;
 
-    list_node node;
-}bullet;
+	list_node node;
+} bullet;
 
 typedef struct bullet_color_t bullet_color;
-typedef struct bullet_color_t{
-    char color;
-    char highlight;
-}bullet_color;
+typedef struct bullet_color_t {
+	char color;
+	char highlight;
+} bullet_color;
 
-bullet* gen_bullet(bullet_color color, char type, pos xy);
-void delete_bullet(bullet* bu);
+bullet *gen_bullet(bullet_color color, char type, pos xy);
+void delete_bullet(bullet * bu);
 void delete_bullet_id(int id);
-bullet* query_bullet(int id);
+bullet *query_bullet(int id);
 
 void tick_bullets();
 
 // bullet color define
-#define BLACK 0 // cannot highlight
+#define BLACK 0			// cannot highlight
 #define RED 1
 #define MAGENTA 2
 #define BLUE 3
 #define CYAN 4
 #define GREEN 5
 #define YELLOW 6
-#define ORANGE 7 // cannot highlight
-#define WHITE 8 // cannot highlight
+#define ORANGE 7		// cannot highlight
+#define WHITE 8			// cannot highlight
 
 // bullet type define (except laser)
 #define ARROW 0
