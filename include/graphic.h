@@ -10,8 +10,8 @@
 #define HEIGHT 480
 
 typedef struct pos_t{
-    int x;
-    int y;
+    double x;
+    double y;
 }pos;
 
 extern int window_w;

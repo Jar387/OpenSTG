@@ -85,11 +85,13 @@ static void tick_bullet(void* data, int id){
     bu->vy += bu->dvy;
     bu->xy.x += bu->vx;
     bu->xy.y += bu->vy;
+    bu->angle = vec2ang((pos){bu->vx, bu->vy});
     if(check_out_of_screen((pos){bu->xy.x+bu->wh.x/2-bu->hitbox_sz.x/2, bu->xy.y+bu->wh.y/2-bu->hitbox_sz.y/2}, bu->wh)==1){
         delete_bullet(bu);
         return;
     }
     draw_game_object(BULLET_TEXTURE, bu->xy, bu->uv, bu->wh, bu->angle, 1.0f);
+    debug("%f %f", bu->xy.x, bu->xy.y);
 }
 
 void delete_bullet(bullet* bu){

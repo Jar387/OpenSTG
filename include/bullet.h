@@ -8,10 +8,10 @@ typedef struct bullet_t{
     pos xy;
 
     int tick;
-    float vx;
-    float vy;
-    float dvx;
-    float dvy;
+    double vx;
+    double vy;
+    double dvx;
+    double dvy;
     float angle; // angle between bullet forward direction and negtive Y axis
     /*  
               |
