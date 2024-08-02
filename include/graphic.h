@@ -22,6 +22,7 @@ extern SDL_Renderer *renderer;
 extern const Uint8 *keyboard_status;
 
 void init_graphic();
+void stop_graphic();
 
 void pre_frame();
 void post_frame();

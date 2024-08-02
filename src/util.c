@@ -13,11 +13,20 @@ void load_basic_texture()
 	load_texture(TEX2, 1);
 }
 
+void terminate_texture()
+{
+	for (int i = 0; i < MAX_SLOTS; i++) {
+		if (usage_bitmap[i] != TEXTURE_UNUSED) {
+			SDL_DestroyTexture(texture_slot[i]);
+		}
+	}
+}
+
 void load_texture(char *path, int solid)
 {
 	SDL_Texture *texture = IMG_LoadTexture(renderer, path);
 	if (!texture) {
-		warn("cannot load texture %s: %s", path, IMG_GetError());
+		IOERROR(path);
 		return;
 	}
 	int free_idx = texture_index;
@@ -32,7 +41,7 @@ void load_texture(char *path, int solid)
 			}
 		}
 		if (free_idx == -1) {
-			warn("cannot load texture because texture slot is full");
+			ILLEGALSTATE("texture slot is full");
 			return;
 		}
 	}
@@ -47,7 +56,7 @@ void load_texture(char *path, int solid)
 void unload_texture(char idx)
 {
 	if (idx < 0 || idx > 15) {
-		error("illegal texture index: %i", idx);
+		ILLEGALPARAM("texture index");
 		return;
 	}
 	SDL_DestroyTexture(texture_slot[(int)idx]);

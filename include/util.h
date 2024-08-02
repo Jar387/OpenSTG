@@ -80,6 +80,7 @@ static inline double vec2ang(pos vec)
 extern SDL_Texture *texture_slot[MAX_SLOTS];
 
 void load_basic_texture();
+void terminate_texture();
 
 void load_texture(char *path, int solid);
 void unload_texture(char idx);

@@ -7,7 +7,6 @@ int tick = 0;
 //         bullet* bu = gen_bullet((bullet_color){BLUE, 1}, CIRCLE, (pos){LENGTH_X/2, LENGTH_Y/2});
 //         bu->vx = sin(M_PI/180.0f*10*i)*2;
 //         bu->vy = cos(M_PI/180.0f*10*i)*2;
-//         debug("%f %f", bu->vx, bu->vy);
 //     }
 // }
 
@@ -16,8 +15,7 @@ int main()
 	init_logger(INFO, NULL);
 	info("starting openstg engine");
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-		error("cannot initialize sdl2");
-		exit(-1);
+		ABORT("cannot initialize sdl2");
 	}
 	IMG_Init(IMG_INIT_PNG);
 
@@ -29,6 +27,8 @@ int main()
 
 	init_player();
 
+	init_buman();
+
 	while (!should_close()) {
 		tick++;
 		pre_frame();
@@ -38,5 +38,7 @@ int main()
 		tick_ui();
 		post_frame();
 	}
+	stop_graphic();
+	terminate_logger();
 	return 0;
 }

@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <signal.h>
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
@@ -10,6 +11,7 @@
 #include <SDL2/SDL_image.h>
 #include <log4c.h>
 
+#include <error.h>
 #include <graphic.h>
 #include <list.h>
 #include <sched.h>

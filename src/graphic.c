@@ -25,15 +25,20 @@ void init_graphic()
 			     SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT,
 			     SDL_WINDOW_HIDDEN);
 	if (window == NULL) {
-		error("cannot create window");
-		exit(-1);
+		ABORT("cannot create window");
 	}
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	if (renderer == NULL) {
-		error("cannot create renderer");
-		exit(-1);
+		ABORT("cannot create renderer");
 	}
 	SDL_ShowWindow(window);
+}
+
+void stop_graphic()
+{
+	terminate_texture();
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 }
 
 void pre_frame()
@@ -75,7 +80,7 @@ void draw_texture(int index, pos xy)
 {
 	SDL_Texture *texture = texture_slot[index];
 	if (!texture) {
-		error("texture pointer %x is null", &texture);
+		NULLOBJ("list head");
 		return;
 	}
 	SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
@@ -92,7 +97,7 @@ void draw_texture_uv(int index, pos xy, pos uv, pos wh)
 {
 	SDL_Texture *texture = texture_slot[index];
 	if (!texture) {
-		error("texture pointer %x is null", &texture);
+		NULLOBJ("list head");
 		return;
 	}
 	src.x = uv.x;
@@ -112,7 +117,7 @@ void draw_texture_transform(int index, pos xy, pos uv, pos wh, float rotation,
 {
 	SDL_Texture *texture = texture_slot[index];
 	if (!texture) {
-		error("texture pointer %x is null", &texture);
+		NULLOBJ("texture");
 		return;
 	}
 	src.x = uv.x;

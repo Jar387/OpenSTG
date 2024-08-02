@@ -28,7 +28,7 @@ bullet *gen_bullet(bullet_color color, char type, pos xy)
 			uv.x = 192 + 256;
 			break;
 		default:
-			warn("illegal bullet color");
+			ILLEGALPARAM("bullet color");
 			free(bu);
 			return NULL;
 		}
@@ -38,7 +38,7 @@ bullet *gen_bullet(bullet_color color, char type, pos xy)
 		wh.x = 32;
 		wh.y = 32;
 		if (color.color == ORANGE) {
-			warn("illegal bullet color");
+			ILLEGALPARAM("bullet color");
 			free(bu);
 			return NULL;
 		}
@@ -57,7 +57,7 @@ bullet *gen_bullet(bullet_color color, char type, pos xy)
 		if (color.highlight == 1) {
 			if (color.color == BLACK || color.color == ORANGE
 			    || color.color == WHITE) {
-				warn("illegal bullet color");
+				ILLEGALPARAM("bullet color");
 				free(bu);
 				return NULL;
 			}
@@ -112,7 +112,6 @@ static void tick_bullet(void *data, int id)
 	}
 	draw_game_object(BULLET_TEXTURE, bu->xy, bu->uv, bu->wh, bu->angle,
 			 1.0f);
-	debug("%f %f", bu->xy.x, bu->xy.y);
 }
 
 void delete_bullet(bullet * bu)

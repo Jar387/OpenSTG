@@ -19,7 +19,7 @@ list_head *create_list()
 void insert_tail(list_head * head, list_node * data)
 {
 	if (head == NULL || data == NULL) {
-		warn("null list head caught");
+		NULLOBJ("list head");
 		return;
 	}
 	data->prev = NULL;
@@ -38,7 +38,7 @@ void insert_tail(list_head * head, list_node * data)
 void delete_object(list_head * head, list_node * obj)
 {
 	if (obj == NULL || obj->data == NULL) {
-		warn("null list object caught");
+		NULLOBJ("list obj");
 		return;
 	}
 	if (obj->prev != NULL) {
@@ -58,18 +58,18 @@ void delete_object(list_head * head, list_node * obj)
 list_node *query_object(list_head * head, int id)
 {
 	if (head == NULL) {
-		warn("null list head caught");
+		NULLOBJ("list head");
 		return NULL;
 	}
 	list_node *index = head->head;
 	if (index == NULL) {
 		// empty list
-		warn("trying to search object in empty list");
+		NULLOBJ("list head");
 		return NULL;
 	}
 	while (index->id != id) {
 		if (index->next == NULL) {
-			warn("cannot find object id %i in list 0x%x", id, head);
+			OBJNOTFOUND("list node");
 			return NULL;
 		}
 		index = index->next;
@@ -87,8 +87,8 @@ void delete_object_id(list_head * head, int id)
 
 void list_foreach(list_head * head, void (*callback)(void *, int))
 {
-	if(head == NULL || head->head == NULL || callback == NULL) {
-		warn("null list head caught");
+	if (head == NULL || head->head == NULL || callback == NULL) {
+		NULLOBJ("list head");
 		return;
 	}
 	list_node *index = head->head;
