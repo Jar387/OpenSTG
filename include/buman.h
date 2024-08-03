@@ -12,18 +12,26 @@
 #define TRACE 0
 #define DEFAULT 1
 #define LAYER_DIF 2
-#define RANDOM_DIR 3
-#define RANDOM_SPEED 4
-#define RANDOM 5
+#define LAYER_DIF_TRACE 3
+#define RANDOM_DIR 4
+#define RANDOM_SPEED 5
+#define RANDOM 6
 
 typedef struct bullet_manager_t {
+	// const data
+	int style;
 	int color;
 	int type;
 	v2d offset;
-	double curr_spd;
-	double spd_delta;
+	double first_v;
+	double last_v;
 	int way;
 	int count;
+	double dif;
+	double dir;
+	// runtime value
+	double curr_spd;
+	double spd_delta;
 } bullet_manager;
 
 #define MAX_BUMAN_INSTANCE 16
@@ -36,11 +44,12 @@ void init_buman();
 void create_bullet(int id);	// have id from 0 to 15
 void fire(int id);
 
+void bstyle(int id, int style);
 void bshape(int id, int color, int type);
 void boffset(int id, int offset_x, int offset_y);
-void bspeed(int id, double min, double max);
 void bamount(int id, int way, int count);
-void bstyle(int id, int style);
+void bspeed(int id, double first, double last);
+void bangle(int id, double dir, double dif);
 
 void btransform(int id, int channel, int mode, int a, int b, int r, int s);
 

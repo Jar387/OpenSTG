@@ -4,13 +4,14 @@ int tick = 0;
 
 void test_bullet(int time, void *data)
 {
-	for (int i = 0; i < 36; i++) {
-		bullet *bu = gen_bullet(BLUE, CIRCLE, (v2d) { LENGTH_X / 2,
-					LENGTH_Y / 2
-					});
-		bu->vx = sin(M_PI / 180.0f * 10 * i) * 2;
-		bu->vy = cos(M_PI / 180.0f * 10 * i) * 2;
-	}
+	create_bullet(0);
+	bstyle(0, LAYER_DIF);
+	bshape(0, RED, SMALL);
+	boffset(0, LENGTH_X/2, LENGTH_Y/2);
+	bamount(0, 5, 3);
+	bspeed(0, 3.0f, 3.0f);
+	bangle(0, 0.0f, 10.0f);
+	fire(0);
 }
 
 int main()
@@ -32,7 +33,7 @@ int main()
 
 	init_buman();
 
-	// add_delay_task(60, test_bullet, NULL);
+	add_delay_task(60, test_bullet, NULL);
 
 	while (!should_close()) {
 		tick++;
@@ -41,6 +42,7 @@ int main()
 		tick_bullets();
 		tick_sched();
 		tick_ui();
+		info("%f", vec2ang((v2d){-player_position.x+LENGTH_X/2, -player_position.y+LENGTH_Y/2}));
 		post_frame();
 	}
 	stop_graphic();
