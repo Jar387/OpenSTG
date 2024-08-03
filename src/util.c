@@ -80,3 +80,37 @@ char check_out_of_screen(v2d p, v2i sz)
 	}
 	return 0;
 }
+
+double player_angle(v2d src)
+{
+	v2d p = player_hitbox();
+	if ((p.x - src.x) >= 0) {
+		if ((p.y - src.y) <= 0) {
+			// alpha dim
+			info("a");
+			return vec2ang((v2d) {
+				       p.x - src.x, p.y - src.y}
+			);
+		} else {
+			// beta dim
+			info("b");
+			return vec2ang((v2d) {
+				       p.x - src.x, p.y - src.y}
+			) + 180.0f;
+		}
+	} else {
+		if ((p.y - src.y) > 0) {
+			// gamma dim
+			info("c");
+			return vec2ang((v2d) {
+				       p.x - src.x, p.y - src.y}
+			) + 180.0f;
+		} else {
+			// delta dim
+			info("d");
+			return vec2ang((v2d) {
+				       p.x - src.x, p.y - src.y}
+			) + 360.0f;
+		}
+	}
+}

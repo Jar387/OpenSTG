@@ -101,6 +101,8 @@ static inline double vec2ang(v2d vec)
 	return rarctan(-vec.x / vec.y);
 }
 
+double player_angle(v2d src);
+
 // const len array because OpenGL supports least 16 texture slots
 extern SDL_Texture *texture_slot[MAX_SLOTS];
 

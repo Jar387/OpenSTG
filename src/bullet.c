@@ -75,6 +75,8 @@ bullet *gen_bullet(int color, char type, v2d xy)
 	}
 	// calculate bullet hitbox
 	uv.x++;			// fix texture offset bug
+	bu->xy.x -= bu->hitbox_sz.x / 2;	// fix coord bug
+	bu->xy.y -= bu->hitbox_sz.y / 2;
 	bu->uv = uv;
 	bu->wh = wh;
 	// add it to bullet list
