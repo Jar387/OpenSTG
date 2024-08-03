@@ -10,7 +10,7 @@ extern int hiscore;
 extern int score;
 extern int power;
 extern int graze;
-extern pos player_position;
+extern v2d player_position;
 
 // player config
 // TEST DATA(RM B)
@@ -32,12 +32,12 @@ extern pos player_position;
 
 typedef struct shooter_config_t {
 	int fire_rate;
-	pos offset;
-	pos hitbox;
+	v2d offset;
+	v2i hitbox;
 	int speed;
 	int dmg;
-	pos uv;
-	pos wh;
+	v2i uv;
+	v2i wh;
 	float rotation;
 	int is_trace;
 } shooter_config;

@@ -1,6 +1,8 @@
 #ifndef ECL_H
 #define ECL_H
 
+#include <openstg.h>
+
 #define OFFSET_X 32
 #define OFFSET_Y 16
 #define LENGTH_X 384
@@ -15,13 +17,11 @@
 #define RANDOM 5
 
 typedef struct bullet_manager_t {
-	int id;
-	int style;
 	int color;
 	int type;
-	pos offset;
-	double min;
-	double max;
+	v2d offset;
+	double curr_spd;
+	double spd_delta;
 	int way;
 	int count;
 } bullet_manager;

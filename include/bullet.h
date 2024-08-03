@@ -5,7 +5,7 @@
 
 typedef struct bullet_t bullet;
 typedef struct bullet_t {
-	pos xy;
+	v2d xy;
 
 	int tick;
 	double vx;
@@ -21,21 +21,15 @@ typedef struct bullet_t {
 	   |
 	 */
 	// calculated texture info
-	pos uv;
-	pos wh;
+	v2i uv;
+	v2i wh;
 
-	pos hitbox_sz;
+	v2i hitbox_sz;
 
 	list_node node;
 } bullet;
 
-typedef struct bullet_color_t bullet_color;
-typedef struct bullet_color_t {
-	char color;
-	char highlight;
-} bullet_color;
-
-bullet *gen_bullet(bullet_color color, char type, pos xy);
+bullet *gen_bullet(int color, char type, v2d xy);
 void delete_bullet(bullet * bu);
 void delete_bullet_id(int id);
 bullet *query_bullet(int id);
@@ -43,15 +37,22 @@ bullet *query_bullet(int id);
 void tick_bullets();
 
 // bullet color define
-#define BLACK 0			// cannot highlight
+#define BLACK 0
 #define RED 1
-#define MAGENTA 2
-#define BLUE 3
-#define CYAN 4
-#define GREEN 5
-#define YELLOW 6
-#define ORANGE 7		// cannot highlight
-#define WHITE 8			// cannot highlight
+#define LIGHT_RED 2
+#define MAGENTA 3
+#define LIGHT_MAGENTA 4
+#define BLUE 5
+#define LIGHT_BLUE 6
+#define CYAN 7
+#define LIGHT_CYAN 8
+#define GREEN 9
+#define LIGHT_GREEN 10
+#define COLOR_11 11
+#define YELLOW 12
+#define LIGHT_YELLOW 13
+#define ORANGE 14
+#define WHITE 15
 
 // bullet type define (except laser)
 #define ARROW 0

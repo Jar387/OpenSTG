@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <openstg.h>
+
 typedef struct list_node_t {
 	int id;
 	void *data;

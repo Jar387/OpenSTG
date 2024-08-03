@@ -7,23 +7,23 @@ int hiscore;
 int score;
 int power;
 int graze;
-pos player_position;
+v2d player_position;
 
 static int animation_frame = 0;
 static int lr_frame = 0;
-static pos uv = PLAYER_DEFAULT_ANIMATION_UV;
-static pos lr_uv = PLAYER_LEFT_ANIMATION_UV;
+static v2i uv = PLAYER_DEFAULT_ANIMATION_UV;
+static v2i lr_uv = PLAYER_LEFT_ANIMATION_UV;
 
 static inline void draw_focus_border()
 {
 	static float focus_border_angle;
-	draw_game_object(BULLET_TEXTURE, (pos) {
+	draw_game_object(BULLET_TEXTURE, (v2i) {
 			 player_position.x + PLAYER_TEXTURE_SZ.x / 2 -
 			 FOCUS_BORDER_SZ.x / 2,
 			 player_position.y + PLAYER_TEXTURE_SZ.y / 2 -
 			 FOCUS_BORDER_SZ.y / 2}, FOCUS_BORDER_UV,
 			 FOCUS_BORDER_SZ, focus_border_angle, 1.0f);
-	draw_game_object(BULLET_TEXTURE, (pos) {
+	draw_game_object(BULLET_TEXTURE, (v2i) {
 			 player_position.x + PLAYER_TEXTURE_SZ.x / 2 -
 			 FOCUS_BORDER_SZ.x / 2,
 			 player_position.y + PLAYER_TEXTURE_SZ.y / 2 -
@@ -39,7 +39,7 @@ void init_player()
 	hiscore = 0;		// replace later
 	score = 0;
 	power = 0;
-	player_position = (pos) {
+	player_position = (v2d) {
 	LENGTH_X / 2, LENGTH_Y / 2};
 }
 
@@ -74,7 +74,7 @@ void tick_player()
 		if (lr_frame >= 8) {
 			lr_frame = 7;
 		}
-		draw_game_object(PLAYER_TEXTURE, player_position, lr_uv,
+		draw_game_object(PLAYER_TEXTURE, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
@@ -92,7 +92,7 @@ void tick_player()
 		if (lr_frame >= 8) {
 			lr_frame = 7;
 		}
-		draw_game_object(PLAYER_TEXTURE, player_position, lr_uv,
+		draw_game_object(PLAYER_TEXTURE, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
@@ -100,8 +100,8 @@ void tick_player()
 		return;
 	}
 	lr_frame = 0;
-	draw_game_object(PLAYER_TEXTURE, player_position, uv, PLAYER_TEXTURE_SZ,
-			 0.0f, 1.0f);
+	draw_game_object(PLAYER_TEXTURE, d2i(player_position), uv,
+			 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
 	if (tick % 8 == 0) {
 		uv.x += PLAYER_TEXTURE_SZ.x + 2;
 		animation_frame++;

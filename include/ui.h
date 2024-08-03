@@ -1,12 +1,14 @@
 #ifndef UI_H
 #define UI_H
 
+#include <openstg.h>
+
 void tick_ui();
 
-void draw_ascii(char c, char highlight, pos position);
-void draw_string(pos position, unsigned char len, char *fmt, ...);
+void draw_ascii(char c, char highlight, v2i position);
+void draw_string(v2i position, unsigned char len, char *fmt, ...);
 
-static inline void draw_game_object(int index, pos xy, pos uv, pos wh,
+static inline void draw_game_object(int index, v2i xy, v2i uv, v2i wh,
 				    float rotation, float scale)
 {
 	xy.x += OFFSET_X;

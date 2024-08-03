@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <SDL2/SDL.h>
+#include <openstg.h>
 
 // solid texture names
 #define TEX0 "../data/ascii.png"
@@ -23,6 +23,28 @@
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832
 #endif
+
+typedef struct vec2d_t {
+	double x;
+	double y;
+} v2d;
+
+typedef struct vec2i_t {
+	int x;
+	int y;
+} v2i;
+
+static inline v2d i2d(v2i i)
+{
+	return (v2d) {
+	(double)i.x, (double)i.y};
+}
+
+static inline v2i d2i(v2d d)
+{
+	return (v2i) {
+	(int)d.x, (int)d.y};
+}
 
 static inline double ang2rad(double angle)
 {
@@ -65,14 +87,17 @@ static inline double rarctan(double x)
 }
 
 // bullet math util
-static inline pos ang2vec(double angle, double speed)
+static inline v2d ang2vec(double angle, double speed)
 {
-	return (pos) {
+	return (v2d) {
 	rsin(angle) * speed, -rcos(angle) * speed};
 }
 
-static inline double vec2ang(pos vec)
+static inline double vec2ang(v2d vec)
 {
+	if (vec.y == 0) {
+		return 0.0f;	// fix this if vec.y==0 will cause return a -Nan
+	}
 	return rarctan(-vec.x / vec.y);
 }
 
@@ -85,7 +110,7 @@ void terminate_texture();
 void load_texture(char *path, int solid);
 void unload_texture(char idx);
 
-char check_collision(pos axy, pos awh, pos bxy, pos bwh);
-char check_out_of_screen(pos p, pos sz);
+char check_collision(v2d axy, v2i awh, v2d bxy, v2i bwh);
+char check_out_of_screen(v2d p, v2i sz);
 
 #endif

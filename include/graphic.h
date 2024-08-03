@@ -1,18 +1,13 @@
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 
-#include <SDL2/SDL.h>
+#include <openstg.h>
 
 #define FPS 60
 #define DELAY 1000/FPS
 
 #define WIDTH 640
 #define HEIGHT 480
-
-typedef struct pos_t {
-	double x;
-	double y;
-} pos;
 
 extern int window_w;
 extern int window_h;
@@ -30,9 +25,9 @@ void post_frame();
 int should_close();
 float get_fps();
 
-void draw_texture(int index, pos xy);
-void draw_texture_uv(int index, pos xy, pos uv, pos wh);
-void draw_texture_transform(int index, pos xy, pos uv, pos wh, float rotation,
+void draw_texture(int index, v2i xy);
+void draw_texture_uv(int index, v2i xy, v2i uv, v2i wh);
+void draw_texture_transform(int index, v2i xy, v2i uv, v2i wh, float rotation,
 			    float scale);
 
 int is_key_pressed(int scancode);

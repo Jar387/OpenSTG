@@ -76,7 +76,7 @@ float get_fps()
 	return actual_fps;
 }
 
-void draw_texture(int index, pos xy)
+void draw_texture(int index, v2i xy)
 {
 	SDL_Texture *texture = texture_slot[index];
 	if (!texture) {
@@ -93,7 +93,7 @@ void draw_texture(int index, pos xy)
 	SDL_RenderCopy(renderer, texture, &src, &dst);
 }
 
-void draw_texture_uv(int index, pos xy, pos uv, pos wh)
+void draw_texture_uv(int index, v2i xy, v2i uv, v2i wh)
 {
 	SDL_Texture *texture = texture_slot[index];
 	if (!texture) {
@@ -112,7 +112,7 @@ void draw_texture_uv(int index, pos xy, pos uv, pos wh)
 	SDL_RenderCopy(renderer, texture, &src, &dst);
 }
 
-void draw_texture_transform(int index, pos xy, pos uv, pos wh, float rotation,
+void draw_texture_transform(int index, v2i xy, v2i uv, v2i wh, float rotation,
 			    float scale)
 {
 	SDL_Texture *texture = texture_slot[index];

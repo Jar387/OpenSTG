@@ -4,18 +4,18 @@
 #define BUF_LEN 1024
 static char buffer[BUF_LEN];
 
-void draw_ascii(char c, char highlight, pos position)
+void draw_ascii(char c, char highlight, v2i position)
 {
 	char off = c - ' ';
 	char row = off / 16;
 	char column = off % 16;
-	pos uv = (pos) { column * 16, 32 + row * 16 };
-	pos wh = (pos) { 16, 16 };
+	v2i uv = (v2i) { column * 16, 32 + row * 16 };
+	v2i wh = (v2i) { 16, 16 };
 	draw_texture_uv(UI_TEXTURE, position, uv, wh);
 }
 
 			  // restrict length to 255
-void draw_string(pos position, unsigned char len, char *fmt, ...)
+void draw_string(v2i position, unsigned char len, char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
@@ -36,7 +36,7 @@ static void draw_widget()
 	draw_texture_uv(UI_TEXTURE, SCORE_POS, SCORE_UV, SCORE_SZ);
 	draw_string(SCORE_NUM_POS, 9, "%09d", score % 1000000000);
 	draw_texture_uv(UI_TEXTURE, PLAYER_POS, PLAYER_UV, PLAYER_SZ);
-	pos tmp = PLAYER_NUM_POS;
+	v2i tmp = PLAYER_NUM_POS;
 	for (int i = 0; i < player_count; i++) {
 		draw_texture_uv(UI_TEXTURE, tmp, PLAYER_ICON_UV, ICON_SZ);
 		tmp.x += ICON_SZ.x;
@@ -80,25 +80,25 @@ static void draw_background()
 {
 	// draw upper and down frame
 	for (int i = 0; i < WIDTH / 128; i++) {
-		draw_texture_uv(UI_TEXTURE, (pos) {
-				i * 128, 0}, BACKGROUND_UV, (pos) {
+		draw_texture_uv(UI_TEXTURE, (v2i) {
+				i * 128, 0}, BACKGROUND_UV, (v2i) {
 				128, 16});
-		draw_texture_uv(UI_TEXTURE, (pos) {
-				i * 128, HEIGHT - 16}, BACKGROUND_UV, (pos) {
+		draw_texture_uv(UI_TEXTURE, (v2i) {
+				i * 128, HEIGHT - 16}, BACKGROUND_UV, (v2i) {
 				128, 16});
 	}
 	// draw left frame
 	for (int i = 0; i < HEIGHT / 32; i++) {
-		draw_texture_uv(UI_TEXTURE, (pos) {
-				0, i * 32}, BACKGROUND_UV, (pos) {
+		draw_texture_uv(UI_TEXTURE, (v2i) {
+				0, i * 32}, BACKGROUND_UV, (v2i) {
 				32, 32});
-		draw_texture_uv(UI_TEXTURE, (pos) {
+		draw_texture_uv(UI_TEXTURE, (v2i) {
 				OFFSET_X + LENGTH_X, i * 32}, BACKGROUND_UV,
-				(pos) {
+				(v2i) {
 				128, 32});
-		draw_texture_uv(UI_TEXTURE, (pos) {
+		draw_texture_uv(UI_TEXTURE, (v2i) {
 				OFFSET_X + LENGTH_X + 128, i * 32},
-				BACKGROUND_UV, (pos) {
+				BACKGROUND_UV, (v2i) {
 				192, 32});
 	}
 }

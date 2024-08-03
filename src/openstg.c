@@ -2,13 +2,16 @@
 
 int tick = 0;
 
-// void test_bullet(int time){
-//     for(int i=0;i<36;i++){
-//         bullet* bu = gen_bullet((bullet_color){BLUE, 1}, CIRCLE, (pos){LENGTH_X/2, LENGTH_Y/2});
-//         bu->vx = sin(M_PI/180.0f*10*i)*2;
-//         bu->vy = cos(M_PI/180.0f*10*i)*2;
-//     }
-// }
+void test_bullet(int time, void *data)
+{
+	for (int i = 0; i < 36; i++) {
+		bullet *bu = gen_bullet(BLUE, CIRCLE, (v2d) { LENGTH_X / 2,
+					LENGTH_Y / 2
+					});
+		bu->vx = sin(M_PI / 180.0f * 10 * i) * 2;
+		bu->vy = cos(M_PI / 180.0f * 10 * i) * 2;
+	}
+}
 
 int main()
 {
@@ -28,6 +31,8 @@ int main()
 	init_player();
 
 	init_buman();
+
+	// add_delay_task(60, test_bullet, NULL);
 
 	while (!should_close()) {
 		tick++;

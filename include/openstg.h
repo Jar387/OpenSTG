@@ -11,15 +11,16 @@
 #include <SDL2/SDL_image.h>
 #include <log4c.h>
 
+#include <util.h>
+
 #include <error.h>
 #include <graphic.h>
 #include <list.h>
 #include <sched.h>
 #include <texture_offset.h>
-#include <util.h>
 
 #include <bullet.h>
-#include <ecl.h>
+#include <buman.h>
 #include <player.h>
 #include <ui.h>
 

@@ -63,7 +63,7 @@ void unload_texture(char idx)
 	usage_bitmap[(int)idx] = TEXTURE_UNUSED;
 }
 
-char check_collision(pos axy, pos awh, pos bxy, pos bwh)
+char check_collision(v2d axy, v2i awh, v2d bxy, v2i bwh)
 {
 	if (axy.x <= bxy.x + bwh.x &&
 	    axy.x + awh.x >= bxy.x &&
@@ -73,7 +73,7 @@ char check_collision(pos axy, pos awh, pos bxy, pos bwh)
 	return 0;
 }
 
-char check_out_of_screen(pos p, pos sz)
+char check_out_of_screen(v2d p, v2i sz)
 {
 	if (p.x <= -sz.x || p.x >= LENGTH_X || p.y <= -sz.y || p.y >= LENGTH_Y) {
 		return 1;
