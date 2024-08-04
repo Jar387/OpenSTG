@@ -46,6 +46,52 @@ static void style_layer_dif_task(int looptime, void *data)
 	buman->dir += buman->dif;
 }
 
+static void style_random_dir_task(int looptime, void *data)
+{
+	bullet_manager *buman = (bullet_manager *) data;
+	for (int i = 0; i < buman->way; i++) {
+		bullet *bu =
+		    gen_bullet(buman->color, buman->type, buman->offset);
+		v2d v =
+		    ang2vec(zundom
+			    (buman->dir - buman->dif, buman->dir + buman->dif),
+			    buman->curr_spd);
+		bu->vx = v.x;
+		bu->vy = v.y;
+	}
+	buman->curr_spd += buman->spd_delta;
+}
+
+static void style_random_speed_task(int looptime, void *data)
+{
+	bullet_manager *buman = (bullet_manager *) data;
+	for (int i = 0; i < buman->way; i++) {
+		bullet *bu =
+		    gen_bullet(buman->color, buman->type, buman->offset);
+		v2d v =
+		    ang2vec(buman->dir, zundom(buman->first_v, buman->last_v));
+		bu->vx = v.x;
+		bu->vy = v.y;
+		buman->dir += 360.0f / buman->way;
+	}
+	buman->dir += buman->dif;
+}
+
+static void style_random_task(int looptime, void *data)
+{
+	bullet_manager *buman = (bullet_manager *) data;
+	for (int i = 0; i < buman->way; i++) {
+		bullet *bu =
+		    gen_bullet(buman->color, buman->type, buman->offset);
+		v2d v =
+		    ang2vec(zundom
+			    (buman->dir - buman->dif, buman->dir + buman->dif),
+			    zundom(buman->first_v, buman->last_v));
+		bu->vx = v.x;
+		bu->vy = v.y;
+	}
+}
+
 void create_bullet(int id)
 {
 	// clear buman data
@@ -63,17 +109,36 @@ void fire(int id)
 	switch (buman_list[id].style) {
 	case TRACE:
 		buman_list[id].dir = player_angle(buman_list[id].offset);
-		add_periodic_times_task(8, buman_list[id].count,
+		add_periodic_times_task(1, buman_list[id].count,
 					&style_default_task, &buman_list[id]);
 		break;
 	case DEFAULT:
-		add_periodic_times_task(8, buman_list[id].count,
+		add_periodic_times_task(1, buman_list[id].count,
 					&style_default_task, &buman_list[id]);
 		break;
 	case LAYER_DIF:
-		add_periodic_times_task(8, buman_list[id].count,
+		add_periodic_times_task(1, buman_list[id].count,
 					&style_layer_dif_task, &buman_list[id]);
-		break;;
+		break;
+	case LAYER_DIF_TRACE:
+		buman_list[id].dir = player_angle(buman_list[id].offset);
+		add_periodic_times_task(1, buman_list[id].count,
+					&style_layer_dif_task, &buman_list[id]);
+		break;
+	case RANDOM_DIR:
+		add_periodic_times_task(1, buman_list[id].count,
+					&style_random_dir_task,
+					&buman_list[id]);
+		break;
+	case RANDOM_SPEED:
+		add_periodic_times_task(1, buman_list[id].count,
+					&style_random_speed_task,
+					&buman_list[id]);
+		break;
+	case RANDOM:
+		add_periodic_times_task(1, buman_list[id].count,
+					&style_random_task, &buman_list[id]);
+		break;
 	default:
 		ILLEGALPARAM("bullet manager style");
 		return;

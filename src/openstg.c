@@ -5,12 +5,12 @@ int tick = 0;
 void test_bullet(int time, void *data)
 {
 	create_bullet(0);
-	bstyle(0, TRACE);
-	bshape(0, RED, SMALL);
+	bstyle(0, RANDOM);
+	bshape(0, MAGENTA, SMALL);
 	boffset(0, LENGTH_X / 2, LENGTH_Y / 2);
-	bamount(0, 6, 9);
-	bspeed(0, 1.0f, 1.0f);
-	bangle(0, 0.0f, 10.0f);
+	bamount(0, 10, 3);
+	bspeed(0, 3.0f, 1.0f);
+	bangle(0, 180.0f, 90.0f);
 	fire(0);
 }
 
@@ -18,6 +18,7 @@ int main()
 {
 	init_logger(INFO, NULL);
 	info("starting openstg engine");
+	srand(time(NULL));
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
 		ABORT("cannot initialize sdl2");
 	}
@@ -33,7 +34,7 @@ int main()
 
 	init_buman();
 
-	add_periodic_task(300, test_bullet, NULL);
+	add_periodic_task(60, test_bullet, NULL);
 
 	while (!should_close()) {
 		tick++;

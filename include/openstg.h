@@ -1,23 +1,34 @@
 #ifndef OPENSTG_H
 #define OPENSTG_H
 
+typedef struct vec2d_t {
+	double x;
+	double y;
+} v2d;
+
+typedef struct vec2i_t {
+	int x;
+	int y;
+} v2i;
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <log4c.h>
 
-#include <util.h>
-
 #include <error.h>
 #include <graphic.h>
 #include <list.h>
+#include <mathutil.h>
 #include <sched.h>
 #include <texture_offset.h>
+#include <util.h>
 
 #include <bullet.h>
 #include <buman.h>

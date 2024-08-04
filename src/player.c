@@ -41,7 +41,6 @@ void init_player()
 
 void tick_player()
 {
-	info("%f %f", player_position.x, player_position.y);
 	int speed;
 	if (is_key_pressed(FOCUS)) {
 		speed = SPEED_SLOW;
