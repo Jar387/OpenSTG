@@ -75,7 +75,8 @@ char check_collision(v2d axy, v2i awh, v2d bxy, v2i bwh)
 
 char check_out_of_screen(v2d p, v2i sz)
 {
-	if (p.x <= -sz.x || p.x >= LENGTH_X || p.y <= -sz.y || p.y >= LENGTH_Y) {
+	if (p.x <= -sz.x / 2 || p.x >= LENGTH_X + sz.x / 2 || p.y <= -sz.y / 2
+	    || p.y >= LENGTH_Y + sz.y / 2) {
 		return 1;
 	}
 	return 0;
@@ -83,17 +84,15 @@ char check_out_of_screen(v2d p, v2i sz)
 
 double player_angle(v2d src)
 {
-	v2d p = player_hitbox();
+	v2d p = player_position;
 	if ((p.x - src.x) >= 0) {
 		if ((p.y - src.y) <= 0) {
 			// alpha dim
-			info("a");
 			return vec2ang((v2d) {
 				       p.x - src.x, p.y - src.y}
 			);
 		} else {
-			// beta dim
-			info("b");
+			// delta dim
 			return vec2ang((v2d) {
 				       p.x - src.x, p.y - src.y}
 			) + 180.0f;
@@ -101,13 +100,11 @@ double player_angle(v2d src)
 	} else {
 		if ((p.y - src.y) > 0) {
 			// gamma dim
-			info("c");
 			return vec2ang((v2d) {
 				       p.x - src.x, p.y - src.y}
 			) + 180.0f;
 		} else {
-			// delta dim
-			info("d");
+			// beta dim
 			return vec2ang((v2d) {
 				       p.x - src.x, p.y - src.y}
 			) + 360.0f;

@@ -42,13 +42,6 @@ typedef struct shooter_config_t {
 	int is_trace;
 } shooter_config;
 
-static inline v2d player_hitbox()
-{
-	return (v2d) {
-	player_position.x + (PLAYER_TEXTURE_SZ.x - HITBOX) / 2,
-		    player_position.y + (PLAYER_TEXTURE_SZ.y - HITBOX) / 2};
-}
-
 void init_player();
 void tick_player();
 

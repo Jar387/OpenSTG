@@ -8,7 +8,7 @@ void test_bullet(int time, void *data)
 	bstyle(0, TRACE);
 	bshape(0, RED, SMALL);
 	boffset(0, LENGTH_X / 2, LENGTH_Y / 2);
-	bamount(0, 5, 9);
+	bamount(0, 6, 9);
 	bspeed(0, 1.0f, 1.0f);
 	bangle(0, 0.0f, 10.0f);
 	fire(0);

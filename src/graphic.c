@@ -136,3 +136,13 @@ int is_key_pressed(int scancode)
 {
 	return keyboard_status[scancode];
 }
+
+void draw_game_object(int index, v2i xy, v2i uv, v2i wh,
+		      float rotation, float scale)
+{
+	xy.x -= wh.x / 2;
+	xy.y -= wh.y / 2;
+	xy.x += OFFSET_X;
+	xy.y += OFFSET_Y;
+	draw_texture_transform(index, xy, uv, wh, rotation, scale);
+}

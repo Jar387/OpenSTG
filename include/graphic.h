@@ -29,6 +29,8 @@ void draw_texture(int index, v2i xy);
 void draw_texture_uv(int index, v2i xy, v2i uv, v2i wh);
 void draw_texture_transform(int index, v2i xy, v2i uv, v2i wh, float rotation,
 			    float scale);
+void draw_game_object(int index, v2i xy, v2i uv, v2i wh,
+		      float rotation, float scale);
 
 int is_key_pressed(int scancode);
 

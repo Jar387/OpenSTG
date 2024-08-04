@@ -5,7 +5,7 @@
 
 typedef struct bullet_t bullet;
 typedef struct bullet_t {
-	v2d xy;
+	v2d xy;			// centered coord
 
 	int tick;
 	double vx;
