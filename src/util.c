@@ -1,6 +1,7 @@
 #include <openstg.h>
 
 SDL_Texture *texture_slot[MAX_SLOTS];
+Mix_Chunk *bgm_slot[MAX_BGMS];
 
 static char usage_bitmap[MAX_SLOTS] = { 0 };
 
@@ -110,4 +111,56 @@ double player_angle(v2d src)
 			) + 360.0f;
 		}
 	}
+}
+
+void load_music(char *path, int idx)
+{
+	Mix_Chunk *music = Mix_LoadWAV(path);
+	if (!music) {
+		IOERROR(path);
+	}
+	if (idx < 0 || idx > 2 || bgm_slot[idx] != NULL) {
+		ILLEGALPARAM("music index");
+	}
+	bgm_slot[idx] = music;
+}
+
+void unload_music(int idx)
+{
+	Mix_Chunk *music = bgm_slot[idx];
+	if (!music) {
+		NULLOBJ("music");
+	}
+	Mix_FreeChunk(music);
+	bgm_slot[idx] = NULL;
+}
+
+void load_basic_music()
+{
+	load_music(BGM0, 0);
+	load_music(BGM1, 1);
+	load_music(BGM2, 2);
+}
+
+void terminate_music()
+{
+	for (int i = 0; i < MAX_BGMS; i++) {
+		if (bgm_slot[i] != NULL) {
+			unload_music(i);
+		}
+	}
+}
+
+void play_music(int idx)
+{
+	Mix_Chunk *music = bgm_slot[idx];
+	if (!music) {
+		NULLOBJ("music");
+	}
+	Mix_PlayChannel(MAIN_CHANNEL, music, 1);
+}
+
+void stop_music()
+{
+	Mix_HaltChannel(MAIN_CHANNEL);
 }

@@ -20,6 +20,7 @@ typedef struct vec2i_t {
 #include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include <log4c.h>
 
 #include <error.h>

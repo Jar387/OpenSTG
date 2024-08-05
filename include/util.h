@@ -19,6 +19,28 @@
 #define TEXTURE_USED 1
 #define TEXTURE_SOLID 2
 
+// music names
+#define BGM0 "../data/6a.wav"	// アルティメットトゥルース
+#define BGM1 "../data/6b.wav"	// 幽雅に咲かせ、墨染の桜　～ Border of Life
+#define BGM2 "../data/6c.wav"	// ボーダーオブライフ
+
+#define MAX_BGMS 3
+
+#define MAIN_CHANNEL -1
+
+extern Mix_Chunk *bgm_slot[MAX_BGMS];
+
+// music utils
+void load_music(char *path, int idx);
+void unload_music(int idx);
+
+void play_music(int idx);
+void stop_music();
+
+void load_basic_music();
+void terminate_music();
+
+// texture utils
 // const len array because OpenGL supports least 16 texture slots
 extern SDL_Texture *texture_slot[MAX_SLOTS];
 

@@ -2,18 +2,6 @@
 
 int tick = 0;
 
-void test_bullet(int time, void *data)
-{
-	create_bullet(0);
-	bstyle(0, RANDOM);
-	bshape(0, MAGENTA, SMALL);
-	boffset(0, LENGTH_X / 2, LENGTH_Y / 2);
-	bamount(0, 10, 3);
-	bspeed(0, 3.0f, 1.0f);
-	bangle(0, 180.0f, 90.0f);
-	fire(0);
-}
-
 int main()
 {
 	init_logger(INFO, NULL);
@@ -22,19 +10,19 @@ int main()
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
 		ABORT("cannot initialize sdl2");
 	}
-	IMG_Init(IMG_INIT_PNG);
+	if (IMG_Init(IMG_INIT_PNG) == 0) {
+		ABORT("cannot initailize sdl2 image module");
+	}
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+		ABORT("cannot initialize sdl2 mixer module");
+	}
 
 	init_graphic();
-
 	load_basic_texture();
-
+	load_basic_music();
 	create_all_instances();
-
 	init_player();
-
 	init_buman();
-
-	add_periodic_task(60, test_bullet, NULL);
 
 	while (!should_close()) {
 		tick++;
@@ -46,6 +34,7 @@ int main()
 		post_frame();
 	}
 	stop_graphic();
+	terminate_music();
 	terminate_logger();
 	return 0;
 }

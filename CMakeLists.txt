@@ -8,6 +8,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 link_libraries(log4c)
 link_libraries(SDL2)
 link_libraries(SDL2_image)
+link_libraries(SDL2_mixer)
 link_libraries(m)
 
 add_definitions(-std=c99 -ggdb)
