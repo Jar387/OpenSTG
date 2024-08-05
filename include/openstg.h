@@ -11,6 +11,11 @@ typedef struct vec2i_t {
 	int y;
 } v2i;
 
+typedef struct vec2c_t {
+	char x;
+	char y;
+} v2c;
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
@@ -27,6 +32,7 @@ typedef struct vec2i_t {
 #include <graphic.h>
 #include <list.h>
 #include <mathutil.h>
+#include <playercfg.h>
 #include <sched.h>
 #include <texture_offset.h>
 #include <util.h>

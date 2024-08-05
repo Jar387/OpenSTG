@@ -30,18 +30,6 @@ extern v2d player_position;
 #define LEFT SDL_SCANCODE_LEFT
 #define RIGHT SDL_SCANCODE_RIGHT
 
-typedef struct shooter_config_t {
-	int fire_rate;
-	v2d offset;
-	v2i hitbox;
-	int speed;
-	int dmg;
-	v2i uv;
-	v2i wh;
-	float rotation;
-	int is_trace;
-} shooter_config;
-
 void init_player();
 void tick_player();
 

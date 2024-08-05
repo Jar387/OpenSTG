@@ -66,9 +66,11 @@ void tick_player()
 		}
 		lr_uv = PLAYER_LEFT_ANIMATION_UV;
 		lr_uv.x += lr_frame * (PLAYER_TEXTURE_SZ.x + 2);
-		lr_frame++;
-		if (lr_frame >= 8) {
-			lr_frame = 7;
+		if (tick % 8 == 0) {
+			lr_frame++;
+			if (lr_frame >= 8) {
+				lr_frame = 5;
+			}
 		}
 		draw_game_object(PLAYER_TEXTURE, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
@@ -84,9 +86,11 @@ void tick_player()
 		}
 		lr_uv = PLAYER_RIGHT_ANIMATION_UV;
 		lr_uv.x += lr_frame * (PLAYER_TEXTURE_SZ.x + 2);
-		lr_frame++;
-		if (lr_frame >= 8) {
-			lr_frame = 7;
+		if (tick % 8 == 0) {
+			lr_frame++;
+			if (lr_frame >= 8) {
+				lr_frame = 5;
+			}
 		}
 		draw_game_object(PLAYER_TEXTURE, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
