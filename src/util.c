@@ -164,3 +164,20 @@ void stop_music()
 {
 	Mix_HaltChannel(MAIN_CHANNEL);
 }
+
+int read_line(FILE * fp, char *buffer, int size)
+{
+	int c;
+	for (int i = 0; i < size; i++) {
+		c = fgetc(fp);
+		if (c == '\n') {
+			buffer[i] = '\0';
+			return i;
+		}
+		if (c == EOF) {
+			buffer[i] = '\0';
+			return -1;
+		}
+		buffer[i] = c;
+	}
+}

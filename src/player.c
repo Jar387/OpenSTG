@@ -13,19 +13,18 @@ static int animation_frame = 0;
 static int lr_frame = 0;
 static v2i uv = PLAYER_DEFAULT_ANIMATION_UV;
 static v2i lr_uv = PLAYER_LEFT_ANIMATION_UV;
+static float rotate_counter = 0.0f;
 
 static inline void draw_focus_border()
 {
-	static float focus_border_angle;
 	draw_game_object(BULLET_TEXTURE, (v2i) {
 			 player_position.x,
 			 player_position.y}, FOCUS_BORDER_UV,
-			 FOCUS_BORDER_SZ, focus_border_angle, 1.0f);
+			 FOCUS_BORDER_SZ, rotate_counter, 1.0f);
 	draw_game_object(BULLET_TEXTURE, (v2i) {
 			 player_position.x,
 			 player_position.y}, FOCUS_BORDER_UV,
-			 FOCUS_BORDER_SZ, -focus_border_angle, 1.0f);
-	focus_border_angle += 1.0f;
+			 FOCUS_BORDER_SZ, -rotate_counter, 1.0f);
 }
 
 void init_player()
@@ -36,11 +35,39 @@ void init_player()
 	score = 0;
 	power = 0;
 	player_position = (v2d) {
-	LENGTH_X / 2, LENGTH_Y / 2};
+	LENGTH_X / 2, LENGTH_Y / 7 * 6};
+}
+
+static void tick_player_shooter()
+{
+	if (!is_key_pressed(FOCUS)) {
+		draw_game_object(PLAYER_TEXTURE, (v2i) {
+				 d2i(player_position).x + 25,
+				 d2i(player_position).y}
+				 , RM_B_OPTION_UV, RM_OPTION_SZ,
+				 rotate_counter * 5, 1.0f);
+		draw_game_object(PLAYER_TEXTURE, (v2i) {
+				 d2i(player_position).x - 25,
+				 d2i(player_position).y}
+				 , RM_B_OPTION_UV, RM_OPTION_SZ,
+				 -rotate_counter * 5 + 180.0f, 1.0f);
+	} else {
+		draw_game_object(PLAYER_TEXTURE, (v2i) {
+				 d2i(player_position).x + 10,
+				 d2i(player_position).y - 30}
+				 , RM_B_OPTION_UV, RM_OPTION_SZ,
+				 rotate_counter * 5, 1.0f);
+		draw_game_object(PLAYER_TEXTURE, (v2i) {
+				 d2i(player_position).x - 10,
+				 d2i(player_position).y - 30}
+				 , RM_B_OPTION_UV, RM_OPTION_SZ,
+				 -rotate_counter * 5 + 180.0f, 1.0f);
+	}
 }
 
 void tick_player()
 {
+	rotate_counter += 1.0f;
 	int speed;
 	if (is_key_pressed(FOCUS)) {
 		speed = SPEED_SLOW;
@@ -77,6 +104,7 @@ void tick_player()
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
 		}
+		// tick_player_shooter();
 		return;
 	}
 	if (is_key_pressed(RIGHT)) {
@@ -97,6 +125,7 @@ void tick_player()
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
 		}
+		// tick_player_shooter();
 		return;
 	}
 	lr_frame = 0;
@@ -113,4 +142,5 @@ void tick_player()
 	if (speed == SPEED_SLOW) {
 		draw_focus_border();
 	}
+	// tick_player_shooter();
 }

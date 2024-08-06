@@ -14,11 +14,11 @@ extern v2d player_position;
 
 // player config
 // TEST DATA(RM B)
-#define HITBOX 1.65
-#define GRAZEBOX 2.8
+#define HITBOX curr_cfg->hitbox
+#define GRAZEBOX curr_cfg->grazebox
 #define INITIAL_LIFE 2
-#define INITIAL_BOMB 3
-#define SPEED 4
+#define INITIAL_BOMB curr_cfg->bomb_per_life
+#define SPEED curr_cfg->speed
 #define SPEED_SLOW SPEED/2
 
 // key config

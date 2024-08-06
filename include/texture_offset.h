@@ -76,6 +76,10 @@ static inline v2i add_y(v2i p, int delta)
 #define RM_B_BULLET_2_UV (v2i){68, 179}
 #define RM_B_BULLET_2_SZ (v2i){56, 10}
 
+#define RM_A_OPTION_UV (v2i){65, 145}
+#define RM_B_OPTION_UV (v2i){81, 145}
+#define RM_OPTION_SZ (v2i){15, 15}
+
 // ui render position
 #define HISCORE_POS (v2i){432, 48}
 #define HISCORE_NUM_POS (v2i){496, 48}
