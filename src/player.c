@@ -33,41 +33,16 @@ void init_player()
 	bomb_count = INITIAL_BOMB;
 	hiscore = 0;		// replace later
 	score = 0;
-	power = 0;
+	power = 128;
 	player_position = (v2d) {
 	LENGTH_X / 2, LENGTH_Y / 7 * 6};
 }
 
-static void tick_player_shooter()
-{
-	if (!is_key_pressed(FOCUS)) {
-		draw_game_object(PLAYER_TEXTURE, (v2i) {
-				 d2i(player_position).x + 25,
-				 d2i(player_position).y}
-				 , RM_B_OPTION_UV, RM_OPTION_SZ,
-				 rotate_counter * 5, 1.0f);
-		draw_game_object(PLAYER_TEXTURE, (v2i) {
-				 d2i(player_position).x - 25,
-				 d2i(player_position).y}
-				 , RM_B_OPTION_UV, RM_OPTION_SZ,
-				 -rotate_counter * 5 + 180.0f, 1.0f);
-	} else {
-		draw_game_object(PLAYER_TEXTURE, (v2i) {
-				 d2i(player_position).x + 10,
-				 d2i(player_position).y - 30}
-				 , RM_B_OPTION_UV, RM_OPTION_SZ,
-				 rotate_counter * 5, 1.0f);
-		draw_game_object(PLAYER_TEXTURE, (v2i) {
-				 d2i(player_position).x - 10,
-				 d2i(player_position).y - 30}
-				 , RM_B_OPTION_UV, RM_OPTION_SZ,
-				 -rotate_counter * 5 + 180.0f, 1.0f);
-	}
-}
-
 void tick_player()
 {
+	int reduce_speed = 0;
 	rotate_counter += 1.0f;
+	tick_shooter();
 	int speed;
 	if (is_key_pressed(FOCUS)) {
 		speed = SPEED_SLOW;
@@ -79,21 +54,30 @@ void tick_player()
 		if (player_position.y <= 15) {
 			player_position.y = 15;
 		}
+		reduce_speed = speed / M_SQRT2;
 	}
 	if (is_key_pressed(DOWN)) {
 		player_position.y += speed;
 		if (player_position.y >= LENGTH_Y - 15) {
 			player_position.y = LENGTH_Y - 15;
 		}
+		reduce_speed = speed / M_SQRT2;
 	}
 	if (is_key_pressed(LEFT)) {
-		player_position.x -= speed;
+		if (reduce_speed == 0) {
+			player_position.x -= speed;
+		} else {
+			player_position.x -= reduce_speed;
+		}
+
 		if (player_position.x <= 7) {
 			player_position.x = 7;
 		}
 		lr_uv = PLAYER_LEFT_ANIMATION_UV;
 		lr_uv.x += lr_frame * (PLAYER_TEXTURE_SZ.x + 2);
-		if (tick % 8 == 0) {
+		if (lr_frame < 5) {
+			lr_frame++;
+		} else if (tick % 8 == 0) {
 			lr_frame++;
 			if (lr_frame >= 8) {
 				lr_frame = 5;
@@ -104,17 +88,23 @@ void tick_player()
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
 		}
-		// tick_player_shooter();
 		return;
 	}
 	if (is_key_pressed(RIGHT)) {
-		player_position.x += speed;
+		if (reduce_speed == 0) {
+			player_position.x += speed;
+		} else {
+			player_position.x += reduce_speed;
+		}
+
 		if (player_position.x >= LENGTH_X - 7) {
 			player_position.x = LENGTH_X - 7;
 		}
 		lr_uv = PLAYER_RIGHT_ANIMATION_UV;
 		lr_uv.x += lr_frame * (PLAYER_TEXTURE_SZ.x + 2);
-		if (tick % 8 == 0) {
+		if (lr_frame < 5) {
+			lr_frame++;
+		} else if (tick % 8 == 0) {
 			lr_frame++;
 			if (lr_frame >= 8) {
 				lr_frame = 5;
@@ -125,7 +115,6 @@ void tick_player()
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
 		}
-		// tick_player_shooter();
 		return;
 	}
 	lr_frame = 0;
@@ -142,5 +131,4 @@ void tick_player()
 	if (speed == SPEED_SLOW) {
 		draw_focus_border();
 	}
-	// tick_player_shooter();
 }

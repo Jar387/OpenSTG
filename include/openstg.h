@@ -40,6 +40,7 @@ typedef struct vec2c_t {
 #include <bullet.h>
 #include <buman.h>
 #include <player.h>
+#include <shooter.h>
 #include <ui.h>
 
 extern int tick;

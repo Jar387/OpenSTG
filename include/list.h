@@ -18,6 +18,7 @@ typedef struct list_head_t {
 
 extern list_head *bullet_list;
 extern list_head *sched_list;
+extern list_head *player_bullet_list;
 
 void create_all_instances();
 

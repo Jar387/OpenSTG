@@ -5,6 +5,10 @@
 #define M_PI 3.1415926535897932384626433832
 #endif
 
+#ifndef M_SQRT2
+#define M_SQRT2	1.41421356237309504880
+#endif
+
 static inline v2d i2d(v2i i)
 {
 	return (v2d) {
