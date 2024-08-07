@@ -33,7 +33,7 @@ void init_player()
 	bomb_count = INITIAL_BOMB;
 	hiscore = 0;		// replace later
 	score = 0;
-	power = 128;
+	power = 0;
 	player_position = (v2d) {
 	LENGTH_X / 2, LENGTH_Y / 7 * 6};
 }

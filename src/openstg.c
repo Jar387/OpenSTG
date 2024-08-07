@@ -20,7 +20,7 @@ int main()
 	init_graphic();
 	load_basic_texture();
 	load_basic_music();
-	load_player_config(CFG_REIMU_B);
+	load_player_config(CFG_REIMU_A);
 	create_all_instances();
 	init_player();
 	init_buman();

@@ -28,13 +28,14 @@ static void tick_shooter_animation()
 	rotate_counter++;
 }
 
-player_bullet *gen_player_bullet(int id, v2d xy, v2d dxy, v2i hitbox)
+player_bullet *gen_player_bullet(int id, v2d xy, v2i hitbox, int angle,
+				 int speed)
 {
 	player_bullet *bu = (player_bullet *) malloc(sizeof(*bu));
 	memset(bu, 0, sizeof(*bu));
 	bu->xy = (v2d) {
 	player_position.x + xy.x, player_position.y + xy.y};
-	bu->dxy = dxy;
+	bu->dxy = ang2vec((double)angle, (double)speed);
 	bu->hitbox = hitbox;
 	switch (id) {
 	case 0:{
@@ -47,14 +48,19 @@ player_bullet *gen_player_bullet(int id, v2d xy, v2d dxy, v2i hitbox)
 			bu->wh = RM_BULLET_1_SZ;
 			break;
 		}
-	case 3:{
+	case 2:{
 			bu->uv = RM_BULLET_2_UV;
 			bu->wh = RM_BULLET_2_SZ;
 			break;
 		}
-	case 2:{
+	case 3:{
 			bu->uv = RM_BULLET_3_UV;
 			bu->wh = RM_BULLET_3_SZ;
+			break;
+		}
+	case 4:{
+			bu->uv = RM_BULLET_4_UV;
+			bu->wh = RM_BULLET_4_SZ;
 			break;
 		}
 	default:
@@ -113,40 +119,43 @@ static void tick_player_power(int power_level)
 			data[i].cd_counter = data[i].start_dalay;
 			continue;
 		}
+		if (data[i].cd_counter != 0) {
+			data[i].cd_counter--;
+			continue;
+		}
 		if (tick % data[i].fire_rate == 0) {
-			if (data[i].cd_counter != 0) {
-				data[i].cd_counter--;
-				continue;
-			}
 			if (data[i].option == 0) {
 				gen_player_bullet(data[i].flags,
-						  i2d(data[i].position), (v2d) {
-						  0, -data[i].speed}
-						  , data[i].hitbox);
+						  i2d(data[i].position)
+						  , data[i].hitbox, data[i].ang,
+						  data[i].speed);
 			}
 			if (data[i].option == 1) {
 				gen_player_bullet(data[i].flags, (v2d) {
 						  data[i].position.x - 25,
 						  data[i].position.y}
-						  , (v2d) {
-						  0, -data[i].speed}
-						  , data[i].hitbox);
+						  , data[i].hitbox, data[i].ang,
+						  data[i].speed);
 			}
 			if (data[i].option == 2) {
 				gen_player_bullet(data[i].flags, (v2d) {
 						  data[i].position.x + 25,
 						  data[i].position.y}
-						  , (v2d) {
-						  0, -data[i].speed}
-						  , data[i].hitbox);
+						  , data[i].hitbox, data[i].ang,
+						  data[i].speed);
 			}
-
 		}
 	}
 }
 
 void tick_shooter()
 {
+	if (is_key_pressed(SDL_SCANCODE_1)) {
+		power--;
+	}
+	if (is_key_pressed(SDL_SCANCODE_2)) {
+		power++;
+	}
 	int power_level = get_power_level();
 	tick_shooter_animation();
 	tick_player_power(power_level);

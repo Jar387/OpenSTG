@@ -69,14 +69,16 @@ static inline v2i add_y(v2i p, int delta)
 #define PLAYER_TEXTURE_SZ (v2i){30, 46}
 
 // RM AB bullet info
-#define RM_BULLET_0_UV (v2i){17, 144}
+#define RM_BULLET_0_UV (v2i){17, 144}	// non-trace universal bullet
 #define RM_BULLET_0_SZ (v2i){16, 16}
-#define RM_BULLET_1_UV (v2i){32, 144}
+#define RM_BULLET_1_UV (v2i){32, 144}	// config A fast bullet, multi section trace
 #define RM_BULLET_1_SZ (v2i){16, 16}
-#define RM_BULLET_2_UV (v2i){7, 166}
-#define RM_BULLET_2_SZ (v2i){32, 70}
-#define RM_BULLET_3_UV (v2i){113, 173}
+#define RM_BULLET_2_UV (v2i){137, 182}	// config A slow bullet, multi section trace
+#define RM_BULLET_2_SZ (v2i){28, 28}
+#define RM_BULLET_3_UV (v2i){113, 173}	// config B fast laser, liner
 #define RM_BULLET_3_SZ (v2i){6, 44}
+#define RM_BULLET_4_UV (v2i){7, 166}	// config B slow laser, liner
+#define RM_BULLET_4_SZ (v2i){32, 70}
 
 #define RM_OPTION_UV (v2i){1, 144}
 #define RM_OPTION_SZ (v2i){16, 16}
