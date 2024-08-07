@@ -2,16 +2,28 @@
 
 player_cfg_data *curr_cfg;
 
+static inline int zun2std(double zun)
+{
+	int ang = (int)rad2ang(zun) + 90;
+	if (ang < 0) {
+		ang += 360;
+	}
+	return ang;
+}
+
 static inline void load_option_config(char *buffer, shooter_cfg_data * data)
 {
-	sscanf(buffer, "%i,%i,%i,%i,%i,%i,%i,%i,%i", &(data->fire_rate),
+	double zun;
+	sscanf(buffer, "%i,%i,%i,%i,%i,%i,%i,%i,%i,%lf,%i", &(data->fire_rate),
 	       &(data->start_dalay), &(data->position.x), &(data->position.y),
 	       &(data->hitbox.x), &(data->hitbox.y), &(data->speed),
-	       &(data->dmg), &(data->flags));
+	       &(data->dmg), &(data->flags), &zun, &(data->option));
+	data->ang = zun2std(zun);
 }
 
 void load_player_config(char *path)
 {
+	int c;
 	if (!path) {
 		NULLOBJ("player config path");
 		return;
@@ -40,11 +52,10 @@ void load_player_config(char *path)
 		for (int j = 0;; j++) {
 			read_line(fp, buffer, 256);
 			if (strcmp(buffer, CONFIG_SPLIT) == 0) {
-				curr_cfg->shooter_counts[i] = j + 1;
 				break;
 			}
 			if (strcmp(buffer, CONFIG_BIG_SPLIT) == 0) {
-				curr_cfg->shooter_exist = i + 1;
+				c = i;
 				goto fin;
 			}
 			load_option_config(buffer, &(curr_cfg->shooters[i][j]));
@@ -55,12 +66,14 @@ void load_player_config(char *path)
 		for (int j = 0;; j++) {
 			read_line(fp, buffer, 256);
 			if (strcmp(buffer, CONFIG_SPLIT) == 0) {
-				curr_cfg->shooter_focus_counts[i] = j + 1;
 				break;
 			}
 			if (strcmp(buffer, CONFIG_BIG_SPLIT) == 0) {
-				curr_cfg->shooter_focus_exist = i + 1;
-				info("player config loaded: with %i/%i power setups", curr_cfg->shooter_exist, curr_cfg->shooter_focus_exist);
+				if (c != CONFIG_COUNT - 1
+				    || i != CONFIG_COUNT - 1) {
+					ABORT("bad player config");
+				}
+				info("player config loaded: with %i/%i power setups", c + 1, i + 1);
 				return;
 			}
 			load_option_config(buffer,

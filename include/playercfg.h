@@ -10,6 +10,8 @@
 #define CONFIG_BIG_SPLIT ">>"
 #define CONFIG_SPLIT ">"
 
+#define CONFIG_COUNT 9
+
 typedef struct shootercfg_data_t {
 	int fire_rate;
 	int start_dalay;
@@ -18,6 +20,9 @@ typedef struct shootercfg_data_t {
 	int dmg;
 	int speed;
 	int flags;
+	int ang;
+	int cd_counter;
+	int option;
 } shooter_cfg_data;
 
 typedef struct playercfg_data_t {
@@ -28,11 +33,7 @@ typedef struct playercfg_data_t {
 	double itembox;
 	int speed;
 	shooter_cfg_data shooters[9][16];
-	int shooter_counts[9];
-	int shooter_exist;
 	shooter_cfg_data shooters_focus[9][16];
-	int shooter_focus_counts[9];
-	int shooter_focus_exist;
 } player_cfg_data;
 
 extern player_cfg_data *curr_cfg;

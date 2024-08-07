@@ -94,8 +94,7 @@ static void tick_bullet(void *data, int id)
 	bu->angle = vec2ang((v2d) {
 			    bu->vx, bu->vy});
 	if (check_out_of_screen((v2d) {
-				bu->xy.x + bu->wh.x / 2 - bu->hitbox_sz.x / 2,
-				bu->xy.y + bu->wh.y / 2 - bu->hitbox_sz.y / 2}
+				bu->xy.x, bu->xy.y}
 				, bu->wh) == 1) {
 		delete_bullet(bu);
 		return;

@@ -69,16 +69,17 @@ static inline v2i add_y(v2i p, int delta)
 #define PLAYER_TEXTURE_SZ (v2i){30, 46}
 
 // RM AB bullet info
-#define RM_A_BULLET_UV (v2i){200, 146}
-#define RM_A_BULLET_SZ (v2i){56, 13}
-#define RM_B_BULLET_1_UV (v2i){200, 162}
-#define RM_B_BULLET_1_SZ (v2i){56, 12}
-#define RM_B_BULLET_2_UV (v2i){68, 179}
-#define RM_B_BULLET_2_SZ (v2i){56, 10}
+#define RM_BULLET_0_UV (v2i){17, 144}
+#define RM_BULLET_0_SZ (v2i){16, 16}
+#define RM_BULLET_1_UV (v2i){32, 144}
+#define RM_BULLET_1_SZ (v2i){16, 16}
+#define RM_BULLET_2_UV (v2i){7, 166}
+#define RM_BULLET_2_SZ (v2i){32, 70}
+#define RM_BULLET_3_UV (v2i){113, 173}
+#define RM_BULLET_3_SZ (v2i){6, 44}
 
-#define RM_A_OPTION_UV (v2i){65, 145}
-#define RM_B_OPTION_UV (v2i){81, 145}
-#define RM_OPTION_SZ (v2i){15, 15}
+#define RM_OPTION_UV (v2i){1, 144}
+#define RM_OPTION_SZ (v2i){16, 16}
 
 // ui render position
 #define HISCORE_POS (v2i){432, 48}
