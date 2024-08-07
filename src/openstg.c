@@ -25,9 +25,12 @@ int main()
 	init_player();
 	init_buman();
 
+	set_background_style(SC_BACKGROUND);
+
 	while (!should_close()) {
 		tick++;
 		pre_frame();
+		tick_background();
 		tick_player();
 		tick_bullets();
 		tick_sched();

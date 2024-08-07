@@ -12,6 +12,10 @@ void load_basic_texture()
 	load_texture(TEX0, 1);
 	load_texture(TEX1, 1);
 	load_texture(TEX2, 1);
+	load_texture(TEX3, 1);
+	load_texture(TEX4, 1);
+	load_texture(TEX5, 1);
+	load_texture(TEX6, 1);
 }
 
 void terminate_texture()

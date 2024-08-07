@@ -7,11 +7,19 @@
 #define TEX0 "../data/ascii.png"
 #define TEX1 "../data/etama.png"
 #define TEX2 "../data/pl00.png"
+#define TEX3 "../data/bga.png"
+#define TEX4 "../data/bgb.png"
+#define TEX5 "../data/bgc.png"
+#define TEX6 "../data/enm.png"
 
 // solid texture id
 #define UI_TEXTURE 0
 #define BULLET_TEXTURE 1
 #define PLAYER_TEXTURE 2
+#define BG_A_TEXTURE 3
+#define BG_B_TEXTURE 4
+#define BG_C_TEXTURE 5
+#define ENM_TEXTURE 6
 
 #define MAX_SLOTS 16
 

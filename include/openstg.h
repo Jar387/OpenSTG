@@ -37,6 +37,7 @@ typedef struct vec2c_t {
 #include <texture_offset.h>
 #include <util.h>
 
+#include <background.h>
 #include <bullet.h>
 #include <buman.h>
 #include <player.h>
