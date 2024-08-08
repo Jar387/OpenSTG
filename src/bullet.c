@@ -6,77 +6,243 @@ bullet *gen_bullet(int color, char type, v2d xy)
 	memset(bu, 0, sizeof(bullet));
 	bu->xy = xy;
 	bu->tick = 0;
-	// calculate texture uv
-	// remake at commit 2c5cda
-	v2i uv;
-	v2i wh;
-	if (type == LARGE) {
-		// use etama2
-		wh.x = 64;
-		wh.y = 64;
-		uv.y = 0;
-		switch (color) {
-		case RED:
-			uv.x = 0 + 256;
-			break;
-		case BLUE:
-			uv.x = 64 + 256;
-			break;
-		case GREEN:
-			uv.x = 128 + 256;
-			break;
-		case YELLOW:
-			uv.x = 192 + 256;
-			break;
-		default:
-			ILLEGALPARAM("bullet color");	// large bullet only have 4 colors
-			free(bu);
-			return NULL;
-		}
-		bu->hitbox_sz = (v2i) {
-		32, 32};
-	} else if (type == MIDDLE || type == LEGACY || type == SAIGYOJI) {
-		wh.x = 32;
-		wh.y = 32;
-		switch (color) {
-		case LIGHT_RED:
-		case LIGHT_MAGENTA:
-		case LIGHT_BLUE:
-		case LIGHT_CYAN:
-		case LIGHT_GREEN:
-		case COLOR_11:
-		case LIGHT_YELLOW:
-		case ORANGE:{
-				ILLEGALPARAM("bullet color");
-				free(bu);
-				return NULL;
-			}
-
-		}
-		int index;	// texture index
-		if (color < COLOR_11) {
-			index = (color + 1) / 2;
-		} else if (color == WHITE) {
-			index = 7;
-		} else {
-			index = 6;
-		}
-		uv.x = index * 32;
-		uv.y = 112 + 32 * (type - MIDDLE);
-		bu->hitbox_sz = (v2i) {
-		16, 16};
-	} else {
+	// calculate texture uv and hibox
+	// remake at commit 483c9ae with EoSD texture
+	v2i uv, wh, hitbox;
+	if (type == RING ||
+	    type == SMALL_BALL ||
+	    type == ELLIPSE || type == NIDDLE || type == CRYSTAL) {
+		uv.x = color;
+		uv.y = type;
 		wh.x = 16;
 		wh.y = 16;
-		uv.y = 16 + type * 16;
-		uv.x = 16 * color;
-		bu->hitbox_sz = (v2i) {
-		8, 8};
+		hitbox.x = 8;
+		hitbox.x = 8;
+	} else if (type == MINI_BALL) {
+		wh.x = 12;
+		wh.y = 12;
+		hitbox.x = 8;
+		hitbox.x = 8;
+		uv.y = 113;
+		switch (color) {
+		case BLACK:{
+				uv.x = 66;
+				break;
+			}
+		case RED:{
+				uv.x = 82;
+				break;
+			}
+		case BLUE:{
+				uv.x = 98;
+				break;
+			}
+		case GREEN:{
+				uv.x = 114;
+				break;
+			}
+		case YELLOW:{
+				uv.x = 130;
+				break;
+			}
+		default:{
+				ILLEGALPARAM("color");
+			}
+		}
+	} else if (type == MINI_CIRCLE) {
+		wh.x = 12;
+		wh.y = 12;
+		hitbox.x = 8;
+		hitbox.x = 8;
+		uv.y = 113;
+		switch (color) {
+		case BLACK:{
+				uv.x = 146;
+				break;
+			}
+		case RED:{
+				uv.x = 162;
+				break;
+			}
+		case BLUE:{
+				uv.x = 178;
+				break;
+			}
+		case GREEN:{
+				uv.x = 194;
+				break;
+			}
+		case YELLOW:{
+				uv.x = 210;
+				break;
+			}
+		default:{
+				ILLEGALPARAM("color");
+			}
+		}
+	} else if (type == MIDDLE_BALL) {
+		wh.x = 32;
+		wh.y = 32;
+		hitbox.x = 16;
+		hitbox.x = 16;
+		uv.y = 128;
+		switch (color) {
+		case BLACK:{
+				uv.x = 0 * 32;
+				break;
+			}
+		case RED:{
+				uv.x = 1 * 32;
+				break;
+			}
+		case MAGENTA:{
+				uv.x = 2 * 32;
+				break;
+			}
+		case BLUE:{
+				uv.x = 3 * 32;
+				break;
+			}
+		case CYAN:{
+				uv.x = 4 * 32;
+				break;
+			}
+		case GREEN:{
+				uv.x = 5 * 32;
+				break;
+			}
+		case YELLOW:{
+				uv.x = 6 * 32;
+				break;
+			}
+		case WHITE:{
+				uv.x = 7 * 32;
+				break;
+			}
+		default:{
+				ILLEGALPARAM("color");
+			}
+		}
+	} else if (type == KNIFE) {
+		wh.x = 32;
+		wh.y = 32;
+		hitbox.x = 6;
+		hitbox.x = 30;
+		uv.y = 160;
+		switch (color) {
+		case BLACK:{
+				uv.x = 0 * 32;
+				break;
+			}
+		case RED:{
+				uv.x = 1 * 32;
+				break;
+			}
+		case MAGENTA:{
+				uv.x = 2 * 32;
+				break;
+			}
+		case BLUE:{
+				uv.x = 3 * 32;
+				break;
+			}
+		case CYAN:{
+				uv.x = 4 * 32;
+				break;
+			}
+		case GREEN:{
+				uv.x = 5 * 32;
+				break;
+			}
+		case YELLOW:{
+				uv.x = 6 * 32;
+				break;
+			}
+		case WHITE:{
+				uv.x = 7 * 32;
+				break;
+			}
+		default:{
+				ILLEGALPARAM("color");
+			}
+		}
+	} else if (type == GLOWING_BALL) {
+		wh.x = 32;
+		wh.y = 32;
+		hitbox.x = 12;
+		hitbox.x = 12;
+		uv.y = 224;
+		switch (color) {
+		case BLACK:{
+				uv.x = 0 * 32;
+				break;
+			}
+		case RED:{
+				uv.x = 1 * 32;
+				break;
+			}
+		case MAGENTA:{
+				uv.x = 2 * 32;
+				break;
+			}
+		case BLUE:{
+				uv.x = 3 * 32;
+				break;
+			}
+		case CYAN:{
+				uv.x = 4 * 32;
+				break;
+			}
+		case GREEN:{
+				uv.x = 5 * 32;
+				break;
+			}
+		case YELLOW:{
+				uv.x = 6 * 32;
+				break;
+			}
+		case WHITE:{
+				uv.x = 7 * 32;
+				break;
+			}
+		default:{
+				ILLEGALPARAM("color");
+			}
+		}
+	} else if (type == BIG_BALL) {
+		wh.x = 64;
+		wh.y = 64;
+		hitbox.x = 45;
+		hitbox.x = 45;
+		uv.y = 0;
+		switch (color) {
+		case RED:{
+				uv.x = 256 + 0 * 64;
+				break;
+			}
+		case BLUE:{
+				uv.x = 256 + 1 * 64;
+				break;
+			}
+		case GREEN:{
+				uv.x = 256 + 2 * 64;
+				break;
+			}
+		case YELLOW:{
+				uv.x = 256 + 3 * 64;
+				break;
+			}
+		default:{
+				ILLEGALPARAM("color");
+			}
+		}
+	} else {
+		ILLEGALPARAM("type");
 	}
-	// calculate bullet hitbox
-	uv.x++;			// fix texture offset bug
+
 	bu->uv = uv;
 	bu->wh = wh;
+	bu->hitbox_sz = hitbox;
 	// add it to bullet list
 	bu->node.data = bu;
 	insert_tail(bullet_list, &bu->node);

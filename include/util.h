@@ -14,8 +14,7 @@
 #define UI_TEX 0
 #define ASCII_TEX 1
 #define TEXT_TEX 1
-#define PL00_TEX 1
-#define PL01_TEX 1
+#define PLAYER_TEX 1
 
 #define MAX_SLOTS 16
 

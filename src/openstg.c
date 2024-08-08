@@ -20,7 +20,7 @@ int main()
 	init_graphic();
 	load_basic_texture();
 	load_basic_music();
-	load_player_config(CFG_REIMU_A);
+	load_player_config(CFG_REIMU_B);
 	create_all_instances();
 	init_player();
 	init_buman();
@@ -31,9 +31,9 @@ int main()
 		tick++;
 		pre_frame();
 		tick_background();
-		// tick_player();
-		// tick_bullets();
-		// tick_sched();
+		tick_player();
+		tick_bullets();
+		tick_sched();
 		tick_ui();
 		post_frame();
 	}

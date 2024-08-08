@@ -17,6 +17,56 @@ static inline v2i add_y(v2i p, int delta)
 }
 
 // generic_0.png
+// left top
+#define P_ITEM_UV (v2i){0*16, 0}
+#define POINT_ITEM_UV (v2i){1*16, 0}
+#define BIG_P_ITEM_UV (v2i){2*16, 0}
+#define BOMB_ITEM_UV (v2i){3*16, 0}
+#define FULL_ITEM_UV (v2i){4*16, 0}
+#define PLAYER_ITEM_UV (v2i){5*16, 0}
+#define BULLET_ITEM_UV (v2i){6*16, 0}
+#define P_SIGN_UV (v2i){8*16, 0}
+#define POINT_SIGN_UV (v2i){9*16, 0}
+#define BIG_P_SIGN_UV (v2i){10*16, 0}
+#define BOMB_SIGN_UV (v2i){11*16, 0}
+#define FULL_SIGN_UV (v2i){12*16, 0}
+#define PLAYER_SIGN_UV (v2i){13*16, 0}
+#define BULLET_SIGN_UV (v2i){14*16, 0}
+#define ITEM_SZ (v2i){16, 15}
+
+// colour define (X coord for 16x16 bullet)
+#define BLACK 0*16
+#define RED 1*16
+#define LIGHT_RED 2*16
+#define MAGENTA 3*16
+#define LIGHT_MAGENTA 4*16
+#define BLUE 5*16
+#define LIGHT_BLUE 6*16
+#define CYAN 7*16
+#define LIGHT_CYAN 8*16
+#define GREEN 9*16
+#define LIGHT_GREEN 10*16
+#define COLOR_11 11*16
+#define YELLOW 12*16
+#define LIGHT_YELLOW 13*16
+#define ORANGE 14*16
+#define WHITE 15*16
+
+//bullet type
+#define LASER 0*16+16
+#define RING 1*16+16
+#define SMALL_BALL 2*16+16
+#define ELLIPSE 3*16+16
+#define NIDDLE 4*16+16
+#define CRYSTAL 5*16+16
+#define MINI_BALL -1
+#define MINI_CIRCLE -2
+#define MIDDLE_BALL -3
+#define KNIFE -4
+#define MICRO_BALL -5
+#define GLOWING_BALL -6
+#define BIG_BALL -7
+
 // left bottom
 #define JAPANESE_TITLE_PART_1_UV (v2i){1, 1+256}
 #define JAPANESE_TITLE_PART_2_UV (v2i){65, 1+256}
@@ -53,33 +103,29 @@ static inline v2i add_y(v2i p, int delta)
 #define ASCII_SHRINK 12
 #define ASCII 16
 
-// etama2.png
-#define FOCUS_BORDER_UV (v2i){0+256, 112}
-#define FOCUS_BORDER_SZ (v2i){64, 64}
+// generic_1.png
+// left bottom
 
-// plxx.png (for both RM,MR)
-#define PLAYER_DEFAULT_ANIMATION_UV (v2i){1, 1}
+// RM animation info
+#define FOCUS_BORDER_UV (v2i){3, 448}
+#define FOCUS_BORDER_SZ (v2i){60, 60}
+#define PLAYER_DEFAULT_ANIMATION_UV (v2i){1, 1+256}
 #define PLAYER_DEFAULT_ANIMATION_COUNT 8
-#define PLAYER_LEFT_ANIMATION_UV (v2i){1, 49}
+#define PLAYER_LEFT_ANIMATION_UV (v2i){1, 49+256}
 #define PLAYER_LEFT_ANIMATION_COUNT 8
-#define PLAYER_RIGHT_ANIMATION_UV (v2i){1, 97}
+#define PLAYER_RIGHT_ANIMATION_UV (v2i){1, 97+256}
 #define PLAYER_RIGHT_ANIMATION_COUNT 8
 #define PLAYER_TEXTURE_SZ (v2i){30, 46}
 
 // RM AB bullet info
-#define RM_BULLET_0_UV (v2i){17, 144}	// non-trace universal bullet
-#define RM_BULLET_0_SZ (v2i){16, 16}
-#define RM_BULLET_1_UV (v2i){32, 144}	// config A fast bullet, multi section trace
-#define RM_BULLET_1_SZ (v2i){16, 16}
-#define RM_BULLET_2_UV (v2i){137, 182}	// config A slow bullet, multi section trace
-#define RM_BULLET_2_SZ (v2i){28, 28}
-#define RM_BULLET_3_UV (v2i){113, 173}	// config B fast laser, liner
-#define RM_BULLET_3_SZ (v2i){6, 44}
-#define RM_BULLET_4_UV (v2i){7, 166}	// config B slow laser, liner
-#define RM_BULLET_4_SZ (v2i){32, 70}
-
-#define RM_OPTION_UV (v2i){1, 144}
-#define RM_OPTION_SZ (v2i){16, 16}
+#define RM_BULLET_0_UV (v2i){3, 418}	// non-trace universal bullet
+#define RM_BULLET_0_SZ (v2i){12, 12}
+#define RM_BULLET_1_UV (v2i){18, 417}	// config A trace bullet
+#define RM_BULLET_1_SZ (v2i){14, 14}
+#define RM_BULLET_2_UV (v2i){70, 418}	// config B laser
+#define RM_BULLET_2_SZ (v2i){7, 45}
+#define RM_OPTION_UV (v2i){2, 400}
+#define RM_OPTION_SZ (v2i){15, 15}
 
 // ui render position
 #define HISCORE_POS (v2i){432, 48}

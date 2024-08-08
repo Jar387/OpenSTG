@@ -4,27 +4,27 @@ static void tick_shooter_animation()
 {
 	static float rotate_counter;
 	static float switch_anim_frame;
-	if (tick % 1 == 0) {
-		if (is_key_pressed(FOCUS)) {
-			if (switch_anim_frame != 5) {
-				switch_anim_frame++;
-			}
-		} else {
-			if (switch_anim_frame > 0) {
-				switch_anim_frame--;
-			}
+	if (is_key_pressed(FOCUS)) {
+		if (switch_anim_frame != 5) {
+			switch_anim_frame++;
+		}
+	} else {
+		if (switch_anim_frame > 0) {
+			switch_anim_frame--;
 		}
 	}
-	draw_game_object(PL00_TEX, (v2i) {
-			 d2i(player_position).x - 35 +
-			 switch_anim_frame * 2, d2i(player_position).y}
-			 , RM_OPTION_UV, RM_OPTION_SZ,
-			 rotate_counter * 5, 1.0f);
-	draw_game_object(PL00_TEX, (v2i) {
-			 d2i(player_position).x + 35 -
-			 switch_anim_frame * 2, d2i(player_position).y}
-			 , RM_OPTION_UV, RM_OPTION_SZ,
-			 -rotate_counter * 5, 1.0f);
+	draw_game_object(PLAYER_TEX, (v2i) {
+			 d2i(player_position).x - 20 +
+			 switch_anim_frame * 2,
+			 d2i(player_position).y - switch_anim_frame * 5}
+			 , RM_OPTION_UV, RM_OPTION_SZ, rotate_counter * 5,
+			 1.0f);
+	draw_game_object(PLAYER_TEX, (v2i) {
+			 d2i(player_position).x + 20 -
+			 switch_anim_frame * 2,
+			 d2i(player_position).y - switch_anim_frame * 5}
+			 , RM_OPTION_UV, RM_OPTION_SZ, -rotate_counter * 5,
+			 1.0f);
 	rotate_counter++;
 }
 
@@ -51,16 +51,6 @@ player_bullet *gen_player_bullet(int id, v2d xy, v2i hitbox, int angle,
 	case 2:{
 			bu->uv = RM_BULLET_2_UV;
 			bu->wh = RM_BULLET_2_SZ;
-			break;
-		}
-	case 3:{
-			bu->uv = RM_BULLET_3_UV;
-			bu->wh = RM_BULLET_3_SZ;
-			break;
-		}
-	case 4:{
-			bu->uv = RM_BULLET_4_UV;
-			bu->wh = RM_BULLET_4_SZ;
 			break;
 		}
 	default:
@@ -91,7 +81,7 @@ static void tick_player_bullet(void *data, int id)
 		delete_player_bullet(bu);
 		return;
 	}
-	draw_game_object(PL00_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
+	draw_game_object(PLAYER_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
 			 1.0f);
 }
 

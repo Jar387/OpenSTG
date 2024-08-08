@@ -129,10 +129,7 @@ void draw_texture_transform(int index, v2i xy, v2i uv, v2i wh, float rotation,
 	dst.y = xy.y;
 	dst.w = wh.x * scale;
 	dst.h = wh.y * scale;
-	SDL_Point center;
-	center.x = wh.x * scale / 2;
-	center.y = wh.y * scale / 2;
-	SDL_RenderCopyEx(renderer, texture, &src, &dst, rotation, &center, 0);
+	SDL_RenderCopyEx(renderer, texture, &src, &dst, rotation, NULL, 0);
 }
 
 int is_key_pressed(int scancode)
