@@ -38,7 +38,7 @@ void tick_sched()
 void add_absolute_delay_task(int abs_frame, void (*callback)(int, void *),
 			     void *data)
 {
-	task *t =(task *) malloc(sizeof(*t));
+	task *t = (task *) malloc(sizeof(*t));
 	memset(t, 0, sizeof(*t));
 	t->abs_frame = abs_frame;
 	t->callback = callback;
@@ -55,7 +55,7 @@ void add_delay_task(int frame, void (*callback)(int, void *), void *data)
 void add_periodic_task(int freq_frame, void (*callback)(int, void *),
 		       void *data)
 {
-	task *t =(task *) malloc(sizeof(*t));
+	task *t = (task *) malloc(sizeof(*t));
 	memset(t, 0, sizeof(*t));
 	t->ferq = freq_frame;
 	t->die_countdown = -1;
@@ -69,7 +69,7 @@ void add_periodic_task(int freq_frame, void (*callback)(int, void *),
 void add_periodic_times_task(int freq_frame, int loop_time,
 			     void (*callback)(int, void *), void *data)
 {
-	task *t =(task *) malloc(sizeof(*t));
+	task *t = (task *) malloc(sizeof(*t));
 	memset(t, 0, sizeof(*t));
 	t->ferq = freq_frame;
 	t->die_countdown = loop_time;

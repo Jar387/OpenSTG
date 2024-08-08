@@ -99,7 +99,7 @@ static void tick_bullet(void *data, int id)
 		delete_bullet(bu);
 		return;
 	}
-	draw_game_object(BULLET_TEXTURE, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
+	draw_game_object(BULLET_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
 			 1.0f);
 }
 

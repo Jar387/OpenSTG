@@ -4,22 +4,18 @@
 #include <openstg.h>
 
 // solid texture names
-#define TEX0 "../data/ascii.png"
-#define TEX1 "../data/etama.png"
-#define TEX2 "../data/pl00.png"
-#define TEX3 "../data/bga.png"
-#define TEX4 "../data/bgb.png"
-#define TEX5 "../data/bgc.png"
-#define TEX6 "../data/enm.png"
+#define GENERIC_0 "data/generic_0.png"
+#define GENERIC_1 "data/generic_1.png"
+#define STG6_BOSS "data/stage_6_boss.png"
 
 // solid texture id
-#define UI_TEXTURE 0
-#define BULLET_TEXTURE 1
-#define PLAYER_TEXTURE 2
-#define BG_A_TEXTURE 3
-#define BG_B_TEXTURE 4
-#define BG_C_TEXTURE 5
-#define ENM_TEXTURE 6
+#define BULLET_TEX 0
+#define ITEM_TEX 0
+#define UI_TEX 0
+#define ASCII_TEX 1
+#define TEXT_TEX 1
+#define PL00_TEX 1
+#define PL01_TEX 1
 
 #define MAX_SLOTS 16
 
@@ -28,15 +24,13 @@
 #define TEXTURE_SOLID 2
 
 // music names
-#define BGM0 "../data/6a.wav"	// アルティメットトゥルース
-#define BGM1 "../data/6b.wav"	// 幽雅に咲かせ、墨染の桜　～ Border of Life
-#define BGM2 "../data/6c.wav"	// ボーダーオブライフ
+#define BGM0 "data/th06_13.mid"	// 亡き王女の為のセプテット
 
-#define MAX_BGMS 3
+#define MAX_BGMS 1
 
 #define MAIN_CHANNEL -1
 
-extern Mix_Chunk *bgm_slot[MAX_BGMS];
+extern Mix_Music *bgm_slot[MAX_BGMS];
 
 // music utils
 void load_music(char *path, int idx);

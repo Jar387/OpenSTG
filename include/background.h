@@ -1,9 +1,8 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-#define NSC_BACKGROUND_1 0
-#define NSC_BACKGROUND_2 1
-#define SC_BACKGROUND 2
+#define NSC_BACKGROUND 0
+#define SC_BACKGROUND 1
 
 void tick_background();
 void set_background_style(int style);

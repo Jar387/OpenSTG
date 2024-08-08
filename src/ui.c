@@ -11,7 +11,10 @@ void draw_ascii(char c, char highlight, v2i position)
 	char column = off % 16;
 	v2i uv = (v2i) { column * 16, 32 + row * 16 };
 	v2i wh = (v2i) { 16, 16 };
-	draw_texture_uv(UI_TEXTURE, position, uv, wh);
+	if (highlight == 1) {
+		uv.x += 256;
+	}
+	draw_texture_uv(ASCII_TEX, position, uv, wh);
 }
 
 			  // restrict length to 255
@@ -31,19 +34,19 @@ void draw_string(v2i position, unsigned char len, char *fmt, ...)
 
 static void draw_widget()
 {
-	draw_texture_uv(UI_TEXTURE, HISCORE_POS, HISCORE_UV, HISCORE_SZ);
+	draw_texture_uv(UI_TEX, HISCORE_POS, HISCORE_UV, HISCORE_SZ);
 	draw_string(HISCORE_NUM_POS, 9, "%09d", hiscore % 1000000000);
-	draw_texture_uv(UI_TEXTURE, SCORE_POS, SCORE_UV, SCORE_SZ);
+	draw_texture_uv(UI_TEX, SCORE_POS, SCORE_UV, SCORE_SZ);
 	draw_string(SCORE_NUM_POS, 9, "%09d", score % 1000000000);
-	draw_texture_uv(UI_TEXTURE, PLAYER_POS, PLAYER_UV, PLAYER_SZ);
+	draw_texture_uv(UI_TEX, PLAYER_POS, PLAYER_UV, PLAYER_SZ);
 	v2i tmp = PLAYER_NUM_POS;
 	for (int i = 0; i < player_count; i++) {
-		draw_texture_uv(UI_TEXTURE, tmp, PLAYER_ICON_UV, ICON_SZ);
+		draw_texture_uv(UI_TEX, tmp, PLAYER_ICON_UV, ICON_SZ);
 		tmp.x += ICON_SZ.x;
 	}
 	tmp = BOMB_NUM_POS;
 	for (int i = 0; i < bomb_count; i++) {
-		draw_texture_uv(UI_TEXTURE, tmp, BOMB_ICON_UV, ICON_SZ);
+		draw_texture_uv(UI_TEX, tmp, BOMB_ICON_UV, ICON_SZ);
 		tmp.x += ICON_SZ.x;
 	}
 	if (power <= 9) {
@@ -62,44 +65,56 @@ static void draw_widget()
 		draw_string(GRAZE_NUM_POS, 2, "%i", graze);
 	} else if (graze <= 999) {
 		draw_string(GRAZE_NUM_POS, 3, "%i", graze);
-	} else if (graze <= 999) {
+	} else if (graze <= 9999) {
 		draw_string(GRAZE_NUM_POS, 4, "%i", graze);
 	}
 
-	draw_texture_uv(UI_TEXTURE, BOMB_POS, BOMB_UV, BOMB_SZ);
-	draw_texture_uv(UI_TEXTURE, POWER_POS, POWER_UV, POWER_SZ);
-	draw_texture_uv(UI_TEXTURE, GRAZE_POS, GRAZE_UV, GRAZE_SZ);
-	draw_texture_uv(UI_TEXTURE, JAPANESE_TITLE_POS, JAPANESE_TITLE_UV,
-			JAPANESE_TITLE_SZ);
-	draw_texture_uv(UI_TEXTURE, ENGLISH_TITLE_POS, ENGLISH_TITLE_UV,
+	if (graze <= 9) {
+		draw_string(POINT_NUM_POS, 1, "%i", point);
+	} else if (graze <= 99) {
+		draw_string(POINT_NUM_POS, 2, "%i", point);
+	} else if (graze <= 999) {
+		draw_string(POINT_NUM_POS, 3, "%i", point);
+	} else if (graze <= 9999) {
+		draw_string(POINT_NUM_POS, 4, "%i", point);
+	}
+
+	draw_texture_uv(UI_TEX, BOMB_POS, BOMB_UV, BOMB_SZ);
+	draw_texture_uv(UI_TEX, POWER_POS, POWER_UV, POWER_SZ);
+	draw_texture_uv(UI_TEX, GRAZE_POS, GRAZE_UV, GRAZE_SZ);
+	draw_texture_uv(UI_TEX, POINT_POS, POINT_UV, POINT_SZ);
+	draw_texture_uv(UI_TEX, ENGLISH_TITLE_POS, ENGLISH_TITLE_UV,
 			ENGLISH_TITLE_SZ);
+	draw_texture_uv(UI_TEX, JAPANESE_TITLE_PART_1_POS,
+			JAPANESE_TITLE_PART_1_UV, JAPANESE_TITLE_SZ);
+	draw_texture_uv(UI_TEX, JAPANESE_TITLE_PART_2_POS,
+			JAPANESE_TITLE_PART_2_UV, JAPANESE_TITLE_SZ);
+	draw_texture_uv(UI_TEX, JAPANESE_TITLE_PART_3_POS,
+			JAPANESE_TITLE_PART_3_UV, JAPANESE_TITLE_SZ);
+	draw_texture_uv(UI_TEX, JAPANESE_TITLE_PART_4_POS,
+			JAPANESE_TITLE_PART_4_UV, JAPANESE_TITLE_SZ);
+	draw_texture_uv(UI_TEX, JAPANESE_TITLE_PART_5_POS,
+			JAPANESE_TITLE_PART_5_UV, JAPANESE_TITLE_SZ);
 	draw_string(FPS_POS, 8, "%.2ffps", get_fps());
 }
 
 static void draw_background()
 {
-	// draw upper and down frame
-	for (int i = 0; i < WIDTH / 128; i++) {
-		draw_texture_uv(UI_TEXTURE, (v2i) {
-				i * 128, 0}, BACKGROUND_UV, (v2i) {
-				128, 16});
-		draw_texture_uv(UI_TEXTURE, (v2i) {
-				i * 128, HEIGHT - 16}, BACKGROUND_UV, (v2i) {
-				128, 16});
+	for (int i = 0; i < WIDTH; i += BACKGROUND_NARROW_SZ.x) {
+		draw_texture_uv(UI_TEX, (v2i) {
+				i, 0}, BACKGROUND_UV, BACKGROUND_NARROW_SZ);
+		draw_texture_uv(UI_TEX, (v2i) {
+				i, OFFSET_Y + LENGTH_Y}, BACKGROUND_UV,
+				BACKGROUND_NARROW_SZ);
 	}
-	// draw left frame
-	for (int i = 0; i < HEIGHT / 32; i++) {
-		draw_texture_uv(UI_TEXTURE, (v2i) {
-				0, i * 32}, BACKGROUND_UV, (v2i) {
-				32, 32});
-		draw_texture_uv(UI_TEXTURE, (v2i) {
-				OFFSET_X + LENGTH_X, i * 32}, BACKGROUND_UV,
-				(v2i) {
-				128, 32});
-		draw_texture_uv(UI_TEXTURE, (v2i) {
-				OFFSET_X + LENGTH_X + 128, i * 32},
-				BACKGROUND_UV, (v2i) {
-				192, 32});
+	for (int i = 0; i < HEIGHT; i += BACKGROUND_SZ.y) {
+		draw_texture_uv(UI_TEX, (v2i) {
+				0, i}, BACKGROUND_UV, BACKGROUND_SZ);
+		for (int j = OFFSET_X + LENGTH_X; j < WIDTH;
+		     j += BACKGROUND_SZ.x) {
+			draw_texture_uv(UI_TEX, (v2i) {
+					j, i}, BACKGROUND_UV, BACKGROUND_SZ);
+		}
 	}
 }
 

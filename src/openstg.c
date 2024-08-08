@@ -31,9 +31,9 @@ int main()
 		tick++;
 		pre_frame();
 		tick_background();
-		tick_player();
-		tick_bullets();
-		tick_sched();
+		// tick_player();
+		// tick_bullets();
+		// tick_sched();
 		tick_ui();
 		post_frame();
 	}

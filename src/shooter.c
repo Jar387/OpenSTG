@@ -15,12 +15,12 @@ static void tick_shooter_animation()
 			}
 		}
 	}
-	draw_game_object(PLAYER_TEXTURE, (v2i) {
+	draw_game_object(PL00_TEX, (v2i) {
 			 d2i(player_position).x - 35 +
 			 switch_anim_frame * 2, d2i(player_position).y}
 			 , RM_OPTION_UV, RM_OPTION_SZ,
 			 rotate_counter * 5, 1.0f);
-	draw_game_object(PLAYER_TEXTURE, (v2i) {
+	draw_game_object(PL00_TEX, (v2i) {
 			 d2i(player_position).x + 35 -
 			 switch_anim_frame * 2, d2i(player_position).y}
 			 , RM_OPTION_UV, RM_OPTION_SZ,
@@ -91,7 +91,7 @@ static void tick_player_bullet(void *data, int id)
 		delete_player_bullet(bu);
 		return;
 	}
-	draw_game_object(PLAYER_TEXTURE, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
+	draw_game_object(PL00_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
 			 1.0f);
 }
 

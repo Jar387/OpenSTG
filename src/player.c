@@ -7,6 +7,7 @@ int hiscore;
 int score;
 int power;
 int graze;
+int point;
 v2d player_position;
 
 static int animation_frame = 0;
@@ -17,11 +18,11 @@ static float rotate_counter = 0.0f;
 
 static inline void draw_focus_border()
 {
-	draw_game_object(BULLET_TEXTURE, (v2i) {
+	draw_game_object(BULLET_TEX, (v2i) {
 			 player_position.x,
 			 player_position.y}, FOCUS_BORDER_UV,
 			 FOCUS_BORDER_SZ, rotate_counter, 1.0f);
-	draw_game_object(BULLET_TEXTURE, (v2i) {
+	draw_game_object(BULLET_TEX, (v2i) {
 			 player_position.x,
 			 player_position.y}, FOCUS_BORDER_UV,
 			 FOCUS_BORDER_SZ, -rotate_counter, 1.0f);
@@ -83,7 +84,7 @@ void tick_player()
 				lr_frame = 5;
 			}
 		}
-		draw_game_object(PLAYER_TEXTURE, d2i(player_position), lr_uv,
+		draw_game_object(PL00_TEX, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
@@ -110,7 +111,7 @@ void tick_player()
 				lr_frame = 5;
 			}
 		}
-		draw_game_object(PLAYER_TEXTURE, d2i(player_position), lr_uv,
+		draw_game_object(PL00_TEX, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
 		if (speed == SPEED_SLOW) {
 			draw_focus_border();
@@ -118,7 +119,7 @@ void tick_player()
 		return;
 	}
 	lr_frame = 0;
-	draw_game_object(PLAYER_TEXTURE, d2i(player_position), uv,
+	draw_game_object(PL00_TEX, d2i(player_position), uv,
 			 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
 	if (tick % 8 == 0) {
 		uv.x += PLAYER_TEXTURE_SZ.x + 2;

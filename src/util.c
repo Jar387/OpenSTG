@@ -1,7 +1,7 @@
 #include <openstg.h>
 
 SDL_Texture *texture_slot[MAX_SLOTS];
-Mix_Chunk *bgm_slot[MAX_BGMS];
+Mix_Music *bgm_slot[MAX_BGMS];
 
 static char usage_bitmap[MAX_SLOTS] = { 0 };
 
@@ -9,13 +9,9 @@ static char texture_index = 0;
 
 void load_basic_texture()
 {
-	load_texture(TEX0, 1);
-	load_texture(TEX1, 1);
-	load_texture(TEX2, 1);
-	load_texture(TEX3, 1);
-	load_texture(TEX4, 1);
-	load_texture(TEX5, 1);
-	load_texture(TEX6, 1);
+	load_texture(GENERIC_0, 1);
+	load_texture(GENERIC_1, 1);
+	load_texture(STG6_BOSS, 1);
 }
 
 void terminate_texture()
@@ -119,7 +115,7 @@ double player_angle(v2d src)
 
 void load_music(char *path, int idx)
 {
-	Mix_Chunk *music = Mix_LoadWAV(path);
+	Mix_Music *music = Mix_LoadMUS(path);
 	if (!music) {
 		IOERROR(path);
 	}
@@ -131,19 +127,17 @@ void load_music(char *path, int idx)
 
 void unload_music(int idx)
 {
-	Mix_Chunk *music = bgm_slot[idx];
+	Mix_Music *music = bgm_slot[idx];
 	if (!music) {
 		NULLOBJ("music");
 	}
-	Mix_FreeChunk(music);
+	Mix_FreeMusic(music);
 	bgm_slot[idx] = NULL;
 }
 
 void load_basic_music()
 {
 	load_music(BGM0, 0);
-	load_music(BGM1, 1);
-	load_music(BGM2, 2);
 }
 
 void terminate_music()
@@ -157,16 +151,16 @@ void terminate_music()
 
 void play_music(int idx)
 {
-	Mix_Chunk *music = bgm_slot[idx];
+	Mix_Music *music = bgm_slot[idx];
 	if (!music) {
 		NULLOBJ("music");
 	}
-	Mix_PlayChannel(MAIN_CHANNEL, music, 1);
+	Mix_PlayMusic(music, 1);
 }
 
 void stop_music()
 {
-	Mix_HaltChannel(MAIN_CHANNEL);
+	Mix_HaltMusic();
 }
 
 int read_line(FILE * fp, char *buffer, int size)

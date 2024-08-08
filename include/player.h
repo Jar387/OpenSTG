@@ -10,6 +10,7 @@ extern int hiscore;
 extern int score;
 extern int power;
 extern int graze;
+extern int point;
 extern v2d player_position;
 
 // player config

@@ -16,50 +16,48 @@ static inline v2i add_y(v2i p, int delta)
 	return p;
 }
 
-// ascii.png
-#define JAPANESE_TITLE_UV (v2i){128+256, 0+256}
-#define ENGLISH_TITLE_UV (v2i){0+256, 0+256}
-#define HISCORE_UV (v2i){0+256, 80+256}
-#define SCORE_UV (v2i){0+256, 96+256}
-#define PLAYER_UV (v2i){0+256, 112+256}
-#define BOMB_UV (v2i){0+256, 128+256}
-#define POWER_UV (v2i){0+256, 144+256}
-#define GRAZE_UV (v2i){0+256, 160+256}
-#define POINT_UV (v2i){0+256, 176+256}
+// generic_0.png
+// left bottom
+#define JAPANESE_TITLE_PART_1_UV (v2i){1, 1+256}
+#define JAPANESE_TITLE_PART_2_UV (v2i){65, 1+256}
+#define JAPANESE_TITLE_PART_3_UV (v2i){129, 1+256}
+#define JAPANESE_TITLE_PART_4_UV (v2i){193, 1+256}
+#define JAPANESE_TITLE_PART_5_UV (v2i){1, 65+256}
+#define ENGLISH_TITLE_UV (v2i){128, 128+256}
+#define HISCORE_UV (v2i){0, 192+256}
+#define SCORE_UV (v2i){0, 208+256}
+#define PLAYER_UV (v2i){0, 176+256}
+#define BOMB_UV (v2i){0, 160+256}
+#define POWER_UV (v2i){32, 208+256}
+#define GRAZE_UV (v2i){32, 224+256}
+#define POINT_UV (v2i){48, 160+256}
 
-#define PLAYER_ICON_UV (v2i){64+256, 80+256}
-#define BOMB_ICON_UV (v2i){80+256, 80+256}
+#define PLAYER_ICON_UV (v2i){32, 240+256}
+#define BOMB_ICON_UV (v2i){48, 240+256}
 
-#define BACKGROUND_UV (v2i){0+256, 224+256}
+#define BACKGROUND_UV (v2i){0, 224+256}
 
-#define JAPANESE_TITLE_SZ (v2i){128, 256}
-#define ENGLISH_TITLE_SZ (v2i){128, 80}
+#define JAPANESE_TITLE_SZ (v2i){62, 62}
+#define ENGLISH_TITLE_SZ (v2i){128, 128}
 #define HISCORE_SZ (v2i){64, 16}
-#define SCORE_SZ (v2i){64, 16}
-#define PLAYER_SZ (v2i){64, 16}
-#define BOMB_SZ (v2i){64, 16}
-#define POWER_SZ (v2i){64, 16}
-#define GRAZE_SZ (v2i){64, 16}
-#define POINT_SZ (v2i){64, 16}
+#define SCORE_SZ (v2i){32, 16}
+#define PLAYER_SZ (v2i){48, 16}
+#define BOMB_SZ (v2i){48, 16}
+#define POWER_SZ (v2i){48, 16}
+#define GRAZE_SZ (v2i){48, 16}
+#define POINT_SZ (v2i){16, 16}
 #define ICON_SZ (v2i){16, 16}
+#define BACKGROUND_SZ (v2i){32, 32}
+#define BACKGROUND_NARROW_SZ (v2i){32, 16}
 
 #define ASCII_SHRINK 12
 #define ASCII 16
-// background size can up to (128, 32)
 
 // etama2.png
 #define FOCUS_BORDER_UV (v2i){0+256, 112}
 #define FOCUS_BORDER_SZ (v2i){64, 64}
 
-// etama3.png
-#define SPELL_RING_UV (v2i){0, 0+256}
-#define SPELL_RING_SZ (v2i){256, 256}
-
-// etama4.png
-#define SUPERNATURAL_BORDER_UV (v2i){0+256, 0+256}
-#define SUPERNATURAL_BORDER_SZ (v2i){256, 256}
-
-// plxx.png (for both RM,MR and SY)
+// plxx.png (for both RM,MR)
 #define PLAYER_DEFAULT_ANIMATION_UV (v2i){1, 1}
 #define PLAYER_DEFAULT_ANIMATION_COUNT 8
 #define PLAYER_LEFT_ANIMATION_UV (v2i){1, 49}
@@ -96,11 +94,17 @@ static inline v2i add_y(v2i p, int delta)
 
 #define POWER_POS (v2i){432, 144}
 #define POWER_NUM_POS (v2i){496, 144}
-#define GRAZE_POS (v2i){432, 160}
-#define GRAZE_NUM_POS (v2i){496, 160}
+#define GRAZE_POS (v2i){432, 162}
+#define GRAZE_NUM_POS (v2i){496, 162}
+#define POINT_POS (v2i){432, 180}
+#define POINT_NUM_POS (v2i){496, 180}
 
-#define JAPANESE_TITLE_POS (v2i){480, 208}
-#define ENGLISH_TITLE_POS (v2i){448, 336}
+#define JAPANESE_TITLE_PART_1_POS (v2i){440, 290}
+#define JAPANESE_TITLE_PART_2_POS (v2i){498, 290}
+#define JAPANESE_TITLE_PART_3_POS (v2i){498, 346}
+#define JAPANESE_TITLE_PART_4_POS (v2i){498, 404}
+#define JAPANESE_TITLE_PART_5_POS (v2i){554, 404}
+#define ENGLISH_TITLE_POS (v2i){464, 312}
 
 #define FPS_POS (v2i){513, 464}
 
