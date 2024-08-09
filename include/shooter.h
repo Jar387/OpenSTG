@@ -42,7 +42,7 @@ static inline int get_power_level()
 
 void tick_shooter();
 
-player_bullet *gen_player_bullet(int id, v2d xy, v2i hitbox, int angle,
-				 int speed);
+player_bullet *create_player_bullet(int id, v2d xy, v2i hitbox, int angle,
+				    int speed);
 
 #endif

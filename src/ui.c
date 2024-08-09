@@ -69,13 +69,13 @@ static void draw_widget()
 		draw_string(GRAZE_NUM_POS, 4, "%i", graze);
 	}
 
-	if (graze <= 9) {
+	if (point <= 9) {
 		draw_string(POINT_NUM_POS, 1, "%i", point);
-	} else if (graze <= 99) {
+	} else if (point <= 99) {
 		draw_string(POINT_NUM_POS, 2, "%i", point);
-	} else if (graze <= 999) {
+	} else if (point <= 999) {
 		draw_string(POINT_NUM_POS, 3, "%i", point);
-	} else if (graze <= 9999) {
+	} else if (point <= 9999) {
 		draw_string(POINT_NUM_POS, 4, "%i", point);
 	}
 

@@ -64,7 +64,7 @@ void unload_texture(char idx)
 	usage_bitmap[(int)idx] = TEXTURE_UNUSED;
 }
 
-char check_collision(v2d axy, v2i awh, v2d bxy, v2i bwh)
+char check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh)
 {
 	if (axy.x <= bxy.x + bwh.x &&
 	    axy.x + awh.x >= bxy.x &&

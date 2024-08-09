@@ -29,7 +29,7 @@ typedef struct bullet_t {
 	list_node node;
 } bullet;
 
-bullet *gen_bullet(int color, char type, v2d xy);
+bullet *create_bullet(int color, char type, v2d xy);
 void delete_bullet(bullet * bu);
 void delete_bullet_id(int id);
 bullet *query_bullet(int id);

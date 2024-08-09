@@ -22,7 +22,7 @@ static void style_default_task(int looptime, void *data)
 	}
 	for (int i = 0; i < buman->way; i++) {
 		bullet *bu =
-		    gen_bullet(buman->color, buman->type, buman->offset);
+		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v = ang2vec(start_angle, buman->curr_spd);
 		bu->vx = v.x;
 		bu->vy = v.y;
@@ -36,7 +36,7 @@ static void style_layer_dif_task(int looptime, void *data)
 	bullet_manager *buman = (bullet_manager *) data;
 	for (int i = 0; i < buman->way; i++) {
 		bullet *bu =
-		    gen_bullet(buman->color, buman->type, buman->offset);
+		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v = ang2vec(buman->dir, buman->curr_spd);
 		bu->vx = v.x;
 		bu->vy = v.y;
@@ -51,7 +51,7 @@ static void style_random_dir_task(int looptime, void *data)
 	bullet_manager *buman = (bullet_manager *) data;
 	for (int i = 0; i < buman->way; i++) {
 		bullet *bu =
-		    gen_bullet(buman->color, buman->type, buman->offset);
+		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v =
 		    ang2vec(zundom
 			    (buman->dir - buman->dif, buman->dir + buman->dif),
@@ -67,7 +67,7 @@ static void style_random_speed_task(int looptime, void *data)
 	bullet_manager *buman = (bullet_manager *) data;
 	for (int i = 0; i < buman->way; i++) {
 		bullet *bu =
-		    gen_bullet(buman->color, buman->type, buman->offset);
+		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v =
 		    ang2vec(buman->dir, zundom(buman->first_v, buman->last_v));
 		bu->vx = v.x;
@@ -82,7 +82,7 @@ static void style_random_task(int looptime, void *data)
 	bullet_manager *buman = (bullet_manager *) data;
 	for (int i = 0; i < buman->way; i++) {
 		bullet *bu =
-		    gen_bullet(buman->color, buman->type, buman->offset);
+		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v =
 		    ang2vec(zundom
 			    (buman->dir - buman->dif, buman->dir + buman->dif),
@@ -92,7 +92,7 @@ static void style_random_task(int looptime, void *data)
 	}
 }
 
-void create_bullet(int id)
+void create_buman(int id)
 {
 	// clear buman data
 	memset(&buman_list[id], 0, sizeof(bullet_manager));

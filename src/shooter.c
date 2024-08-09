@@ -4,7 +4,7 @@ static void tick_shooter_animation()
 {
 	static float rotate_counter;
 	static float switch_anim_frame;
-	if (is_key_pressed(FOCUS)) {
+	if (is_key_pressed(FOCUS_KEY)) {
 		if (switch_anim_frame != 5) {
 			switch_anim_frame++;
 		}
@@ -28,8 +28,8 @@ static void tick_shooter_animation()
 	rotate_counter++;
 }
 
-player_bullet *gen_player_bullet(int id, v2d xy, v2i hitbox, int angle,
-				 int speed)
+player_bullet *create_player_bullet(int id, v2d xy, v2i hitbox, int angle,
+				    int speed)
 {
 	player_bullet *bu = (player_bullet *) malloc(sizeof(*bu));
 	memset(bu, 0, sizeof(*bu));
@@ -96,7 +96,7 @@ static void tick_player_bullets()
 static void tick_player_power(int power_level)
 {
 	shooter_cfg_data *data;
-	if (is_key_pressed(FOCUS)) {
+	if (is_key_pressed(FOCUS_KEY)) {
 		data = curr_cfg->shooters_focus[power_level];
 	} else {
 		data = curr_cfg->shooters[power_level];
@@ -105,7 +105,7 @@ static void tick_player_power(int power_level)
 		if (data[i].fire_rate == 0) {
 			break;
 		}
-		if (is_key_pressed(SHOOT) == 0) {
+		if (is_key_pressed(SHOOT_KEY) == 0) {
 			data[i].cd_counter = data[i].start_dalay;
 			continue;
 		}
@@ -115,24 +115,27 @@ static void tick_player_power(int power_level)
 		}
 		if (tick % data[i].fire_rate == 0) {
 			if (data[i].option == 0) {
-				gen_player_bullet(data[i].flags,
-						  i2d(data[i].position)
-						  , data[i].hitbox, data[i].ang,
-						  data[i].speed);
+				create_player_bullet(data[i].flags,
+						     i2d(data[i].position)
+						     , data[i].hitbox,
+						     data[i].ang,
+						     data[i].speed);
 			}
 			if (data[i].option == 1) {
-				gen_player_bullet(data[i].flags, (v2d) {
-						  data[i].position.x - 25,
-						  data[i].position.y}
-						  , data[i].hitbox, data[i].ang,
-						  data[i].speed);
+				create_player_bullet(data[i].flags, (v2d) {
+						     data[i].position.x - 25,
+						     data[i].position.y}
+						     , data[i].hitbox,
+						     data[i].ang,
+						     data[i].speed);
 			}
 			if (data[i].option == 2) {
-				gen_player_bullet(data[i].flags, (v2d) {
-						  data[i].position.x + 25,
-						  data[i].position.y}
-						  , data[i].hitbox, data[i].ang,
-						  data[i].speed);
+				create_player_bullet(data[i].flags, (v2d) {
+						     data[i].position.x + 25,
+						     data[i].position.y}
+						     , data[i].hitbox,
+						     data[i].ang,
+						     data[i].speed);
 			}
 		}
 	}
@@ -140,12 +143,6 @@ static void tick_player_power(int power_level)
 
 void tick_shooter()
 {
-	if (is_key_pressed(SDL_SCANCODE_1)) {
-		power--;
-	}
-	if (is_key_pressed(SDL_SCANCODE_2)) {
-		power++;
-	}
 	int power_level = get_power_level();
 	tick_shooter_animation();
 	tick_player_power(power_level);

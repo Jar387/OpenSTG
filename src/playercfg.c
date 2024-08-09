@@ -41,9 +41,10 @@ void load_player_config(char *path)
 		ABORT("bad config file header");
 	}
 	read_line(fp, buffer, 256);
-	sscanf(buffer, "%i,%i,%lf,%lf,%lf,%i", &(curr_cfg->bomb_per_life),
+	sscanf(buffer, "%i,%i,%lf,%lf,%lf,%i,%i", &(curr_cfg->bomb_per_life),
 	       &(curr_cfg->deathbomb_frame), &(curr_cfg->hitbox),
-	       &(curr_cfg->grazebox), &(curr_cfg->itembox), &(curr_cfg->speed));
+	       &(curr_cfg->grazebox), &(curr_cfg->itembox), &(curr_cfg->speed),
+	       &(curr_cfg->initial_life));
 	read_line(fp, buffer, 256);
 	if (strcmp(buffer, CONFIG_BIG_SPLIT) != 0) {
 		ABORT("bad config file format");

@@ -41,7 +41,7 @@ extern bullet_manager buman_list[MAX_BUMAN_INSTANCE];
 void init_buman();
 
 // bullet functions
-void create_bullet(int id);	// have id from 0 to 15
+void create_buman(int id);	// have id from 0 to 15
 void fire(int id);
 
 void bstyle(int id, int style);

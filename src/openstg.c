@@ -2,6 +2,11 @@
 
 int tick = 0;
 
+void callback(int looptime, void *data)
+{
+	// test code
+}
+
 int main()
 {
 	init_logger(INFO, NULL);
@@ -27,12 +32,15 @@ int main()
 
 	set_background_style(SC_BACKGROUND);
 
+	add_periodic_task(60, &callback, NULL);
+
 	while (!should_close()) {
 		tick++;
 		pre_frame();
 		tick_background();
 		tick_player();
 		tick_bullets();
+		tick_items();
 		tick_sched();
 		tick_ui();
 		post_frame();

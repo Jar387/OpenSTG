@@ -1,13 +1,5 @@
 #include <openstg.h>
 
-// global game data
-int player_count;
-int bomb_count;
-int hiscore;
-int score;
-int power;
-int graze;
-int point;
 v2d player_position;
 
 static int animation_frame = 0;
@@ -26,8 +18,8 @@ static inline void draw_focus_border()
 
 void init_player()
 {
-	player_count = INITIAL_LIFE;
-	bomb_count = INITIAL_BOMB;
+	player_count = curr_cfg->initial_life;
+	bomb_count = curr_cfg->bomb_per_life;
 	hiscore = 0;		// replace later
 	score = 0;
 	power = 0;
@@ -41,26 +33,26 @@ void tick_player()
 	rotate_counter += 1.0f;
 	tick_shooter();
 	int speed;
-	if (is_key_pressed(FOCUS)) {
-		speed = SPEED_SLOW;
+	if (is_key_pressed(FOCUS_KEY)) {
+		speed = curr_cfg->speed / 2;
 	} else {
-		speed = SPEED;
+		speed = curr_cfg->speed;
 	}
-	if (is_key_pressed(UP)) {
+	if (is_key_pressed(UP_KEY)) {
 		player_position.y -= speed;
 		if (player_position.y <= 15) {
 			player_position.y = 15;
 		}
 		reduce_speed = speed / M_SQRT2;
 	}
-	if (is_key_pressed(DOWN)) {
+	if (is_key_pressed(DOWN_KEY)) {
 		player_position.y += speed;
 		if (player_position.y >= LENGTH_Y - 15) {
 			player_position.y = LENGTH_Y - 15;
 		}
 		reduce_speed = speed / M_SQRT2;
 	}
-	if (is_key_pressed(LEFT)) {
+	if (is_key_pressed(LEFT_KEY)) {
 		if (reduce_speed == 0) {
 			player_position.x -= speed;
 		} else {
@@ -82,12 +74,12 @@ void tick_player()
 		}
 		draw_game_object(PLAYER_TEX, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
-		if (speed == SPEED_SLOW) {
+		if (speed == curr_cfg->speed / 2) {
 			draw_focus_border();
 		}
 		return;
 	}
-	if (is_key_pressed(RIGHT)) {
+	if (is_key_pressed(RIGHT_KEY)) {
 		if (reduce_speed == 0) {
 			player_position.x += speed;
 		} else {
@@ -109,7 +101,7 @@ void tick_player()
 		}
 		draw_game_object(PLAYER_TEX, d2i(player_position), lr_uv,
 				 PLAYER_TEXTURE_SZ, 0.0f, 1.0f);
-		if (speed == SPEED_SLOW) {
+		if (speed == curr_cfg->speed / 2) {
 			draw_focus_border();
 		}
 		return;
@@ -125,7 +117,7 @@ void tick_player()
 			uv.x = PLAYER_DEFAULT_ANIMATION_UV.x;
 		}
 	}
-	if (speed == SPEED_SLOW) {
+	if (speed == curr_cfg->speed / 2) {
 		draw_focus_border();
 	}
 }

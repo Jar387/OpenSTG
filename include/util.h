@@ -51,7 +51,7 @@ void terminate_texture();
 void load_texture(char *path, int solid);
 void unload_texture(char idx);
 
-char check_collision(v2d axy, v2i awh, v2d bxy, v2i bwh);
+char check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh);
 char check_out_of_screen(v2d p, v2i sz);
 
 // file utils

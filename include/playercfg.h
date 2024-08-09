@@ -26,6 +26,7 @@ typedef struct shootercfg_data_t {
 } shooter_cfg_data;
 
 typedef struct playercfg_data_t {
+	int initial_life;
 	int bomb_per_life;
 	int deathbomb_frame;
 	double hitbox;

@@ -1,6 +1,6 @@
 #include <openstg.h>
 
-bullet *gen_bullet(int color, char type, v2d xy)
+bullet *create_bullet(int color, char type, v2d xy)
 {
 	bullet *bu = (bullet *) malloc(sizeof(bullet));
 	memset(bu, 0, sizeof(bullet));
