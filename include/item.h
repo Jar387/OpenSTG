@@ -1,6 +1,8 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <openstg.h>
+
 // global game data
 extern int player_count;
 extern int bomb_count;

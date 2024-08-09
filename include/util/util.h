@@ -3,6 +3,11 @@
 
 #include <openstg.h>
 
+#include <error.h>
+#include <list.h>
+#include <mathutil.h>
+#include <playercfg.h>
+
 // solid texture names
 #define GENERIC_0 "data/generic_0.png"
 #define GENERIC_1 "data/generic_1.png"
@@ -29,10 +34,20 @@
 
 #define MAIN_CHANNEL -1
 
+// array of all loaded musics
 extern Mix_Music *bgm_slot[MAX_BGMS];
 
-// music utils
+/**
+* @brief Load midi music
+*
+* This function loads a midi file to "bgm_slot" array
+* @param path the midi file path
+* @param idx the slot that midi file loads
+* @return void
+*/
 void load_music(char *path, int idx);
+
+
 void unload_music(int idx);
 
 void play_music(int idx);
