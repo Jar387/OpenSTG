@@ -1,3 +1,6 @@
 [submodule "data"]
 	path = data
 	url = git@github.com:Jar387/OpenSTG-testdata.git
+[submodule "docs"]
+	path = docs
+	url = git@github.com:Jar387/OpenSTG-doc.git

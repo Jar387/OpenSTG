@@ -9,7 +9,7 @@ CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 
 # Source file locations
-INPUT                  = ./src ./include
+INPUT                  = ./include
 RECURSIVE              = YES
 EXCLUDE                = 
 EXCLUDE_SYMLINKS       = NO
@@ -18,8 +18,9 @@ EXCLUDE_SYMBOLS        =
 
 # Build related configuration
 EXTRACT_ALL            = YES
-EXTRACT_PRIVATE        = NO
-EXTRACT_STATIC         = NO
+EXTRACT_MACROS         = NO
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = YES
 
@@ -33,7 +34,7 @@ GENERATE_RTF           = NO
 GENERATE_XML           = NO
 
 # Dot tool configuration (for diagrams)
-HAVE_DOT               = YES
+HAVE_DOT               = NO
 DOT_NUM_THREADS        = 0
 DOT_FONTNAME           = Helvetica
 DOT_FONTSIZE           = 10
@@ -52,5 +53,5 @@ WARN_NO_PARAMDOC       = YES
 GENERATE_TODOLIST      = YES
 
 # File encoding settings
-FILE_PATTERNS          = *.c *.h
+FILE_PATTERNS          = *.h
 INPUT_ENCODING         = UTF-8

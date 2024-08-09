@@ -178,4 +178,5 @@ int read_line(FILE * fp, char *buffer, int size)
 		}
 		buffer[i] = c;
 	}
+	return -2;
 }
