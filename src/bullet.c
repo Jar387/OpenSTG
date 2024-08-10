@@ -17,12 +17,12 @@ bullet *create_bullet(int color, char type, v2d xy)
 		wh.x = 16;
 		wh.y = 16;
 		hitbox.x = 8;
-		hitbox.x = 8;
+		hitbox.y = 8;
 	} else if (type == MINI_BALL) {
 		wh.x = 12;
 		wh.y = 12;
 		hitbox.x = 8;
-		hitbox.x = 8;
+		hitbox.y = 8;
 		uv.y = 113;
 		switch (color) {
 		case BLACK:{
@@ -53,7 +53,7 @@ bullet *create_bullet(int color, char type, v2d xy)
 		wh.x = 12;
 		wh.y = 12;
 		hitbox.x = 8;
-		hitbox.x = 8;
+		hitbox.y = 8;
 		uv.y = 113;
 		switch (color) {
 		case BLACK:{
@@ -84,7 +84,7 @@ bullet *create_bullet(int color, char type, v2d xy)
 		wh.x = 32;
 		wh.y = 32;
 		hitbox.x = 16;
-		hitbox.x = 16;
+		hitbox.y = 16;
 		uv.y = 128;
 		switch (color) {
 		case BLACK:{
@@ -127,7 +127,7 @@ bullet *create_bullet(int color, char type, v2d xy)
 		wh.x = 32;
 		wh.y = 32;
 		hitbox.x = 6;
-		hitbox.x = 30;
+		hitbox.y = 30;
 		uv.y = 160;
 		switch (color) {
 		case BLACK:{
@@ -170,7 +170,7 @@ bullet *create_bullet(int color, char type, v2d xy)
 		wh.x = 32;
 		wh.y = 32;
 		hitbox.x = 12;
-		hitbox.x = 12;
+		hitbox.y = 12;
 		uv.y = 224;
 		switch (color) {
 		case BLACK:{
@@ -213,7 +213,7 @@ bullet *create_bullet(int color, char type, v2d xy)
 		wh.x = 64;
 		wh.y = 64;
 		hitbox.x = 45;
-		hitbox.x = 45;
+		hitbox.y = 45;
 		uv.y = 0;
 		switch (color) {
 		case RED:{
@@ -264,6 +264,17 @@ static void tick_bullet(void *data, int id)
 				, bu->wh) == 1) {
 		delete_bullet(bu);
 		return;
+	}
+	if (check_collision(player_position, (v2d) {
+			    curr_cfg->hitbox, curr_cfg->hitbox}
+			    , bu->xy, i2d(bu->hitbox_sz))) {
+		player_die();
+		delete_bullet(bu);
+	}
+	if (check_collision(player_position, (v2d) {
+			    curr_cfg->grazebox, curr_cfg->grazebox}
+			    , bu->xy, i2d(bu->hitbox_sz))) {
+		graze++;
 	}
 	draw_game_object(BULLET_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
 			 1.0f);

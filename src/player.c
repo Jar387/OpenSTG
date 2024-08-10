@@ -23,12 +23,16 @@ void init_player()
 	hiscore = 0;		// replace later
 	score = 0;
 	power = 0;
+	invulnerable_frame = 0;
 	player_position = (v2d) {
 	LENGTH_X / 2, LENGTH_Y / 7 * 6};
 }
 
 void tick_player()
 {
+	if (invulnerable_frame != 0) {
+		invulnerable_frame--;
+	}
 	int reduce_speed = 0;
 	rotate_counter += 1.0f;
 	tick_shooter();
@@ -119,5 +123,18 @@ void tick_player()
 	}
 	if (speed == curr_cfg->speed / 2) {
 		draw_focus_border();
+	}
+}
+
+void player_die()
+{
+	if (invulnerable_frame == 0) {
+		if (player_count != 0) {
+			player_count--;
+		}
+		power = 0;
+		player_position = (v2d) {
+		LENGTH_X / 2, LENGTH_Y / 7 * 6};
+		invulnerable_frame = 60;
 	}
 }

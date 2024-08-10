@@ -133,7 +133,6 @@ void terminate_texture();
 */
 void load_texture(char *path, int solid);
 
-
 /**
 * @brief Unload texture
 *
@@ -157,7 +156,7 @@ void unload_texture(char idx);
 * @return 1 for collision
 * @return 0 for not collision
 */
-char check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh);
+int check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh);
 
 /**
 * @brief Check if gameobject out of screen
@@ -169,7 +168,7 @@ char check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh);
 * @return 1 for completely out of screen
 * @return 0 for completely out of screen
 */
-char check_out_of_screen(v2d p, v2i sz);
+int check_out_of_screen(v2d p, v2i sz);
 
 /**
 * @brief Read a line from file

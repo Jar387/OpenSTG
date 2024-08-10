@@ -53,7 +53,6 @@ typedef struct vec2c_t {
 #include <sched.h>
 #include <shooter.h>
 
-
 extern int tick;
 
 #endif

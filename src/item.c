@@ -8,6 +8,7 @@ int score;
 int power;
 int graze;
 int point;
+int invulnerable_frame;
 
 item *create_item(v2d pos, enum ITEM_TYPE type)
 {

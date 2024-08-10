@@ -64,17 +64,17 @@ void unload_texture(char idx)
 	usage_bitmap[(int)idx] = TEXTURE_UNUSED;
 }
 
-char check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh)
+int check_collision(v2d axy, v2d awh, v2d bxy, v2d bwh)
 {
-	if (axy.x <= bxy.x + bwh.x &&
-	    axy.x + awh.x >= bxy.x &&
-	    axy.y <= bxy.y + bwh.y && axy.y + awh.y >= bxy.y) {
+	if (axy.x < bxy.x + bwh.x &&
+	    axy.x + awh.x > bxy.x &&
+	    axy.y < bxy.y + bwh.y && axy.y + awh.y > bxy.y) {
 		return 1;
 	}
 	return 0;
 }
 
-char check_out_of_screen(v2d p, v2i sz)
+int check_out_of_screen(v2d p, v2i sz)
 {
 	if (p.x <= -sz.x / 2 || p.x >= LENGTH_X + sz.x / 2 || p.y <= -sz.y / 2
 	    || p.y >= LENGTH_Y + sz.y / 2) {

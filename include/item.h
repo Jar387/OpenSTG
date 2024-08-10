@@ -11,6 +11,7 @@ extern int score;
 extern int power;
 extern int graze;
 extern int point;
+extern int invulnerable_frame;
 extern v2d player_position;
 
 // game consts

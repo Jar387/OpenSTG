@@ -15,4 +15,6 @@
 void init_player();
 void tick_player();
 
+void player_die();
+
 #endif
