@@ -6,6 +6,7 @@ bullet *create_bullet(int color, char type, v2d xy)
 	memset(bu, 0, sizeof(bullet));
 	bu->xy = xy;
 	bu->tick = 0;
+	bu->fire = -1;
 	// calculate texture uv and hibox
 	// remake at commit 483c9ae with EoSD texture
 	v2i uv, wh, hitbox;
@@ -236,6 +237,22 @@ bullet *create_bullet(int color, char type, v2d xy)
 				ILLEGALPARAM("color");
 			}
 		}
+	} else if(type==DOT){
+		wh.x = 8;
+		wh.y = 8;
+		hitbox.x = 6;
+		hitbox.y = 6;
+		if(color<LIGHT_CYAN){
+			// first row
+			uv.x = 128+color/2;
+			uv.y = 207;
+		}else{
+			// second row
+			uv.x = 128+(color-LIGHT_CYAN)/2;
+			uv.y = 215;
+		}
+	} else if(type==FIRE){
+		bu->fire = 0;
 	} else {
 		ILLEGALPARAM("type");
 	}
@@ -265,19 +282,30 @@ static void tick_bullet(void *data, int id)
 		delete_bullet(bu);
 		return;
 	}
-	if (check_collision(player_position, (v2d) {
+	if (check_collision(PLAYER_POSITION_D, (v2d) {
 			    curr_cfg->hitbox, curr_cfg->hitbox}
 			    , bu->xy, i2d(bu->hitbox_sz))) {
 		player_die();
 		delete_bullet(bu);
 	}
-	if (check_collision(player_position, (v2d) {
+	if (check_collision(PLAYER_POSITION_D, (v2d) {
 			    curr_cfg->grazebox, curr_cfg->grazebox}
 			    , bu->xy, i2d(bu->hitbox_sz))) {
 		graze++;
 	}
-	draw_game_object(BULLET_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
+	if(bu->fire==-1){
+		draw_game_object(BULLET_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
 			 1.0f);
+	}else{
+		draw_game_object(BULLET_TEX, d2i(bu->xy), (v2i){bu->fire*32, 192}, (v2i){32, 32}, bu->angle,
+			 1.0f);
+		if(bu->fire==3){
+			bu->fire = 0;
+		}else{
+			bu->fire++;
+		}
+	}
+	
 }
 
 void delete_bullet(bullet * bu)

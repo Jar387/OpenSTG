@@ -3,27 +3,6 @@
 
 #include <openstg.h>
 
-// global game data
-extern int player_count;
-extern int bomb_count;
-extern int hiscore;
-extern int score;
-extern int power;
-extern int graze;
-extern int point;
-extern int invulnerable_frame;
-extern v2d player_position;
-
-// game consts
-#define MAX_PLAYER 7
-#define MAX_BOMB 7
-#define MAX_POWER 128
-#define MAX_POINT 9999
-#define MAX_GRAZE 9999
-#define MAX_SCORE 999999999
-
-#define BIG_P_CONTAIN_POWER 8
-
 enum ITEM_TYPE {
 	POWER,
 	POINT,

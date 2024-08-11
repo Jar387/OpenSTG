@@ -85,7 +85,7 @@ int check_out_of_screen(v2d p, v2i sz)
 
 double player_angle(v2d src)
 {
-	v2d p = player_position;
+	v2d p = PLAYER_POSITION_D;
 	if ((p.x - src.x) >= 0) {
 		if ((p.y - src.y) <= 0) {
 			// alpha dim

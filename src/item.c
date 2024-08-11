@@ -1,15 +1,5 @@
 #include <openstg.h>
 
-// global game data
-int player_count;
-int bomb_count;
-int hiscore;
-int score;
-int power;
-int graze;
-int point;
-int invulnerable_frame;
-
 item *create_item(v2d pos, enum ITEM_TYPE type)
 {
 	item *itm = (item *) malloc(sizeof(*itm));
@@ -46,7 +36,7 @@ static void tick_item(void *data, int id)
 	} else {
 		draw_game_object(ITEM_TEX, d2i(itm->pos), itm->uv, ITEM_SZ,
 				 0.0f, 1.0f);
-		if (check_collision(player_position, (v2d) {
+		if (check_collision(PLAYER_POSITION_D, (v2d) {
 				    curr_cfg->itembox, curr_cfg->itembox}
 				    , itm->pos, i2d(ITEM_SZ))) {
 			delete_object(item_list, &itm->node);

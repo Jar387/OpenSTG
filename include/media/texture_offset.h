@@ -66,6 +66,8 @@ static inline v2i add_y(v2i p, int delta)
 #define MICRO_BALL -5
 #define GLOWING_BALL -6
 #define BIG_BALL -7
+#define DOT -8
+#define FIRE -9
 
 // left bottom
 #define JAPANESE_TITLE_PART_1_UV (v2i){1, 1+256}

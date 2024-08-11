@@ -5,22 +5,6 @@ int tick = 0;
 void callback(int looptime, void *data)
 {
 	// test code
-	create_buman(0);
-	bamount(0, 12, 1);
-	boffset(0, 192, 144);
-	bangle(0, 15.0f, 15.0f);
-	bshape(0, BLUE, KNIFE);
-	bspeed(0, 4.8f, 1.0f);
-	bstyle(0, TRACE);
-	fire(0);
-	create_buman(1);
-	bamount(1, 12, 12);
-	boffset(1, 192, 144);
-	bangle(1, -15.0f, 15.0f);
-	bshape(1, BLUE, KNIFE);
-	bspeed(1, 4.8f, 1.0f);
-	bstyle(1, TRACE);
-	fire(1);
 }
 
 int main()

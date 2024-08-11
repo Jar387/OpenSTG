@@ -1,5 +1,5 @@
-#ifndef ECL_H
-#define ECL_H
+#ifndef BUMAN_H
+#define BUMAN_H
 
 #include <openstg.h>
 

@@ -6,6 +6,9 @@
 #define CFG_REIMU_A "../data/pl00a.cfg"
 #define CFG_REIMU_B "../data/pl00b.cfg"
 
+#define CFG_REIMU_A_ID 0
+#define CFG_REIMU_B_ID 1
+
 #define CONFIG_HEADER "VERSION 1.0"
 #define CONFIG_BIG_SPLIT ">>"
 #define CONFIG_SPLIT ">"
@@ -26,6 +29,7 @@ typedef struct shootercfg_data_t {
 } shooter_cfg_data;
 
 typedef struct playercfg_data_t {
+	int config_id;
 	int initial_life;
 	int bomb_per_life;
 	int deathbomb_frame;

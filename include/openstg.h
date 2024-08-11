@@ -12,10 +12,10 @@ typedef struct vec2i_t {
 	int y;
 } v2i;
 
-typedef struct vec2c_t {
-	char x;
-	char y;
-} v2c;
+typedef struct vec2f_t {
+	float x;
+	float y;
+} v2f;
 
 // include all ANSI C headers for convenience
 #include <assert.h>
@@ -46,8 +46,11 @@ typedef struct vec2c_t {
 #include <media/graphic.h>
 #include <util/util.h>
 
+#include <boss.h>
 #include <bullet.h>
 #include <buman.h>
+#include <ecl.h>
+#include <enemy.h>
 #include <item.h>
 #include <player.h>
 #include <sched.h>

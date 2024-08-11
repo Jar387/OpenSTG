@@ -26,6 +26,8 @@ typedef struct bullet_t {
 
 	v2i hitbox_sz;
 
+	int fire; // is fire bullet? need animation
+
 	list_node node;
 } bullet;
 

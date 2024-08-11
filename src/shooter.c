@@ -14,15 +14,15 @@ static void tick_shooter_animation()
 		}
 	}
 	draw_game_object(PLAYER_TEX, (v2i) {
-			 d2i(player_position).x - 20 +
+			 player_x - 20 +
 			 switch_anim_frame * 2,
-			 d2i(player_position).y - switch_anim_frame * 5}
+			 player_y - switch_anim_frame * 5}
 			 , RM_OPTION_UV, RM_OPTION_SZ, rotate_counter * 5,
 			 1.0f);
 	draw_game_object(PLAYER_TEX, (v2i) {
-			 d2i(player_position).x + 20 -
+			 player_x + 20 -
 			 switch_anim_frame * 2,
-			 d2i(player_position).y - switch_anim_frame * 5}
+			 player_y - switch_anim_frame * 5}
 			 , RM_OPTION_UV, RM_OPTION_SZ, -rotate_counter * 5,
 			 1.0f);
 	rotate_counter++;
@@ -34,7 +34,7 @@ player_bullet *create_player_bullet(int id, v2d xy, v2i hitbox, int angle,
 	player_bullet *bu = (player_bullet *) malloc(sizeof(*bu));
 	memset(bu, 0, sizeof(*bu));
 	bu->xy = (v2d) {
-	player_position.x + xy.x, player_position.y + xy.y};
+	player_x + xy.x, player_y + xy.y};
 	bu->dxy = ang2vec((double)angle, (double)speed);
 	bu->hitbox = hitbox;
 	switch (id) {

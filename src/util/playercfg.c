@@ -33,6 +33,11 @@ void load_player_config(char *path)
 		IOERROR(path);
 		return;
 	}
+	if(path==CFG_REIMU_A){
+		curr_cfg->config_id = CFG_REIMU_A_ID;
+	}else if(path==CFG_REIMU_B){
+		curr_cfg->config_id = CFG_REIMU_B_ID;
+	}
 	curr_cfg = (player_cfg_data *) malloc(sizeof(*curr_cfg));
 	memset(curr_cfg, 0, sizeof(*curr_cfg));
 	char buffer[256];
