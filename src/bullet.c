@@ -213,8 +213,8 @@ bullet *create_bullet(int color, char type, v2d xy)
 	} else if (type == BIG_BALL) {
 		wh.x = 64;
 		wh.y = 64;
-		hitbox.x = 45;
-		hitbox.y = 45;
+		hitbox.x = 32;
+		hitbox.y = 32;
 		uv.y = 0;
 		switch (color) {
 		case RED:{
@@ -237,21 +237,21 @@ bullet *create_bullet(int color, char type, v2d xy)
 				ILLEGALPARAM("color");
 			}
 		}
-	} else if(type==DOT){
+	} else if (type == DOT) {
 		wh.x = 8;
 		wh.y = 8;
 		hitbox.x = 6;
 		hitbox.y = 6;
-		if(color<LIGHT_CYAN){
+		if (color < LIGHT_CYAN) {
 			// first row
-			uv.x = 128+color/2;
+			uv.x = 128 + color / 2;
 			uv.y = 207;
-		}else{
+		} else {
 			// second row
-			uv.x = 128+(color-LIGHT_CYAN)/2;
+			uv.x = 128 + (color - LIGHT_CYAN) / 2;
 			uv.y = 215;
 		}
-	} else if(type==FIRE){
+	} else if (type == FIRE) {
 		bu->fire = 0;
 	} else {
 		ILLEGALPARAM("type");
@@ -293,19 +293,22 @@ static void tick_bullet(void *data, int id)
 			    , bu->xy, i2d(bu->hitbox_sz))) {
 		graze++;
 	}
-	if(bu->fire==-1){
-		draw_game_object(BULLET_TEX, d2i(bu->xy), bu->uv, bu->wh, bu->angle,
-			 1.0f);
-	}else{
-		draw_game_object(BULLET_TEX, d2i(bu->xy), (v2i){bu->fire*32, 192}, (v2i){32, 32}, bu->angle,
-			 1.0f);
-		if(bu->fire==3){
+	if (bu->fire == -1) {
+		draw_game_object(BULLET_TEX, d2i(bu->xy), bu->uv, bu->wh,
+				 bu->angle, 1.0f);
+	} else {
+		draw_game_object(BULLET_TEX, d2i(bu->xy), (v2i) {
+				 bu->fire * 32, 192}
+				 , (v2i) {
+				 32, 32}
+				 , bu->angle, 1.0f);
+		if (bu->fire == 3) {
 			bu->fire = 0;
-		}else{
+		} else {
 			bu->fire++;
 		}
 	}
-	
+
 }
 
 void delete_bullet(bullet * bu)

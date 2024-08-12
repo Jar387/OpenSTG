@@ -34,23 +34,20 @@ typedef struct bullet_manager_t {
 	double spd_delta;
 } bullet_manager;
 
-#define MAX_BUMAN_INSTANCE 16
-
-extern bullet_manager buman_list[MAX_BUMAN_INSTANCE];
+extern bullet_manager *curr_buman_setup;
 
 void init_buman();
-
 // bullet functions
-void create_buman(int id);	// have id from 0 to 15
-void fire(int id);
 
-void bstyle(int id, int style);
-void bshape(int id, int color, int type);
-void boffset(int id, int offset_x, int offset_y);
-void bamount(int id, int way, int count);
-void bspeed(int id, double first, double last);
-void bangle(int id, double dir, double dif);
+void fire();
+bullet_manager *create_buman();
+void bstyle(int style);
+void bshape(int color, int type);
+void boffset(int offset_x, int offset_y);
+void bamount(int way, int count);
+void bspeed(double first, double last);
+void bangle(double dir, double dif);
 
-void btransform(int id, int channel, int mode, int a, int b, int r, int s);
+void btransform(int channel, int mode, int a, int b, int r, int s);
 
 #endif

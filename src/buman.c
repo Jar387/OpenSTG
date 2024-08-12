@@ -1,10 +1,13 @@
 #include <openstg.h>
 
-bullet_manager buman_list[MAX_BUMAN_INSTANCE];
+bullet_manager *curr_buman_setup;
+
+#define FREE 0
+#define ALLOCATED 1
 
 void init_buman()
 {
-	memset(buman_list, 0, sizeof(buman_list));
+	// do no initialize
 }
 
 static void style_default_task(int looptime, void *data)
@@ -29,6 +32,9 @@ static void style_default_task(int looptime, void *data)
 		start_angle += buman->dif;
 	}
 	buman->curr_spd += buman->spd_delta;
+	if (looptime + 1 == buman->count) {
+		free(buman);
+	}
 }
 
 static void style_layer_dif_task(int looptime, void *data)
@@ -44,6 +50,9 @@ static void style_layer_dif_task(int looptime, void *data)
 	}
 	buman->curr_spd += buman->spd_delta;
 	buman->dir += buman->dif;
+	if (looptime + 1 == buman->count) {
+		free(buman);
+	}
 }
 
 static void style_random_dir_task(int looptime, void *data)
@@ -60,6 +69,9 @@ static void style_random_dir_task(int looptime, void *data)
 		bu->vy = v.y;
 	}
 	buman->curr_spd += buman->spd_delta;
+	if (looptime + 1 == buman->count) {
+		free(buman);
+	}
 }
 
 static void style_random_speed_task(int looptime, void *data)
@@ -75,6 +87,9 @@ static void style_random_speed_task(int looptime, void *data)
 		buman->dir += 360.0f / buman->way;
 	}
 	buman->dir += buman->dif;
+	if (looptime + 1 == buman->count) {
+		free(buman);
+	}
 }
 
 static void style_random_task(int looptime, void *data)
@@ -90,54 +105,61 @@ static void style_random_task(int looptime, void *data)
 		bu->vx = v.x;
 		bu->vy = v.y;
 	}
+	if (looptime + 1 == buman->count) {
+		free(buman);
+	}
 }
 
-void create_buman(int id)
+bullet_manager *create_buman()
 {
-	// clear buman data
-	memset(&buman_list[id], 0, sizeof(bullet_manager));
+	bullet_manager *buman = (bullet_manager *) malloc(sizeof(*buman));
+	memset(buman, 0, sizeof(*buman));
+	curr_buman_setup = buman;
+	return buman;
 }
 
-void fire(int id)
+void fire()
 {
 	// bullet speed is liner
 	// TODO: add non-liner speed delta
-	buman_list[id].curr_spd = buman_list[id].first_v;
-	buman_list[id].spd_delta =
-	    (buman_list[id].last_v -
-	     buman_list[id].first_v) / buman_list[id].count;
-	switch (buman_list[id].style) {
+	curr_buman_setup->curr_spd = curr_buman_setup->first_v;
+	curr_buman_setup->spd_delta =
+	    (curr_buman_setup->last_v -
+	     curr_buman_setup->first_v) / curr_buman_setup->count;
+	switch (curr_buman_setup->style) {
 	case TRACE:
-		buman_list[id].dir = player_angle(buman_list[id].offset);
-		add_periodic_times_task(1, buman_list[id].count,
-					&style_default_task, &buman_list[id]);
+		curr_buman_setup->dir = player_angle(curr_buman_setup->offset);
+		add_periodic_times_task(1, curr_buman_setup->count,
+					&style_default_task, curr_buman_setup);
 		break;
 	case DEFAULT:
-		add_periodic_times_task(1, buman_list[id].count,
-					&style_default_task, &buman_list[id]);
+		add_periodic_times_task(1, curr_buman_setup->count,
+					&style_default_task, curr_buman_setup);
 		break;
 	case LAYER_DIF:
-		add_periodic_times_task(1, buman_list[id].count,
-					&style_layer_dif_task, &buman_list[id]);
+		add_periodic_times_task(1, curr_buman_setup->count,
+					&style_layer_dif_task,
+					curr_buman_setup);
 		break;
 	case LAYER_DIF_TRACE:
-		buman_list[id].dir = player_angle(buman_list[id].offset);
-		add_periodic_times_task(1, buman_list[id].count,
-					&style_layer_dif_task, &buman_list[id]);
+		curr_buman_setup->dir = player_angle(curr_buman_setup->offset);
+		add_periodic_times_task(1, curr_buman_setup->count,
+					&style_layer_dif_task,
+					curr_buman_setup);
 		break;
 	case RANDOM_DIR:
-		add_periodic_times_task(1, buman_list[id].count,
+		add_periodic_times_task(1, curr_buman_setup->count,
 					&style_random_dir_task,
-					&buman_list[id]);
+					curr_buman_setup);
 		break;
 	case RANDOM_SPEED:
-		add_periodic_times_task(1, buman_list[id].count,
+		add_periodic_times_task(1, curr_buman_setup->count,
 					&style_random_speed_task,
-					&buman_list[id]);
+					curr_buman_setup);
 		break;
 	case RANDOM:
-		add_periodic_times_task(1, buman_list[id].count,
-					&style_random_task, &buman_list[id]);
+		add_periodic_times_task(1, curr_buman_setup->count,
+					&style_random_task, curr_buman_setup);
 		break;
 	default:
 		ILLEGALPARAM("bullet manager style");
@@ -146,37 +168,37 @@ void fire(int id)
 
 }
 
-void bstyle(int id, int style)
+void bstyle(int style)
 {
-	buman_list[id].style = style;
+	curr_buman_setup->style = style;
 }
 
-void bshape(int id, int color, int type)
+void bshape(int color, int type)
 {
-	buman_list[id].color = color;
-	buman_list[id].type = type;
+	curr_buman_setup->color = color;
+	curr_buman_setup->type = type;
 }
 
-void boffset(int id, int offset_x, int offset_y)
+void boffset(int offset_x, int offset_y)
 {
-	buman_list[id].offset = (v2d) {
+	curr_buman_setup->offset = (v2d) {
 	offset_x, offset_y};
 }
 
-void bamount(int id, int way, int count)
+void bamount(int way, int count)
 {
-	buman_list[id].way = way;
-	buman_list[id].count = count;
+	curr_buman_setup->way = way;
+	curr_buman_setup->count = count;
 }
 
-void bspeed(int id, double first, double last)
+void bspeed(double first, double last)
 {
-	buman_list[id].first_v = first;
-	buman_list[id].last_v = last;
+	curr_buman_setup->first_v = first;
+	curr_buman_setup->last_v = last;
 }
 
-void bangle(int id, double dir, double dif)
+void bangle(double dir, double dif)
 {
-	buman_list[id].dir = dir;
-	buman_list[id].dif = dif;
+	curr_buman_setup->dir = dir;
+	curr_buman_setup->dif = dif;
 }

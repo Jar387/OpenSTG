@@ -29,16 +29,18 @@ int main()
 	create_all_instances();
 	init_player();
 	init_buman();
+	init_ecl();
 
 	set_background_style(SC_BACKGROUND);
 
-	add_periodic_times_task(32, 1020, &callback, NULL);
+	add_periodic_times_task(8, 1, &callback, NULL);
 
 	while (!should_close()) {
 		tick++;
 		pre_frame();
 		tick_background();
 		tick_player();
+		tick_ecl();
 		tick_bullets();
 		tick_items();
 		tick_sched();
