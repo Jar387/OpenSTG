@@ -1,6 +1,12 @@
 #ifndef ECL_H
 #define ECL_H
 
+#include <openstg.h>
+
+#include <boss.h>
+#include <buman.h>
+#include <enemy.h>
+
 // bullet spirit mapping
 // bullet type
 #define SPR_DOT DOT

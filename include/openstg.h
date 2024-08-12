@@ -46,11 +46,8 @@ typedef struct vec2f_t {
 #include <media/graphic.h>
 #include <util/util.h>
 
-#include <boss.h>
 #include <bullet.h>
-#include <buman.h>
 #include <ecl.h>
-#include <enemy.h>
 #include <item.h>
 #include <player.h>
 #include <sched.h>
