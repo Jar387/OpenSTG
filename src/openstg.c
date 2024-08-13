@@ -33,7 +33,7 @@ int main()
 
 	set_background_style(SC_BACKGROUND);
 
-	add_periodic_times_task(8, 1, &callback, NULL);
+	add_periodic_task(1, &callback, NULL);
 
 	while (!should_close()) {
 		tick++;

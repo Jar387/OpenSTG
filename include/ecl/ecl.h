@@ -7,22 +7,6 @@
 #include <buman.h>
 #include <enemy.h>
 
-// bullet spirit mapping
-// bullet type
-#define SPR_DOT DOT
-#define SPR_RING RING
-#define SPR_RICE ELLIPSE
-#define SPR_SMALL SMALL_BALL
-#define SPR_CHAIN NIDDLE
-#define SPR_NIDDLE CRYSTAL
-#define SPR_MIDDLE MIDDLE_BALL
-#define SPR_FIRE FIRE
-#define SPR_KNIFE KNIFE
-#define SPR_BIG BIG_BALL
-
-extern const int bullet_spirit[10];
-extern const int bullet_color[16];
-
 #define PLAYER_POSITION_I (v2i){player_x, player_y}
 #define PLAYER_POSITION_D (v2d){player_x, player_y}
 #define PLAYER_POSITION_F (v2f){player_x, player_y}

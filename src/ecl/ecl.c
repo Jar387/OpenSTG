@@ -1,16 +1,5 @@
 #include <openstg.h>
 
-const int bullet_spirit[10] =
-    { SPR_DOT, SPR_RING, SPR_RICE, SPR_SMALL, SPR_CHAIN, SPR_NIDDLE, SPR_MIDDLE,
-	SPR_FIRE, SPR_KNIFE, SPR_BIG
-};
-
-const int bullet_color[16] =
-    { BLACK, RED, LIGHT_RED, MAGENTA, LIGHT_MAGENTA, BLUE, LIGHT_BLUE, CYAN,
-	LIGHT_CYAN, GREEN, LIGHT_GREEN, COLOR_11, YELLOW, LIGHT_YELLOW, ORANGE,
-	    WHITE
-};
-
 // ECL global vars
 int rank;			// -10013
 int difficulty;			// -10014, unused
@@ -44,7 +33,7 @@ void et_on_fan_aim(int spr, int col, int way, int layer, double spd1,
 {
 	create_buman();
 	bstyle(TRACE);
-	bshape(bullet_color[col], bullet_spirit[spr]);
+	bshape(col, spr);
 	boffset(192, 96);	// TODO
 	bamount(way, layer);
 	bspeed(spd1, spd2);
@@ -57,7 +46,7 @@ void et_on_fan(int spr, int col, int way, int layer, double spd1, double spd2,
 {
 	create_buman();
 	bstyle(DEFAULT);
-	bshape(bullet_color[col], bullet_spirit[spr]);
+	bshape(col, spr);
 	boffset(192, 96);	// TODO
 	bamount(way, layer);
 	bspeed(spd1, spd2);

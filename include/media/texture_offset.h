@@ -34,41 +34,6 @@ static inline v2i add_y(v2i p, int delta)
 #define BULLET_SIGN_UV (v2i){14*16, 0}
 #define ITEM_SZ (v2i){16, 15}
 
-// colour define (X coord for 16x16 bullet)
-#define BLACK 0*16
-#define RED 1*16
-#define LIGHT_RED 2*16
-#define MAGENTA 3*16
-#define LIGHT_MAGENTA 4*16
-#define BLUE 5*16
-#define LIGHT_BLUE 6*16
-#define CYAN 7*16
-#define LIGHT_CYAN 8*16
-#define GREEN 9*16
-#define LIGHT_GREEN 10*16
-#define COLOR_11 11*16
-#define YELLOW 12*16
-#define LIGHT_YELLOW 13*16
-#define ORANGE 14*16
-#define WHITE 15*16
-
-//bullet type
-#define LASER 0*16+16
-#define RING 1*16+16
-#define SMALL_BALL 2*16+16
-#define ELLIPSE 3*16+16
-#define NIDDLE 4*16+16
-#define CRYSTAL 5*16+16
-#define MINI_BALL -1
-#define MINI_CIRCLE -2
-#define MIDDLE_BALL -3
-#define KNIFE -4
-#define MICRO_BALL -5
-#define GLOWING_BALL -6
-#define BIG_BALL -7
-#define DOT -8
-#define FIRE -9
-
 // left bottom
 #define JAPANESE_TITLE_PART_1_UV (v2i){1, 1+256}
 #define JAPANESE_TITLE_PART_2_UV (v2i){65, 1+256}

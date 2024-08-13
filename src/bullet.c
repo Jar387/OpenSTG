@@ -1,260 +1,89 @@
 #include <openstg.h>
 
-bullet *create_bullet(int color, char type, v2d xy)
+bullet *create_bullet(int color, int type, v2d xy)
 {
+	// check all params in entry to avoid free
+	if (color < BLACK || color > WHITE) {
+		ILLEGALPARAM("color");
+	}
+	if (type < DOT || type > BIG) {
+		ILLEGALPARAM("type");
+	}
 	bullet *bu = (bullet *) malloc(sizeof(bullet));
 	memset(bu, 0, sizeof(bullet));
 	bu->xy = xy;
 	bu->tick = 0;
 	bu->fire = -1;
 	// calculate texture uv and hibox
-	// remake at commit 483c9ae with EoSD texture
+	// make at commit 19aafbc with basic function
+	// remake at commit bebc3f with full function
+	// remake at commit 0cf748 with generic offset fix
+	// remake at commit 483c9a with EoSD texture
+	// remake at commit cdcc56 with EoSD texture and id
+	// this is such a fucking part :(
 	v2i uv, wh, hitbox;
-	if (type == RING ||
-	    type == SMALL_BALL ||
-	    type == ELLIPSE || type == NIDDLE || type == CRYSTAL) {
-		uv.x = color;
-		uv.y = type;
-		wh.x = 16;
-		wh.y = 16;
-		hitbox.x = 8;
-		hitbox.y = 8;
-	} else if (type == MINI_BALL) {
-		wh.x = 12;
-		wh.y = 12;
-		hitbox.x = 8;
-		hitbox.y = 8;
-		uv.y = 113;
-		switch (color) {
-		case BLACK:{
-				uv.x = 66;
-				break;
-			}
-		case RED:{
-				uv.x = 82;
-				break;
-			}
-		case BLUE:{
-				uv.x = 98;
-				break;
-			}
-		case GREEN:{
-				uv.x = 114;
-				break;
-			}
-		case YELLOW:{
-				uv.x = 130;
-				break;
-			}
-		default:{
-				ILLEGALPARAM("color");
-			}
+	if (type == DOT) {
+		wh.x = 8;
+		wh.y = 8;
+		hitbox.x = 6;
+		hitbox.y = 6;
+		if (color < 8) {
+			// first row
+			uv.x = 128 + color * 8;
+			uv.y = 207;
+		} else {
+			color -= 8;
+			uv.x = 128 + color * 8;
+			uv.y = 215;
 		}
-	} else if (type == MINI_CIRCLE) {
-		wh.x = 12;
-		wh.y = 12;
-		hitbox.x = 8;
-		hitbox.y = 8;
-		uv.y = 113;
-		switch (color) {
-		case BLACK:{
-				uv.x = 146;
-				break;
-			}
-		case RED:{
-				uv.x = 162;
-				break;
-			}
-		case BLUE:{
-				uv.x = 178;
-				break;
-			}
-		case GREEN:{
-				uv.x = 194;
-				break;
-			}
-		case YELLOW:{
-				uv.x = 210;
-				break;
-			}
-		default:{
-				ILLEGALPARAM("color");
-			}
-		}
-	} else if (type == MIDDLE_BALL) {
+	} else if (type == MIDDLE) {
 		wh.x = 32;
 		wh.y = 32;
 		hitbox.x = 16;
 		hitbox.y = 16;
+		uv.x = color * 32;
 		uv.y = 128;
-		switch (color) {
-		case BLACK:{
-				uv.x = 0 * 32;
-				break;
-			}
-		case RED:{
-				uv.x = 1 * 32;
-				break;
-			}
-		case MAGENTA:{
-				uv.x = 2 * 32;
-				break;
-			}
-		case BLUE:{
-				uv.x = 3 * 32;
-				break;
-			}
-		case CYAN:{
-				uv.x = 4 * 32;
-				break;
-			}
-		case GREEN:{
-				uv.x = 5 * 32;
-				break;
-			}
-		case YELLOW:{
-				uv.x = 6 * 32;
-				break;
-			}
-		case WHITE:{
-				uv.x = 7 * 32;
-				break;
-			}
-		default:{
-				ILLEGALPARAM("color");
-			}
-		}
 	} else if (type == KNIFE) {
 		wh.x = 32;
 		wh.y = 32;
 		hitbox.x = 6;
 		hitbox.y = 30;
+		uv.x = color * 32;
 		uv.y = 160;
-		switch (color) {
-		case BLACK:{
-				uv.x = 0 * 32;
-				break;
-			}
-		case RED:{
-				uv.x = 1 * 32;
-				break;
-			}
-		case MAGENTA:{
-				uv.x = 2 * 32;
-				break;
-			}
-		case BLUE:{
-				uv.x = 3 * 32;
-				break;
-			}
-		case CYAN:{
-				uv.x = 4 * 32;
-				break;
-			}
-		case GREEN:{
-				uv.x = 5 * 32;
-				break;
-			}
-		case YELLOW:{
-				uv.x = 6 * 32;
-				break;
-			}
-		case WHITE:{
-				uv.x = 7 * 32;
-				break;
-			}
-		default:{
-				ILLEGALPARAM("color");
-			}
-		}
-	} else if (type == GLOWING_BALL) {
-		wh.x = 32;
-		wh.y = 32;
-		hitbox.x = 12;
-		hitbox.y = 12;
-		uv.y = 224;
-		switch (color) {
-		case BLACK:{
-				uv.x = 0 * 32;
-				break;
-			}
-		case RED:{
-				uv.x = 1 * 32;
-				break;
-			}
-		case MAGENTA:{
-				uv.x = 2 * 32;
-				break;
-			}
-		case BLUE:{
-				uv.x = 3 * 32;
-				break;
-			}
-		case CYAN:{
-				uv.x = 4 * 32;
-				break;
-			}
-		case GREEN:{
-				uv.x = 5 * 32;
-				break;
-			}
-		case YELLOW:{
-				uv.x = 6 * 32;
-				break;
-			}
-		case WHITE:{
-				uv.x = 7 * 32;
-				break;
-			}
-		default:{
-				ILLEGALPARAM("color");
-			}
-		}
-	} else if (type == BIG_BALL) {
+	} else if (type == BIG) {
 		wh.x = 64;
 		wh.y = 64;
 		hitbox.x = 32;
 		hitbox.y = 32;
+		uv.x = 256 + color * 64;
 		uv.y = 0;
-		switch (color) {
-		case RED:{
-				uv.x = 256 + 0 * 64;
-				break;
-			}
-		case BLUE:{
-				uv.x = 256 + 1 * 64;
-				break;
-			}
-		case GREEN:{
-				uv.x = 256 + 2 * 64;
-				break;
-			}
-		case YELLOW:{
-				uv.x = 256 + 3 * 64;
-				break;
-			}
-		default:{
-				ILLEGALPARAM("color");
-			}
-		}
-	} else if (type == DOT) {
-		wh.x = 8;
-		wh.y = 8;
-		hitbox.x = 6;
-		hitbox.y = 6;
-		if (color < LIGHT_CYAN) {
-			// first row
-			uv.x = 128 + color / 2;
-			uv.y = 207;
-		} else {
-			// second row
-			uv.x = 128 + (color - LIGHT_CYAN) / 2;
-			uv.y = 215;
-		}
 	} else if (type == FIRE) {
-		bu->fire = 0;
+		bu->fire = 1;
 	} else {
-		ILLEGALPARAM("type");
+		// all 16x16 normal bullet
+		hitbox.x = 8;
+		hitbox.y = 8;
+		wh.x = 16;
+		wh.y = 16;
+		uv.x = 16 * color;
+		switch (type) {
+		case RING:
+			uv.y = 32;
+			break;
+		case RICE:
+			uv.y = 64;
+			break;
+		case SMALL:
+			uv.y = 48;
+			break;
+		case CHAIN:
+			uv.y = 80;
+			break;
+		case NIDDLE:
+			uv.y = 96;
+			break;
+			// not default situation
+		}
 	}
 
 	bu->uv = uv;
