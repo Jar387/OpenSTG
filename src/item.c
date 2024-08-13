@@ -1,5 +1,7 @@
 #include <openstg.h>
 
+list_head *item_list;
+
 item *create_item(v2d pos, enum ITEM_TYPE type)
 {
 	item *itm = (item *) malloc(sizeof(*itm));
@@ -92,7 +94,7 @@ static void tick_item(void *data, int id)
 
 void delete_all_item()
 {
-	list_foreach(item_list, &delete_all_item);
+	list_foreach(item_list, &delete_callback);
 }
 
 void tick_items()

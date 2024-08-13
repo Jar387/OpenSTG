@@ -1,5 +1,7 @@
 #include <openstg.h>
 
+list_head *player_bullet_list;
+
 static void tick_shooter_animation()
 {
 	static float rotate_counter;

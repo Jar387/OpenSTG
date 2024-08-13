@@ -1,5 +1,7 @@
 #include <openstg.h>
 
+list_head *bullet_list;
+
 bullet *create_bullet(int color, int type, v2d xy)
 {
 	// check all params in entry to avoid free

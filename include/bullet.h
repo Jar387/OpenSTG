@@ -3,6 +3,8 @@
 
 #include <openstg.h>
 
+extern list_head *bullet_list;
+
 typedef struct bullet_t bullet;
 typedef struct bullet_t {
 	v2d xy;			// centered coord

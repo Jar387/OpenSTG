@@ -1,11 +1,6 @@
 #include <openstg.h>
 
-list_head *bullet_list;
-list_head *sched_list;
-list_head *player_bullet_list;
-list_head *item_list;
-
-void create_all_instances()
+void create_all_lists()
 {
 	bullet_list = create_list();
 	sched_list = create_list();
@@ -91,7 +86,7 @@ void delete_object_id(list_head * head, int id)
 
 void list_foreach(list_head * head, void (*callback)(void *, int))
 {
-	if (head == NULL || head->head == NULL || callback == NULL) {
+	if(head == NULL || head->head == NULL || callback == NULL) {
 		NULLOBJ("list head");
 		return;
 	}

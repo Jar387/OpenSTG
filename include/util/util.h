@@ -3,6 +3,7 @@
 
 #include <openstg.h>
 
+#include <array.h>
 #include <error.h>
 #include <list.h>
 #include <mathutil.h>

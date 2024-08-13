@@ -1,14 +1,16 @@
 #include <openstg.h>
 
 int tick = 0;
+array_head *head;
 
 void callback(int looptime, void *data)
 {
-	// test code
+
 }
 
 int main()
 {
+	head = create_array(-1, sizeof(int));
 	init_logger(INFO, NULL);
 	info("starting openstg engine");
 	srand(time(NULL));
@@ -26,7 +28,7 @@ int main()
 	load_basic_texture();
 	load_basic_music();
 	load_player_config(CFG_REIMU_B);
-	create_all_instances();
+	create_all_lists();
 	init_player();
 	init_buman();
 	init_ecl();

@@ -18,7 +18,7 @@ link_libraries(SDL2_image)
 link_libraries(SDL2_mixer)
 link_libraries(m)
 
-add_definitions(-std=c99 -ggdb)
+add_definitions(-std=c99 -ggdb -Wall)
 
 add_executable(openstg ${DIR_SRCS})
 

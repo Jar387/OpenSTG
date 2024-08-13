@@ -1,6 +1,8 @@
 #ifndef SHOOTER_H
 #define SHOOTER_H
 
+extern list_head *player_bullet_list;
+
 typedef struct player_bullet_t {
 	v2d xy;
 	v2d dxy;
