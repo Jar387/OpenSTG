@@ -18,16 +18,76 @@ int graze;
 int point;
 int invulnerable_frame;
 
+int check_ip_onbound(enemy_data* data){
+	ecl_sub* sub = (ecl_sub*)get_obj(sub_array_list, data->fp+1);
+	if(data->ip+1==sub->store_line){
+		return 1;
+	}
+	return 0;
+}
+
+int search_symbol(enemy_data* data, char* symbol){
+	ecl_sub* curr_sub = (ecl_sub*)get_obj(sub_array_list, data->fp);
+	ecl_sub* next_sub = (ecl_sub*)get_obj(sub_array_list, data->fp+1);
+	for(int i=curr_sub->store_line; i<next_sub->store_line;i++){
+		if(strcmp(((ecl_line*)get_obj(line_array_list, i))->text, symbol)==0){
+			// TODO: replace this with hash
+			return i+1;
+		}
+	}
+	return -1;
+}
+
+void exec_ins(char* ins){
+	info("exec %s", ins);
+}
+
 void init_ecl()
 {
 	rank = RANK_LUNATIC;
 	shot_type = curr_cfg->config_id;
+	memset(&boss_data, 0, sizeof(boss_data));
 	boss_data.sp = 0;
-	boss_data.ip;
+	boss_data.ip = 232; // sub 15 line 326
+	boss_data.fp = 15;
+	boss_data.stack[0].return_address = -1; // return and crash
 }
 
 void tick_ecl()
 {
+	if(boss_data.lock==1){
+		return;
+	}
+	if(boss_data.curr_delay!=0){
+		boss_data.curr_delay--;
+		return;
+	}
+	if(check_ip_onbound(&boss_data)==1){
+		boss_data.lock = 1;
+	}
+	// exec code
+	ecl_line* code = (ecl_line*)get_obj(line_array_list, boss_data.ip);
+	switch(code->type){
+		case STAT_DEALY: {
+			int d;
+			sscanf(code->text, "+%d", &d);
+			boss_data.curr_delay = d;
+			info("delay %d", d);
+			break;
+		}
+		case STAT_LABEL: {
+			info("symbol");
+			break;
+		}
+		case STAT_INS: {
+			exec_ins(code->text);
+			break;
+		}
+		default: {
+			ABORT("illegal opcode");
+		}
+	}
+	boss_data.ip++;
 }
 
 void et_on_fan_aim(int spr, int col, int way, int layer, double spd1,

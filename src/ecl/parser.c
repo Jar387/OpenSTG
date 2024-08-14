@@ -1,9 +1,5 @@
 #include <openstg.h>
 
-#define STAT_DEALY 1
-#define STAT_LABEL 2
-#define STAT_INS 3
-
 int line_count = 0;
 int sub_count = 0;
 int script_entry = -1;
@@ -65,13 +61,9 @@ static void parse_line(char *buf, int len)
 	}
 	if (buf[0] == '+') {
 		// delay statement
-		int delay;
-		sscanf(buf, "+%d", &delay);
-		char ibuf[2 * sizeof(int)];
-		int *iptr = (int *)ibuf;
-		iptr[0] = delay;
-		iptr[1] = 0;
-		store_line(ibuf, STAT_DEALY);
+		char* tok = strchr(buf, ':');
+		*tok = '\0'; 
+		store_line(buf, STAT_DEALY);
 		return;
 	}
 	if (strncmp(buf, "sub ", 4) == 0) {
@@ -147,11 +139,13 @@ void load_script(char *path)
 	if (script_entry == -1) {
 		ABORT("cannot find entry in script");
 	}
+	#ifdef DUMP_SCRIPT
 	info("----------script dump----------");
 	for (int i = 0; i < line_count; i++) {
 		info("%i %s", i,
 		     ((ecl_line *) get_obj(line_array_list, i))->text);
 	}
+	#endif
 	info("script %s loaded with %i sub(s) and %i legal statement(s)", path,
 	     sub_count, line_count);
 }
