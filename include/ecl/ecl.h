@@ -3,11 +3,11 @@
 
 #include <openstg.h>
 
-#include <boss.h>
-#include <buman.h>
-#include <enemy.h>
-#include <parser.h>
-#include <script.h>
+#include <ecl/boss.h>
+#include <ecl/buman.h>
+#include <ecl/enemy.h>
+#include <ecl/parser.h>
+#include <ecl/script.h>
 
 #define PLAYER_POSITION_I (v2i){player_x, player_y}
 #define PLAYER_POSITION_D (v2d){player_x, player_y}
@@ -49,9 +49,9 @@ extern int invulnerable_frame;
 #define RANK_LUNATIC 3
 #define RANK_EXTRA 4
 
-typedef struct ecl_local_t {
-	int local_i[8];		// -10001~-10004 -10009~-10012
-	float local_f[4];	// -10005~-10008
+#define MAX_STACK_DEPTH 16
+
+typedef struct {
 	int x;			// -10015
 	int y;			// -10016
 	int z;			// -10017, only used by extra boss
@@ -59,7 +59,11 @@ typedef struct ecl_local_t {
 	int tick;		// -10022
 	float dist;		// -10023, unused
 	int life;		// -10024
-} ecl_local;
+	ecl_stack_frame stack[MAX_STACK_DEPTH];
+	int sp;
+	int ip;
+	int curr_delay;		// remain ticks until activate
+} enemy_data;
 
 void init_ecl();
 void tick_ecl();

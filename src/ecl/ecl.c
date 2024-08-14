@@ -22,6 +22,8 @@ void init_ecl()
 {
 	rank = RANK_LUNATIC;
 	shot_type = curr_cfg->config_id;
+	boss_data.sp = 0;
+	boss_data.ip;
 }
 
 void tick_ecl()

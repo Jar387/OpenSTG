@@ -43,11 +43,11 @@ typedef struct vec2f_t {
 #include <log4c.h>
 
 // openstg headers
+#include <ecl/ecl.h>
 #include <media/graphic.h>
 #include <util/util.h>
 
 #include <bullet.h>
-#include <ecl.h>
 #include <item.h>
 #include <player.h>
 #include <sched.h>

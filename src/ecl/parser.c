@@ -89,9 +89,35 @@ static void parse_line(char *buf, int len)
 	}
 	label = strchr(buf, '(');
 	if (label != NULL) {
+		// check difficulty
+		if (buf[0] == '!') {
+			*label = '\0';
+			if (!(strchr(buf, 'E') && rank == RANK_EASY)) {
+				if (!(strchr(buf, 'N') && rank == RANK_NORMAL)) {
+					if (!
+					    (strchr(buf, 'H')
+					     && rank == RANK_HARD)) {
+						if (!
+						    (strchr(buf, 'L')
+						     && rank == RANK_LUNATIC)) {
+							if (!strchr(buf, '*')) {
+								return;
+							}
+						}
+					}
+				}
+			}
+			*label = '(';
+			buf += 2;
+			while (buf[0] == 'E' || buf[0] == 'N' || buf[0] == 'H'
+			       || buf[0] == 'L' || buf[0] == ' ') {
+				buf++;
+			}
+		}
 		label = strchr(buf, ';');
 		if (label != NULL) {
 			*label = '\0';
+			info("%s", buf);
 			store_line(buf, STAT_INS);
 			return;
 		}
@@ -124,6 +150,22 @@ void load_script(char *path)
 	if (script_entry == -1) {
 		ABORT("cannot find entry in script");
 	}
+	info("----------script dump----------");
+	for (int i = 0; i < line_count; i++) {
+		info("%i %s", i,
+		     ((ecl_line *) get_obj(line_array_list, i))->text);
+	}
 	info("script %s loaded with %i sub(s) and %i legal statement(s)", path,
 	     sub_count, line_count);
+}
+
+void unload_script()
+{
+	for (int i = 0; i < line_count; i++) {
+		free(((ecl_line *) get_obj(line_array_list, i))->text);
+	}
+	destroy_array(line_array_list);
+	destroy_array(sub_array_list);
+	line_array_list = NULL;
+	sub_array_list = NULL;
 }

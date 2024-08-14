@@ -3,11 +3,11 @@
 
 #include <openstg.h>
 
-#include <array.h>
-#include <error.h>
-#include <list.h>
-#include <mathutil.h>
-#include <playercfg.h>
+#include <util/array.h>
+#include <util/error.h>
+#include <util/list.h>
+#include <util/mathutil.h>
+#include <util/playercfg.h>
 
 // solid texture names
 #define GENERIC_0 "data/generic_0.png"

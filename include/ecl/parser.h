@@ -4,6 +4,6 @@
 #include <openstg.h>
 
 void load_script(char *path);
-void free_current_script();
+void unload_script();
 
 #endif

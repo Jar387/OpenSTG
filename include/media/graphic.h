@@ -3,9 +3,9 @@
 
 #include <openstg.h>
 
-#include <background.h>
-#include <texture_offset.h>
-#include <ui.h>
+#include <media/background.h>
+#include <media/texture_offset.h>
+#include <media/ui.h>
 
 #define FPS 60
 #define DELAY 1000/FPS

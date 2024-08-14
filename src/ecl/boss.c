@@ -1,4 +1,3 @@
 #include <openstg.h>
 
-int x;
-int y;
+enemy_data boss_data;

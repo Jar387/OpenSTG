@@ -3,4 +3,6 @@
 
 #include <openstg.h>
 
+extern enemy_data boss_data;
+
 #endif
