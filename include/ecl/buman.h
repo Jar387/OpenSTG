@@ -1,8 +1,6 @@
 #ifndef BUMAN_H
 #define BUMAN_H
 
-#include <openstg.h>
-
 #define OFFSET_X 32
 #define OFFSET_Y 16
 #define LENGTH_X 384

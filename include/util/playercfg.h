@@ -1,8 +1,6 @@
 #ifndef PLAYER_CFG_H
 #define PLAYER_CFG_H
 
-#include <openstg.h>
-
 #define CFG_REIMU_A "../data/pl00a.cfg"
 #define CFG_REIMU_B "../data/pl00b.cfg"
 

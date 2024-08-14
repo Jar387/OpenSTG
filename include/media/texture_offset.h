@@ -1,8 +1,6 @@
 #ifndef TEXTURE_OFFSET_H
 #define TEXTURE_OFFSET_H
 
-#include <openstg.h>
-
 // convenient inlines to process pos_t
 static inline v2i add_x(v2i p, int delta)
 {

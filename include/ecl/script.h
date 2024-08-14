@@ -1,7 +1,7 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-#include <openstg.h>
+#include <util/array.h>
 
 extern array_head *line_array_list;
 extern array_head *sub_array_list;

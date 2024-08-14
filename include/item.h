@@ -1,8 +1,6 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <openstg.h>
-
 extern list_head *item_list;
 
 enum ITEM_TYPE {

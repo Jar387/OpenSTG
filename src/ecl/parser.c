@@ -94,12 +94,10 @@ static void parse_line(char *buf, int len)
 			*label = '\0';
 			if (!(strchr(buf, 'E') && rank == RANK_EASY)) {
 				if (!(strchr(buf, 'N') && rank == RANK_NORMAL)) {
-					if (!
-					    (strchr(buf, 'H')
-					     && rank == RANK_HARD)) {
-						if (!
-						    (strchr(buf, 'L')
-						     && rank == RANK_LUNATIC)) {
+					if (!(strchr(buf, 'H')
+					      && rank == RANK_HARD)) {
+						if (!(strchr(buf, 'L')
+						      && rank == RANK_LUNATIC)) {
 							if (!strchr(buf, '*')) {
 								return;
 							}
@@ -117,7 +115,6 @@ static void parse_line(char *buf, int len)
 		label = strchr(buf, ';');
 		if (label != NULL) {
 			*label = '\0';
-			info("%s", buf);
 			store_line(buf, STAT_INS);
 			return;
 		}

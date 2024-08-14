@@ -43,8 +43,23 @@ typedef struct vec2f_t {
 #include <log4c.h>
 
 // openstg headers
+#include <ecl/boss.h>
+#include <ecl/buman.h>
 #include <ecl/ecl.h>
+#include <ecl/enemy.h>
+#include <ecl/parser.h>
+#include <ecl/script.h>
+
+#include <media/background.h>
 #include <media/graphic.h>
+#include <media/texture_offset.h>
+#include <media/ui.h>
+
+#include <util/array.h>
+#include <util/error.h>
+#include <util/list.h>
+#include <util/mathutil.h>
+#include <util/playercfg.h>
 #include <util/util.h>
 
 #include <bullet.h>

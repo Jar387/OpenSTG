@@ -1,8 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <openstg.h>
-
 // key config
 #define SHOOT_KEY SDL_SCANCODE_Z
 #define BOMB_KEY SDL_SCANCODE_X

@@ -1,7 +1,7 @@
 #ifndef BOSS_H
 #define BOSS_H
 
-#include <openstg.h>
+#include <ecl/ecl.h>
 
 extern enemy_data boss_data;
 

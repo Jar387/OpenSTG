@@ -1,14 +1,6 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <openstg.h>
-
-#include <util/array.h>
-#include <util/error.h>
-#include <util/list.h>
-#include <util/mathutil.h>
-#include <util/playercfg.h>
-
 // solid texture names
 #define GENERIC_0 "data/generic_0.png"
 #define GENERIC_1 "data/generic_1.png"

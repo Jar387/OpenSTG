@@ -1,8 +1,6 @@
 #ifndef SCHED_H
 #define SCHED_H
 
-#include <openstg.h>
-
 extern list_head *sched_list;
 
 typedef struct task_t task;

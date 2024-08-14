@@ -1,8 +1,6 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <openstg.h>
-
 extern list_head *bullet_list;
 
 typedef struct bullet_t bullet;

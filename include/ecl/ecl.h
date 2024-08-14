@@ -1,12 +1,6 @@
 #ifndef ECL_H
 #define ECL_H
 
-#include <openstg.h>
-
-#include <ecl/boss.h>
-#include <ecl/buman.h>
-#include <ecl/enemy.h>
-#include <ecl/parser.h>
 #include <ecl/script.h>
 
 #define PLAYER_POSITION_I (v2i){player_x, player_y}
