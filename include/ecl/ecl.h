@@ -7,6 +7,7 @@
 #include <buman.h>
 #include <enemy.h>
 #include <parser.h>
+#include <script.h>
 
 #define PLAYER_POSITION_I (v2i){player_x, player_y}
 #define PLAYER_POSITION_D (v2d){player_x, player_y}

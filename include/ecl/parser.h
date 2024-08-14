@@ -3,9 +3,7 @@
 
 #include <openstg.h>
 
-typedef struct {
-	int id;
-	int line;		// line after define or '{'
-} ecl_sub;
+void load_script(char *path);
+void free_current_script();
 
 #endif

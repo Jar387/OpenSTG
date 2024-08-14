@@ -1,7 +1,6 @@
 #include <openstg.h>
 
 int tick = 0;
-array_head *head;
 
 void callback(int looptime, void *data)
 {
@@ -10,7 +9,6 @@ void callback(int looptime, void *data)
 
 int main()
 {
-	head = create_array(-1, sizeof(int));
 	init_logger(INFO, NULL);
 	info("starting openstg engine");
 	srand(time(NULL));
@@ -32,6 +30,8 @@ int main()
 	init_player();
 	init_buman();
 	init_ecl();
+
+	load_script("data/stg6.ecl");
 
 	set_background_style(SC_BACKGROUND);
 
