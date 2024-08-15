@@ -7,6 +7,12 @@
 extern array_head *line_array_list;
 extern array_head *sub_array_list;
 
+#define PARAM_TYPE_INT 1
+#define PARAM_TYPE_FLOAT 2
+#define PARAM_TYPE_VAR 3
+#define PARAM_TYPE_SYMBOL 4
+#define PARAM_TYPE_SUB 5
+
 typedef struct {
 	// local vars
 	int i_local_grp_1[4];
@@ -22,13 +28,20 @@ typedef struct {
 
 typedef struct {
 	int type;
-	uint32_t value;
-} param;
+	union {
+		int i;
+		float f;
+		int var_id;
+		unsigned char symbol_hash[MD5_DIGEST_LENGTH];
+		char sub_name[16];
+	};
+
+} param_t;
 
 typedef char label[MD5_DIGEST_LENGTH];
 typedef struct {
 	int opcode;
-	param p[];
+	param_t p[];
 } ins_call;
 
 typedef struct {
