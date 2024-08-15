@@ -61,8 +61,8 @@ static void parse_line(char *buf, int len)
 	}
 	if (buf[0] == '+') {
 		// delay statement
-		char* tok = strchr(buf, ':');
-		*tok = '\0'; 
+		char *tok = strchr(buf, ':');
+		*tok = '\0';
 		store_line(buf, STAT_DEALY);
 		return;
 	}
@@ -139,13 +139,13 @@ void load_script(char *path)
 	if (script_entry == -1) {
 		ABORT("cannot find entry in script");
 	}
-	#ifdef DUMP_SCRIPT
+#ifdef DUMP_SCRIPT
 	info("----------script dump----------");
 	for (int i = 0; i < line_count; i++) {
 		info("%i %s", i,
 		     ((ecl_line *) get_obj(line_array_list, i))->text);
 	}
-	#endif
+#endif
 	info("script %s loaded with %i sub(s) and %i legal statement(s)", path,
 	     sub_count, line_count);
 }

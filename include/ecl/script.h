@@ -17,7 +17,7 @@ typedef struct {
 
 typedef struct {
 	int type;
-	char *text; // also store delay cache as Uint32
+	char *text;		// also store delay cache as Uint32
 } ecl_line;
 
 typedef struct {

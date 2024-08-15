@@ -54,11 +54,11 @@ typedef struct {
 	float dist;		// -10023, unused
 	int life;		// -10024
 	ecl_stack_frame stack[MAX_STACK_DEPTH];
-	int sp; // stack pointer
-	int ip; // instruction pointer
-	int fp; // function pointer
+	int sp;			// stack pointer
+	int ip;			// instruction pointer
+	int fp;			// function pointer
 	int curr_delay;		// remain ticks until activate
-	int lock; // for bossrush only
+	int lock;		// for bossrush only
 } enemy_data;
 
 void init_ecl();
