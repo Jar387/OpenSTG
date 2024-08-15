@@ -42,11 +42,15 @@ typedef struct vec2f_t {
 // logger headers
 #include <log4c.h>
 
+// libcrypto headers
+#include <openssl/md5.h>
+
 // openstg headers
 #include <ecl/boss.h>
 #include <ecl/buman.h>
 #include <ecl/ecl.h>
 #include <ecl/enemy.h>
+#include <ecl/mapper.h>
 #include <ecl/parser.h>
 #include <ecl/script.h>
 

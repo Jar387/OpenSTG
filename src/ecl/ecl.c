@@ -38,8 +38,20 @@ int search_symbol(enemy_data* data, char* symbol){
 	return -1;
 }
 
+void parse_label(ecl_line* line){
+	unsigned char* md5buf = (unsigned char*)malloc(MD5_DIGEST_LENGTH);
+	const unsigned char *t = (const unsigned char *)(line->text);
+	MD5(t, strlen(line->text), md5buf);
+	free(line->text);
+	line->text = (char*)md5buf;
+	line->type = BIN_LABEL;
+}
+
 void exec_ins(char* ins){
 	info("exec %s", ins);
+	char* param = strchr(ins, '(');
+	char* fin = strchr(ins, ')');
+	*fin = '\0';
 }
 
 void init_ecl()
@@ -72,15 +84,31 @@ void tick_ecl()
 			int d;
 			sscanf(code->text, "+%d", &d);
 			boss_data.curr_delay = d;
+			// generate binary cache
+			free(code->text);
+			long l = (long)d;
+			code->text = (char*)l;
 			info("delay %d", d);
+			code->type = BIN_DELAY;
 			break;
 		}
 		case STAT_LABEL: {
-			info("symbol");
+			parse_label(code);
 			break;
 		}
 		case STAT_INS: {
 			exec_ins(code->text);
+			break;
+		}
+		case BIN_LABEL: break;
+		case BIN_DELAY: {
+			long l = (long)(code->text);
+			int d = (int)l;
+			boss_data.curr_delay = d;
+			info("delay %d", d);
+			break;
+		}
+		case BIN_INS: {
 			break;
 		}
 		default: {

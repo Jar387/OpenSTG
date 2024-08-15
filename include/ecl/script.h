@@ -2,6 +2,7 @@
 #define SCRIPT_H
 
 #include <util/array.h>
+#include <openssl/md5.h>
 
 extern array_head *line_array_list;
 extern array_head *sub_array_list;
@@ -16,8 +17,19 @@ typedef struct {
 
 typedef struct {
 	int type;
-	char *text;
+	char *text; // also store delay cache as Uint32
 } ecl_line;
+
+typedef struct {
+	int type;
+	uint32_t value;
+} param;
+
+typedef char label[MD5_DIGEST_LENGTH];
+typedef struct {
+	int opcode;
+	param p[];
+} ins_call;
 
 typedef struct {
 	char name[16];
