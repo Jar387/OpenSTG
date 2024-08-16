@@ -59,7 +59,6 @@ void parse_label(ecl_line * line)
 
 void parse_single_param(char *text, param_t * target)
 {
-	info("parse");
 	char *last = text + strlen(text) - 1;
 	if (text[0] == '$') {
 		target->type = PARAM_TYPE_VAR;
@@ -103,9 +102,99 @@ void parse_single_param(char *text, param_t * target)
 	}
 }
 
-void exec_ins(ecl_line * line)
+void exec_ins(ecl_line * line, enemy_data * enm)
 {
-
+	ins_call *call = (ins_call *) (line->text);
+	int param_count = ins_arg_count[call->opcode];
+	void *prg = ins_prg[call->opcode];
+	if (prg == NULL) {
+		warn("ins %i not found", call->opcode);
+		return;
+	}
+	switch (param_count) {
+	case 0:{
+			void (*p)(enemy_data *) = prg;
+			p(enm);
+			break;
+		}
+	case 1:{
+			void (*p)(enemy_data *, param_t *) = prg;
+			p(enm, &call->p[0]);
+			break;
+		}
+	case 2:{
+			void (*p)(enemy_data *, param_t *, param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1]);
+			break;
+		}
+	case 3:{
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2]);
+			break;
+		}
+	case 4:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3]);
+			break;
+		}
+	case 5:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3], &call->p[4]);
+			break;
+		}
+	case 6:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3], &call->p[4], &call->p[5]);
+			break;
+		}
+	case 7:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *) =
+			    prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3], &call->p[4], &call->p[5], &call->p[6]);
+			break;
+		}
+	case 8:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
+			  &call->p[7]);
+			break;
+		}
+	case 9:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
+			  &call->p[7], &call->p[8]);
+			break;
+		}
+	case 14:{
+			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *) = prg;
+			p(enm, &call->p[0], &call->p[1], &call->p[2],
+			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
+			  &call->p[7], &call->p[8], &call->p[9], &call->p[10],
+			  &call->p[11], &call->p[12], &call->p[13]);
+			break;
+		}
+	default:{
+			warn("unsupported param number: %d", param_count);
+		}
+	}
 }
 
 void parse_ins(ecl_line * line)
@@ -155,6 +244,7 @@ void parse_ins(ecl_line * line)
  fin:
 	call->opcode = opcode;
 	line->text = (char *)call;
+	line->type = BIN_INS;
 }
 
 void init_ecl()
@@ -179,6 +269,7 @@ void tick_ecl()
 	}
 	if (check_ip_onbound(&boss_data) == 1) {
 		boss_data.lock = 1;
+		info("script exec finished");
 	}
 	// exec code
 	ecl_line *code = (ecl_line *) get_obj(line_array_list, boss_data.ip);
@@ -191,7 +282,6 @@ void tick_ecl()
 			free(code->text);
 			long l = (long)d;
 			code->text = (char *)l;
-			info("delay %d", d);
 			code->type = BIN_DELAY;
 			break;
 		}
@@ -201,7 +291,7 @@ void tick_ecl()
 		}
 	case STAT_INS:{
 			parse_ins(code);
-			exec_ins(code);
+			exec_ins(code, &boss_data);
 			break;
 		}
 	case BIN_LABEL:
@@ -210,11 +300,10 @@ void tick_ecl()
 			long l = (long)(code->text);
 			int d = (int)l;
 			boss_data.curr_delay = d;
-			info("delay %d", d);
 			break;
 		}
 	case BIN_INS:{
-			exec_ins(code);
+			exec_ins(code, &boss_data);
 			break;
 		}
 	default:{

@@ -161,4 +161,7 @@
 
 #define LOCAL_LIST {"I0", "I1", "I2", "I3", "F0", "F1", "F2", "F3", "I4", "I5", "I6", "I7", FIELD_RANK, FIELD_DIFFICULTY, FIELD_X, FIELD_Y, FIELD_Z, FIELD_PLAYER_X, FIELD_PLAYER_Y, FIELD_PLAYER_Z, FIELD_AIM, FIELD_TIME, FIELD_DIST, FIELD_LIFE, FIELD_SHOT_TYPE};
 
+extern int ins_arg_count[];
+extern void *ins_prg[];
+
 #endif
