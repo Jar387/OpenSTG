@@ -76,6 +76,7 @@ static void parse_line(char *buf, int len)
 	char *label = strchr(buf, ':');
 	if (label != NULL) {
 		*label = '\0';
+		// use hash as non-hash
 		store_line(buf, STAT_LABEL);
 		return;
 	}

@@ -58,11 +58,13 @@ typedef struct {
 	int ip;			// instruction pointer
 	int fp;			// function pointer
 	int curr_delay;		// remain ticks until activate
-	int lock;		// for bossrush only
 } enemy_data;
 
 void init_ecl();
 void tick_ecl();
+
+int search_symbol(enemy_data * data, char *symbol);
+void parse_label(ecl_line * line);
 
 // ecl ins
 void et_on_fan_aim(int spr, int col, int way, int layer, double spd1,

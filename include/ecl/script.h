@@ -32,7 +32,7 @@ typedef struct {
 		int i;
 		float f;
 		int var_id;
-		unsigned char symbol_hash[MD5_DIGEST_LENGTH];
+		char symbol_hash[MD5_DIGEST_LENGTH];
 		char sub_name[16];
 	};
 

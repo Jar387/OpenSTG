@@ -22,7 +22,7 @@ int graze;
 int point;
 int invulnerable_frame;
 
-int check_ip_onbound(enemy_data * data)
+static int check_ip_onbound(enemy_data * data)
 {
 	ecl_sub *sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
 	if (data->ip + 1 == sub->store_line) {
@@ -36,11 +36,11 @@ int search_symbol(enemy_data * data, char *symbol)
 	ecl_sub *curr_sub = (ecl_sub *) get_obj(sub_array_list, data->fp);
 	ecl_sub *next_sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
 	for (int i = curr_sub->store_line; i < next_sub->store_line; i++) {
-		unsigned char hash[MD5_DIGEST_LENGTH];
-		MD5((const unsigned char *)symbol, strlen(symbol), hash);
-		if (memcmp
-		    (hash, ((ecl_line *) (get_obj(line_array_list, i)))->text,
-		     MD5_DIGEST_LENGTH)) {
+		ecl_line *line = (ecl_line *) (get_obj(line_array_list, i));
+		if (line->type != STAT_LABEL) {
+			continue;
+		}
+		if (strcmp(symbol, line->text) == 0) {
 			return i + 1;
 		}
 	}
@@ -57,7 +57,7 @@ void parse_label(ecl_line * line)
 	line->type = BIN_LABEL;
 }
 
-void parse_single_param(char *text, param_t * target)
+static void parse_single_param(char *text, param_t * target)
 {
 	char *last = text + strlen(text) - 1;
 	if (text[0] == '$') {
@@ -96,13 +96,12 @@ void parse_single_param(char *text, param_t * target)
 		return;
 	} else {
 		target->type = PARAM_TYPE_SYMBOL;
-		MD5((const unsigned char *)text, strlen(text),
-		    target->symbol_hash);
+		memcpy(target->symbol_hash, text, 16);
 		return;
 	}
 }
 
-void exec_ins(ecl_line * line, enemy_data * enm)
+static void exec_ins(ecl_line * line, enemy_data * enm)
 {
 	ins_call *call = (ins_call *) (line->text);
 	int param_count = ins_arg_count[call->opcode];
@@ -197,7 +196,7 @@ void exec_ins(ecl_line * line, enemy_data * enm)
 	}
 }
 
-void parse_ins(ecl_line * line)
+static void parse_ins(ecl_line * line)
 {
 	int opcode;
 	ins_call *call;
@@ -260,18 +259,10 @@ void init_ecl()
 
 void tick_ecl()
 {
-	if (boss_data.lock == 1) {
-		return;
-	}
 	if (boss_data.curr_delay != 0) {
 		boss_data.curr_delay--;
 		return;
 	}
-	if (check_ip_onbound(&boss_data) == 1) {
-		boss_data.lock = 1;
-		info("script exec finished");
-	}
-	// exec code
 	ecl_line *code = (ecl_line *) get_obj(line_array_list, boss_data.ip);
 	switch (code->type) {
 	case STAT_DEALY:{
@@ -286,7 +277,7 @@ void tick_ecl()
 			break;
 		}
 	case STAT_LABEL:{
-			parse_label(code);
+			// parse_label(code);
 			break;
 		}
 	case STAT_INS:{
