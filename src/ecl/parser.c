@@ -21,11 +21,12 @@ static void store_line(char *text, int type)
 	line_count++;
 }
 
-static void store_hash(char* unhash, int type){
-	unsigned char *hash = (unsigned char*)malloc(MD5_DIGEST_LENGTH);
+static void store_hash(char *unhash, int type)
+{
+	unsigned char *hash = (unsigned char *)malloc(MD5_DIGEST_LENGTH);
 	MD5((const unsigned char *)unhash, strlen(unhash), hash);
 	ecl_line line;
-	line.text = (char*)hash;
+	line.text = (char *)hash;
 	line.type = type;
 	put_obj(line_array_list, &line, line_count);
 	line_count++;

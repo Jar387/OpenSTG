@@ -177,7 +177,6 @@ void write_float_var(enemy_data * enm, int var_id, float data)
 
 ECL_INS nop(VOID)
 {
-	info("nop");
 }
 
 ECL_INS delete(P1)
@@ -188,13 +187,56 @@ ECL_INS delete(P1)
 
 ECL_INS jmp(P2)
 {
-	// write_int_var(enm, FIELD_TIME_ID, p1->i);
+	write_int_var(enm, FIELD_TIME_ID, p1->i);
 	int ip = search_symbol(enm, p2->symbol_hash);
 	if (ip == -1) {
 		return;
 	}
 	enm->ip = ip - 1;
-	info("jmp to %i", enm->ip);
+}
+
+ECL_INS loop(P3)
+{
+	int cx = read_int_var(enm, p3->var_id);
+	if (cx == 0) {
+		return;
+	}
+	write_int_var(enm, p3->var_id, cx - 1);
+	write_int_var(enm, FIELD_TIME_ID, p1->i);
+	int ip = search_symbol(enm, p2->symbol_hash);
+	if (ip == -1) {
+		return;
+	}
+	enm->ip = ip - 1;
+}
+
+ECL_INS iset(P2)
+{
+	write_int_var(enm, p1->var_id, p2->i);
+}
+
+ECL_INS fset(P2)
+{
+	write_float_var(enm, p1->var_id, p2->f);
+}
+
+ECL_INS iset_r(P2)
+{
+	write_int_var(enm, p1->var_id, zundom_raw() % p2->i);
+}
+
+ECL_INS iset_r2(P3)
+{
+	write_int_var(enm, p1->var_id, p2->i + zundom_raw() % p3->i);
+}
+
+ECL_INS fset_r(P2)
+{
+}
+
+ECL_INS fset_r2(P3)
+{
+
 }
 
 void *ins_prg[] =
