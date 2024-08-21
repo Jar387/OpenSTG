@@ -49,5 +49,6 @@ void tick_ecl();
 
 int search_symbol(enemy_data * data, char *symbol);
 void parse_label(ecl_line * line);
+int check_ip_onbound(enemy_data * data);
 
 #endif

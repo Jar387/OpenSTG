@@ -65,6 +65,8 @@ typedef struct vec2f_t {
 #include <util/playercfg.h>
 #include <util/util.h>
 
+#include <config.h>
+
 #include <bullet.h>
 #include <item.h>
 #include <player.h>

@@ -22,7 +22,7 @@ int graze;
 int point;
 int invulnerable_frame;
 
-static int check_ip_onbound(enemy_data * data)
+int check_ip_onbound(enemy_data * data)
 {
 	ecl_sub *sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
 	if (data->ip + 1 == sub->store_line) {
@@ -37,10 +37,12 @@ int search_symbol(enemy_data * data, char *symbol)
 	ecl_sub *next_sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
 	for (int i = curr_sub->store_line; i < next_sub->store_line; i++) {
 		ecl_line *line = (ecl_line *) (get_obj(line_array_list, i));
-		if (line->type != STAT_LABEL) {
+		if (line->type != BIN_LABEL) {
 			continue;
 		}
-		if (strcmp(symbol, line->text) == 0) {
+		unsigned char hash[MD5_DIGEST_LENGTH];
+		MD5((const unsigned char *)symbol, strlen(symbol), hash);
+		if (memcmp(hash, line->text, MD5_DIGEST_LENGTH) == 0) {
 			return i + 1;
 		}
 	}
@@ -279,7 +281,6 @@ void tick_ecl()
 			break;
 		}
 	case STAT_LABEL:{
-			// parse_label(code);
 			break;
 		}
 	case STAT_INS:{

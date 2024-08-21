@@ -12,6 +12,7 @@
 
 #include <util/array.h>
 #include <openssl/md5.h>
+#include <config.h>
 
 extern array_head *line_array_list;
 extern array_head *sub_array_list;
@@ -40,7 +41,6 @@ typedef struct {
 		char symbol_hash[MD5_DIGEST_LENGTH];
 		char sub_name[16];
 	};
-
 } param_t;
 
 typedef char label[MD5_DIGEST_LENGTH];

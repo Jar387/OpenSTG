@@ -21,6 +21,16 @@ static void store_line(char *text, int type)
 	line_count++;
 }
 
+static void store_hash(char* unhash, int type){
+	unsigned char *hash = (unsigned char*)malloc(MD5_DIGEST_LENGTH);
+	MD5((const unsigned char *)unhash, strlen(unhash), hash);
+	ecl_line line;
+	line.text = (char*)hash;
+	line.type = type;
+	put_obj(line_array_list, &line, line_count);
+	line_count++;
+}
+
 static void store_sub(char *name)
 {
 	ecl_sub sub;
@@ -76,8 +86,8 @@ static void parse_line(char *buf, int len)
 	char *label = strchr(buf, ':');
 	if (label != NULL) {
 		*label = '\0';
-		// use hash as non-hash
-		store_line(buf, STAT_LABEL);
+		// use hash to speed up
+		store_hash(buf, BIN_LABEL);
 		return;
 	}
 	label = strchr(buf, '(');
@@ -141,11 +151,6 @@ void load_script(char *path)
 		ABORT("cannot find entry in script");
 	}
 #ifdef DUMP_SCRIPT
-	info("----------script dump----------");
-	for (int i = 0; i < line_count; i++) {
-		info("%i %s", i,
-		     ((ecl_line *) get_obj(line_array_list, i))->text);
-	}
 #endif
 	info("script %s loaded with %i sub(s) and %i legal statement(s)", path,
 	     sub_count, line_count);
