@@ -1,7 +1,8 @@
 #ifndef ECL_H
 #define ECL_H
 
-#include <ecl/script.h>
+#include <ecl/enemy.h>
+#include <ecl/parser.h>
 
 #define PLAYER_POSITION_I (v2i){player_x, player_y}
 #define PLAYER_POSITION_D (v2d){player_x, player_y}
@@ -43,43 +44,10 @@ extern int invulnerable_frame;
 #define RANK_LUNATIC 3
 #define RANK_EXTRA 4
 
-#define MAX_STACK_DEPTH 16
-
-typedef struct {
-	int x;			// -10015
-	int y;			// -10016
-	int z;			// -10017, only used by extra boss
-	float aim;		// -10021
-	int tick;		// -10022
-	float dist;		// -10023, unused
-	int life;		// -10024
-	ecl_stack_frame stack[MAX_STACK_DEPTH];
-	int sp;			// stack pointer
-	int ip;			// instruction pointer
-	int fp;			// function pointer
-	int curr_delay;		// remain ticks until activate
-} enemy_data;
-
 void init_ecl();
 void tick_ecl();
 
 int search_symbol(enemy_data * data, char *symbol);
 void parse_label(ecl_line * line);
-
-// ecl ins
-void et_on_fan_aim(int spr, int col, int way, int layer, double spd1,
-		   double spd2, double r1, double r2, int flags);
-void et_on_fan(int spr, int col, int way, int layer, double spd1, double spd2,
-	       double r1, double r2, int flags);
-void et_on_cir_aim(int spr, int col, int way, int layer, double spd1,
-		   double spd2, double r1, double r2, int flags);
-void et_on_cir(int spr, int col, int way, int layer, double spd1, double spd2,
-	       double r1, double r2, int flags);
-void et_on_random_r(int spr, int col, int way, int layer, double spd1,
-		    double spd2, double r1, double r2, int flags);
-void et_on_random_sp(int spr, int col, int way, int layer, double spd1,
-		     double spd2, double r1, double r2, int flags);
-void et_on_random(int spr, int col, int way, int layer, double spd1,
-		  double spd2, double r1, double r2, int flags);
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef MAPPER_H
 #define MAPPER_H
 
-#define DUMP_SCRIPT
+// #define DUMP_SCRIPT
 
 // instruction mapper
 #define NR_INS 136

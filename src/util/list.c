@@ -84,7 +84,7 @@ void delete_object_id(list_head * head, int id)
 	}
 }
 
-void list_foreach(list_head * head, void (*callback)(void *, int))
+void list_foreach(list_head * head, void (*callback) (void *, int))
 {
 	if (head == NULL || head->head == NULL || callback == NULL) {
 		NULLOBJ("list head");

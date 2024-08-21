@@ -112,78 +112,80 @@ static void exec_ins(ecl_line * line, enemy_data * enm)
 	}
 	switch (param_count) {
 	case 0:{
-			void (*p)(enemy_data *) = prg;
+			void (*p) (enemy_data *) = prg;
 			p(enm);
 			break;
 		}
 	case 1:{
-			void (*p)(enemy_data *, param_t *) = prg;
+			void (*p) (enemy_data *, param_t *) = prg;
 			p(enm, &call->p[0]);
 			break;
 		}
 	case 2:{
-			void (*p)(enemy_data *, param_t *, param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1]);
 			break;
 		}
 	case 3:{
-			void (*p)(enemy_data *, param_t *, param_t *,
-				  param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2]);
 			break;
 		}
 	case 4:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3]);
 			break;
 		}
 	case 5:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4]);
 			break;
 		}
 	case 6:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *) =
+			    prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5]);
 			break;
 		}
 	case 7:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *, param_t *) =
-			    prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *,
+				   param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6]);
 			break;
 		}
 	case 8:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *, param_t *,
-				  param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *,
+				   param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
 			  &call->p[7]);
 			break;
 		}
 	case 9:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
 			  &call->p[7], &call->p[8]);
 			break;
 		}
 	case 14:{
-			void (*p)(enemy_data *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *, param_t *,
-				  param_t *, param_t *, param_t *) = prg;
+			void (*p) (enemy_data *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *,
+				   param_t *, param_t *, param_t *, param_t *) =
+			    prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
 			  &call->p[7], &call->p[8], &call->p[9], &call->p[10],

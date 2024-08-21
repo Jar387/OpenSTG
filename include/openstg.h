@@ -52,7 +52,6 @@ typedef struct vec2f_t {
 #include <ecl/enemy.h>
 #include <ecl/mapper.h>
 #include <ecl/parser.h>
-#include <ecl/script.h>
 
 #include <media/background.h>
 #include <media/graphic.h>
