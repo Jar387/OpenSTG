@@ -80,9 +80,8 @@ static void style_random_speed_task(int looptime, void *data)
 	for (int i = 0; i < buman->way; i++) {
 		bullet *bu =
 		    create_bullet(buman->color, buman->type, buman->offset);
-		v2d v =
-		    ang2vec(buman->dir,
-			    zundom_f2(buman->first_v, buman->last_v));
+		v2d v = ang2vec(buman->dir,
+				zundom_f2(buman->first_v, buman->last_v));
 		bu->vx = v.x;
 		bu->vy = v.y;
 		buman->dir += 360.0f / buman->way;

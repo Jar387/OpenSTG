@@ -9,6 +9,7 @@ typedef struct {
 	float f_local_grp_1[4];
 	int i_local_grp_2[4];
 	int return_address;
+	int return_function;
 } ecl_stack_frame;
 
 typedef struct {
@@ -23,6 +24,7 @@ typedef struct {
 	int sp;			// stack pointer
 	int ip;			// instruction pointer
 	int fp;			// function pointer
+	int flags;		// currently used as comparisons register
 	int curr_delay;		// remain ticks until activate
 } enemy_data;
 

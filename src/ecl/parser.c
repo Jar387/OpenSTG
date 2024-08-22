@@ -35,7 +35,8 @@ static void store_hash(char *unhash, int type)
 static void store_sub(char *name)
 {
 	ecl_sub sub;
-	strncpy(sub.name, name, 16);
+	MD5((const unsigned char *)name, strlen(name),
+	    (unsigned char *)sub.hash);
 	sub.store_line = line_count;
 	put_obj(sub_array_list, &sub, sub_count);
 	sub_count++;

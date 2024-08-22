@@ -177,6 +177,7 @@ void write_float_var(enemy_data * enm, int var_id, float data)
 
 ECL_INS nop(VOID)
 {
+	info("nop invoked");
 }
 
 ECL_INS delete(P1)
@@ -188,11 +189,12 @@ ECL_INS delete(P1)
 ECL_INS jmp(P2)
 {
 	write_int_var(enm, FIELD_TIME_ID, p1->i);
-	int ip = search_symbol(enm, p2->symbol_hash);
+	int ip = search_symbol(enm, p2->hash);
 	if (ip == -1) {
-		return;
+		ABORT("bad symbol");
 	}
 	enm->ip = ip - 1;
+	info("aaa");
 }
 
 ECL_INS loop(P3)
@@ -202,12 +204,7 @@ ECL_INS loop(P3)
 		return;
 	}
 	write_int_var(enm, p3->var_id, cx - 1);
-	write_int_var(enm, FIELD_TIME_ID, p1->i);
-	int ip = search_symbol(enm, p2->symbol_hash);
-	if (ip == -1) {
-		return;
-	}
-	enm->ip = ip - 1;
+	jmp(enm, p1, p2);
 }
 
 ECL_INS iset(P2)
@@ -322,18 +319,186 @@ ECL_INS fdiv(P3)
 	write_float_var(enm, p1->var_id, (p2->f) / (p3->f));
 }
 
-ECL_INS fmod(P3)
+ECL_INS ecl_fmod(P3)		// name conflict by libm
 {				// IEEE 754 remainder
 	write_float_var(enm, p1->var_id, IEEE_754_remainder(p2->f, p3->f));
 }
 
+ECL_INS ecl_atan2(P5)		// name conflict by libm
+{
+	write_float_var(enm, p1->var_id,
+			atan((p4->f - p2->f) / (p5->f - p3->f)));
+}
+
+ECL_INS norm_r(P1)
+{
+	float f = read_float_var(enm, p1->var_id);
+	int pi_count = (int)(f / M_PI);
+	if (f <= 0.0f) {
+		f += pi_count * M_PI;
+	} else {
+		f -= pi_count * M_PI;
+	}
+	write_float_var(enm, p1->var_id, f);
+}
+
+ECL_INS itest(P2)
+{
+	if (p1->i < p2->i) {
+		enm->flags = -1;
+	} else if (p1->i == p2->i) {
+		enm->flags = 0;
+	} else {
+		enm->flags = 1;
+	}
+}
+
+ECL_INS ftest(P2)
+{
+	if (p1->f < p2->f) {
+		enm->flags = -1;
+	} else if (p1->f == p2->f) {
+		enm->flags = 0;
+	} else if (p1->f > p2->f) {
+		enm->flags = 1;
+	}
+}
+
+ECL_INS jmp_l(P2)
+{
+	if (enm->flags == -1) {
+		jmp(enm, p1, p2);
+	}
+}
+
+ECL_INS jmp_le(P2)
+{
+	if (enm->flags == -1 || enm->flags == 0) {
+		jmp(enm, p1, p2);
+	}
+}
+
+ECL_INS jmp_e(P2)
+{
+	if (enm->flags == 0) {
+		jmp(enm, p1, p2);
+	}
+}
+
+ECL_INS jmp_g(P2)
+{
+	if (enm->flags == 1) {
+		jmp(enm, p1, p2);
+	}
+}
+
+ECL_INS jmp_ge(P2)
+{
+	if (enm->flags == 0 || enm->flags == 1) {
+		jmp(enm, p1, p2);
+	}
+}
+
+ECL_INS jmp_n(P2)
+{
+	if (enm->flags == -1 || enm->flags == 1) {
+		jmp(enm, p1, p2);
+	}
+}
+
+ECL_INS call(P3)
+{
+	enm->sp++;
+	if (enm->sp >= MAX_STACK_DEPTH) {
+		ABORT("stack overflow");
+	}
+	ecl_stack_frame *curr_stack = &(enm->stack[enm->sp]);
+	// enm->ip always point to currently executing instruction
+	// as ip will automaticly increase by 1 after any instruction exection
+	// point return addr to currently "call" and after "return", ip will point to the next ins after "call"
+	curr_stack->return_address = enm->ip;
+	// set param
+	curr_stack->i_local_grp_1[0] = p2->i;
+	curr_stack->f_local_grp_1[0] = p3->f;
+	curr_stack->return_function = enm->fp;
+	int ip = search_sub(p1->hash, &enm->fp);
+	if (ip == -1) {
+		ABORT("bad sub");
+	}
+	enm->ip = ip - 1;
+}
+
+ECL_INS ret(VOID)
+{
+	if (enm->sp == 0 || (enm->stack)[enm->sp].return_address == -1
+	    || (enm->stack)[enm->sp].return_function == -1) {
+		ABORT("stack underflow");
+	}
+	enm->ip = (enm->stack)[enm->sp].return_address;
+	enm->fp = (enm->stack)[enm->sp].return_function;
+	enm->sp--;
+	info("%i %i", enm->fp, enm->ip);
+}
+
+ECL_INS call_l(P3)
+{
+	if (enm->flags == -1) {
+		call(enm, p1, p2, p3);
+	}
+}
+
+ECL_INS call_le(P3)
+{
+	if (enm->flags == -1 || enm->flags == 0) {
+		call(enm, p1, p2, p3);
+	}
+}
+
+ECL_INS call_e(P3)
+{
+	if (enm->flags == 0) {
+		call(enm, p1, p2, p3);
+	}
+}
+
+ECL_INS call_g(P3)
+{
+	if (enm->flags == 1) {
+		call(enm, p1, p2, p3);
+	}
+}
+
+ECL_INS call_ge(P3)
+{
+	if (enm->flags == 0 || enm->flags == 1) {
+		call(enm, p1, p2, p3);
+	}
+}
+
+ECL_INS call_n(P3)
+{
+	if (enm->flags == -1 || enm->flags == 1) {
+		call(enm, p1, p2, p3);
+	}
+}
+
+ECL_INS pos(P3)
+{
+	enm->x = p1->f;
+	enm->y = p2->f;
+	enm->z = p3->f;
+}
+
 void *ins_prg[] =
-    { nop, delete, jmp, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    { nop, delete, jmp, loop, iset, fset, iset_r, iset_r2, fset_r, fset_r2,
+	get_x, get_y,
+	get_z, iadd, isub, imul, idiv, imod, inc, dec, fadd, fsub, fmul, fdiv,
+	fmod,
+	ecl_atan2, norm_r, itest, ftest, jmp_l, jmp_le, jmp_e, jmp_g, jmp_ge,
+	jmp_n, call, ret,
+	call_l, call_le,	// spectre instruction
+	call_e, call_g, call_ge, call_n, pos, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL,

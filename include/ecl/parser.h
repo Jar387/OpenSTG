@@ -38,8 +38,7 @@ typedef struct {
 		int i;
 		float f;
 		int var_id;
-		char symbol_hash[MD5_DIGEST_LENGTH];
-		char sub_name[16];
+		char hash[MD5_DIGEST_LENGTH];	// for both sub and label
 	};
 } param_t;
 
@@ -50,7 +49,7 @@ typedef struct {
 } ins_call;
 
 typedef struct {
-	char name[16];
+	char hash[MD5_DIGEST_LENGTH];
 	int store_line;
 } ecl_sub;
 

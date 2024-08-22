@@ -31,7 +31,7 @@ int check_ip_onbound(enemy_data * data)
 	return 0;
 }
 
-int search_symbol(enemy_data * data, char *symbol)
+int search_symbol(enemy_data * data, char *hash)
 {
 	ecl_sub *curr_sub = (ecl_sub *) get_obj(sub_array_list, data->fp);
 	ecl_sub *next_sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
@@ -40,10 +40,20 @@ int search_symbol(enemy_data * data, char *symbol)
 		if (line->type != BIN_LABEL) {
 			continue;
 		}
-		unsigned char hash[MD5_DIGEST_LENGTH];
-		MD5((const unsigned char *)symbol, strlen(symbol), hash);
 		if (memcmp(hash, line->text, MD5_DIGEST_LENGTH) == 0) {
 			return i + 1;
+		}
+	}
+	return -1;
+}
+
+int search_sub(char *hash, int *id)
+{
+	for (int i = 0; i < sub_count; i++) {
+		ecl_sub *sub = (ecl_sub *) get_obj(sub_array_list, i);
+		if (memcmp(hash, sub->hash, MD5_DIGEST_LENGTH) == 0) {
+			id[0] = i;
+			return sub->store_line;
 		}
 	}
 	return -1;
@@ -88,7 +98,8 @@ static void parse_single_param(char *text, param_t * target)
 		target->type = PARAM_TYPE_SUB;
 		last[0] = '\0';
 		text++;
-		strncpy(target->sub_name, text, 16);
+		MD5((const unsigned char *)text, strlen(text),
+		    (unsigned char *)target->hash);
 		return;
 	}
 	int i;
@@ -98,7 +109,8 @@ static void parse_single_param(char *text, param_t * target)
 		return;
 	} else {
 		target->type = PARAM_TYPE_SYMBOL;
-		memcpy(target->symbol_hash, text, 16);
+		MD5((const unsigned char *)text, strlen(text),
+		    (unsigned char *)target->hash);
 		return;
 	}
 }
@@ -114,79 +126,79 @@ static void exec_ins(ecl_line * line, enemy_data * enm)
 	}
 	switch (param_count) {
 	case 0:{
-			void (*p) (enemy_data *) = prg;
+			void (*p)(enemy_data *) = prg;
 			p(enm);
 			break;
 		}
 	case 1:{
-			void (*p) (enemy_data *, param_t *) = prg;
+			void (*p)(enemy_data *, param_t *) = prg;
 			p(enm, &call->p[0]);
 			break;
 		}
 	case 2:{
-			void (*p) (enemy_data *, param_t *, param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1]);
 			break;
 		}
 	case 3:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2]);
 			break;
 		}
 	case 4:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3]);
 			break;
 		}
 	case 5:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4]);
 			break;
 		}
 	case 6:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *) =
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *) =
 			    prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5]);
 			break;
 		}
 	case 7:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *,
-				   param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6]);
 			break;
 		}
 	case 8:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *,
-				   param_t *, param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
 			  &call->p[7]);
 			break;
 		}
 	case 9:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *) = prg;
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *) = prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
 			  &call->p[7], &call->p[8]);
 			break;
 		}
 	case 14:{
-			void (*p) (enemy_data *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *,
-				   param_t *, param_t *, param_t *, param_t *) =
+			void (*p)(enemy_data *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *,
+				  param_t *, param_t *, param_t *, param_t *) =
 			    prg;
 			p(enm, &call->p[0], &call->p[1], &call->p[2],
 			  &call->p[3], &call->p[4], &call->p[5], &call->p[6],
@@ -258,6 +270,8 @@ void init_ecl()
 	boss_data.sp = 0;
 	boss_data.ip = 232;	// sub 15 line 326
 	boss_data.fp = 15;
+	boss_data.flags = 0;
+	boss_data.stack[0].return_function = -1;
 	boss_data.stack[0].return_address = -1;	// return and crash
 }
 

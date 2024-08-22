@@ -48,6 +48,7 @@ void init_ecl();
 void tick_ecl();
 
 int search_symbol(enemy_data * data, char *symbol);
+int search_sub(char *hash, int *id);
 void parse_label(ecl_line * line);
 int check_ip_onbound(enemy_data * data);
 
