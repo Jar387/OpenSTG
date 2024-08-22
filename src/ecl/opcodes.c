@@ -222,21 +222,109 @@ ECL_INS fset(P2)
 
 ECL_INS iset_r(P2)
 {
-	write_int_var(enm, p1->var_id, zundom_raw() % p2->i);
+	write_int_var(enm, p1->var_id, zundom_i(p2->i));
 }
 
 ECL_INS iset_r2(P3)
 {
-	write_int_var(enm, p1->var_id, p2->i + zundom_raw() % p3->i);
+	write_int_var(enm, p1->var_id, zundom_i2(p2->i, p3->i));
 }
 
 ECL_INS fset_r(P2)
 {
+	write_float_var(enm, p1->var_id, zundom_f(p2->f));
 }
 
 ECL_INS fset_r2(P3)
 {
+	write_float_var(enm, p1->var_id, zundom_f2(p2->f, p3->f));
+}
 
+ECL_INS get_x(P1)
+{
+	write_float_var(enm, p1->var_id, enm->x);
+}
+
+ECL_INS get_y(P1)
+{
+	write_float_var(enm, p1->var_id, enm->y);
+}
+
+ECL_INS get_z(P1)
+{
+	write_float_var(enm, p1->var_id, enm->z);
+}
+
+ECL_INS iadd(P3)
+{
+	write_int_var(enm, p1->var_id, (p2->i) + (p3->i));
+}
+
+ECL_INS isub(P3)
+{
+	write_int_var(enm, p1->var_id, (p2->i) - (p3->i));
+}
+
+ECL_INS imul(P3)
+{
+	write_int_var(enm, p1->var_id, (p2->i) * (p3->i));
+}
+
+ECL_INS idiv(P3)
+{
+	write_int_var(enm, p1->var_id, (p2->i) / (p3->i));
+}
+
+ECL_INS imod(P3)
+{
+	write_int_var(enm, p1->var_id, (p2->i) % (p3->i));
+}
+
+ECL_INS inc(P1)
+{
+	if (p1->type == PARAM_TYPE_INT) {
+		write_int_var(enm, p1->var_id,
+			      read_int_var(enm, p1->var_id) + 1);
+	} else if (p1->type == PARAM_TYPE_FLOAT) {
+		write_float_var(enm, p1->var_id,
+				read_float_var(enm, p1->var_id) + 1.0f);
+	}
+}
+
+ECL_INS dec(P1)
+{
+	if (p1->type == PARAM_TYPE_INT) {
+		write_int_var(enm, p1->var_id,
+			      read_int_var(enm, p1->var_id) - 1);
+	} else if (p1->type == PARAM_TYPE_FLOAT) {
+		write_float_var(enm, p1->var_id,
+				read_float_var(enm, p1->var_id) - 1.0f);
+	}
+}
+
+ECL_INS fadd(P3)
+{
+	write_float_var(enm, p1->var_id, (p2->f) + (p3->f));
+}
+
+ECL_INS fsub(P3)
+{
+	write_float_var(enm, p1->var_id, (p2->f) - (p3->f));
+}
+
+ECL_INS fmul(P3)
+{
+	write_float_var(enm, p1->var_id, (p2->f) * (p3->f));
+}
+
+ECL_INS fdiv(P3)
+{
+	write_float_var(enm, p1->var_id, (p2->f) / (p3->f));
+}
+
+ECL_INS fmod(P3)
+{				// IEEE 754 remainder
+	write_float_var(enm, p1->var_id, IEEE_754_remainder(p2->f, p3->f));
 }
 
 void *ins_prg[] =

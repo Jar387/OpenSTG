@@ -62,7 +62,7 @@ static void style_random_dir_task(int looptime, void *data)
 		bullet *bu =
 		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v =
-		    ang2vec(zundom
+		    ang2vec(zundom_f2
 			    (buman->dir - buman->dif, buman->dir + buman->dif),
 			    buman->curr_spd);
 		bu->vx = v.x;
@@ -81,7 +81,8 @@ static void style_random_speed_task(int looptime, void *data)
 		bullet *bu =
 		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v =
-		    ang2vec(buman->dir, zundom(buman->first_v, buman->last_v));
+		    ang2vec(buman->dir,
+			    zundom_f2(buman->first_v, buman->last_v));
 		bu->vx = v.x;
 		bu->vy = v.y;
 		buman->dir += 360.0f / buman->way;
@@ -99,9 +100,9 @@ static void style_random_task(int looptime, void *data)
 		bullet *bu =
 		    create_bullet(buman->color, buman->type, buman->offset);
 		v2d v =
-		    ang2vec(zundom
+		    ang2vec(zundom_f2
 			    (buman->dir - buman->dif, buman->dir + buman->dif),
-			    zundom(buman->first_v, buman->last_v));
+			    zundom_f2(buman->first_v, buman->last_v));
 		bu->vx = v.x;
 		bu->vy = v.y;
 	}

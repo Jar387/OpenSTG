@@ -21,19 +21,39 @@ static inline v2i d2i(v2d d)
 	(int)d.x, (int)d.y};
 }
 
-static inline int zundom_raw()
+static inline double IEEE_754_remainder(double a, double b)
+{
+	return a - (b * round(a / b));
+}
+
+static inline int zundom_i_raw()
 {
 	return rand() % (2 << 16);
 }
 
-static inline double zundom_f()
+static inline int zundom_i(int a)
+{
+	return zundom_i_raw() % a;
+}
+
+static inline int zundom_i2(int a, int b)
+{
+	return zundom_i(b - a) + a;
+}
+
+static inline double zundom_f_raw()
 {
 	return (double)rand() / RAND_MAX;
 }
 
-static inline double zundom(double a, double b)
+static inline double zundom_f(double a)
 {
-	return a + zundom_f() * (b - a);
+	return zundom_f_raw() * a;
+}
+
+static inline double zundom_f2(double a, double b)
+{
+	return a + zundom_f_raw() * (b - a);
 }
 
 static inline double ang2rad(double angle)
