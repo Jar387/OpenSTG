@@ -111,6 +111,20 @@ static inline double vec2ang(v2d vec)
 	return rarctan(-vec.x / vec.y);
 }
 
+static inline float abs_f(float f)
+{
+	if (f < 0.0f) {
+		f = -f;
+	}
+}
+
+static inline float abs_d(float d)
+{
+	if (d < 0.0f) {
+		d = -d;
+	}
+}
+
 double player_angle(v2d src);
 
 #endif

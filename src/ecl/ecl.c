@@ -270,7 +270,10 @@ void init_ecl()
 	boss_data.sp = 0;
 	boss_data.ip = 232;	// sub 15 line 326
 	boss_data.fp = 15;
-	boss_data.flags = 0;
+	boss_data.cmp_reg = 0;
+	boss_data.hurt_flag = 0;
+	boss_data.hit_flag = 0;
+	boss_data.is_clip = 0;
 	boss_data.stack[0].return_function = -1;
 	boss_data.stack[0].return_address = -1;	// return and crash
 }

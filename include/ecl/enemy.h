@@ -24,16 +24,24 @@ typedef struct {
 	int sp;			// stack pointer
 	int ip;			// instruction pointer
 	int fp;			// function pointer
-	int flags;		// currently used as comparisons register
+	int cmp_reg;		// currently used as comparisons register
 	int curr_delay;		// remain ticks until activate
+	// flags
+	int hurt_flag;
+	int hit_flag;
 	// movement info
-	v2f v;
+	float v;
 	float dir;
-	v2f deltav;
+	float deltav;
 	float delta_dir;
 	// clip
+	int is_clip;
 	v2f clip_lu;
 	v2f clip_rd;
+	// hitbox
+	float w;
+	float h;
+	float d;
 } enemy_data;
 
 void tick_enemy();

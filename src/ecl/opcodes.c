@@ -345,63 +345,63 @@ ECL_INS norm_r(P1)
 ECL_INS itest(P2)
 {
 	if (p1->i < p2->i) {
-		enm->flags = -1;
+		enm->cmp_reg = -1;
 	} else if (p1->i == p2->i) {
-		enm->flags = 0;
+		enm->cmp_reg = 0;
 	} else {
-		enm->flags = 1;
+		enm->cmp_reg = 1;
 	}
 }
 
 ECL_INS ftest(P2)
 {
 	if (p1->f < p2->f) {
-		enm->flags = -1;
+		enm->cmp_reg = -1;
 	} else if (p1->f == p2->f) {
-		enm->flags = 0;
+		enm->cmp_reg = 0;
 	} else if (p1->f > p2->f) {
-		enm->flags = 1;
+		enm->cmp_reg = 1;
 	}
 }
 
 ECL_INS jmp_l(P2)
 {
-	if (enm->flags == -1) {
+	if (enm->cmp_reg == -1) {
 		jmp(enm, p1, p2);
 	}
 }
 
 ECL_INS jmp_le(P2)
 {
-	if (enm->flags == -1 || enm->flags == 0) {
+	if (enm->cmp_reg == -1 || enm->cmp_reg == 0) {
 		jmp(enm, p1, p2);
 	}
 }
 
 ECL_INS jmp_e(P2)
 {
-	if (enm->flags == 0) {
+	if (enm->cmp_reg == 0) {
 		jmp(enm, p1, p2);
 	}
 }
 
 ECL_INS jmp_g(P2)
 {
-	if (enm->flags == 1) {
+	if (enm->cmp_reg == 1) {
 		jmp(enm, p1, p2);
 	}
 }
 
 ECL_INS jmp_ge(P2)
 {
-	if (enm->flags == 0 || enm->flags == 1) {
+	if (enm->cmp_reg == 0 || enm->cmp_reg == 1) {
 		jmp(enm, p1, p2);
 	}
 }
 
 ECL_INS jmp_n(P2)
 {
-	if (enm->flags == -1 || enm->flags == 1) {
+	if (enm->cmp_reg == -1 || enm->cmp_reg == 1) {
 		jmp(enm, p1, p2);
 	}
 }
@@ -442,42 +442,42 @@ ECL_INS ret(VOID)
 
 ECL_INS call_l(P3)
 {
-	if (enm->flags == -1) {
+	if (enm->cmp_reg == -1) {
 		call(enm, p1, p2, p3);
 	}
 }
 
 ECL_INS call_le(P3)
 {
-	if (enm->flags == -1 || enm->flags == 0) {
+	if (enm->cmp_reg == -1 || enm->cmp_reg == 0) {
 		call(enm, p1, p2, p3);
 	}
 }
 
 ECL_INS call_e(P3)
 {
-	if (enm->flags == 0) {
+	if (enm->cmp_reg == 0) {
 		call(enm, p1, p2, p3);
 	}
 }
 
 ECL_INS call_g(P3)
 {
-	if (enm->flags == 1) {
+	if (enm->cmp_reg == 1) {
 		call(enm, p1, p2, p3);
 	}
 }
 
 ECL_INS call_ge(P3)
 {
-	if (enm->flags == 0 || enm->flags == 1) {
+	if (enm->cmp_reg == 0 || enm->cmp_reg == 1) {
 		call(enm, p1, p2, p3);
 	}
 }
 
 ECL_INS call_n(P3)
 {
-	if (enm->flags == -1 || enm->flags == 1) {
+	if (enm->cmp_reg == -1 || enm->cmp_reg == 1) {
 		call(enm, p1, p2, p3);
 	}
 }
@@ -487,6 +487,53 @@ ECL_INS pos(P3)
 	enm->x = p1->f;
 	enm->y = p2->f;
 	enm->z = p3->f;
+}
+
+ECL_INS dir(P2)
+{
+	enm->dir = p1->f;
+	enm->v = p2->f;
+}
+
+ECL_INS rot(P1)
+{
+	enm->delta_dir = p1->f;
+}
+
+ECL_INS spd(P1)
+{
+	enm->v = p1->f;
+}
+
+ECL_INS acc(P1)
+{
+	enm->deltav = p1->f;
+}
+
+ECL_INS rot_r(P2)
+{
+	enm->dir = zundom_f2(p1->f, p2->f);
+}
+
+ECL_INS rot_r2(P2)
+{
+	enm->dir = zundom_f2(p1->f, p2->f);
+}
+
+ECL_INS rot_aim(P2)
+{				// document conflict between pytouhou(P2) and touhouwiki(P3)
+	enm->dir = player_angle((v2d) {
+				enm->x, enm->y}
+	) + p1->f;
+	enm->v = p2->f;
+}
+
+// all acc and dec need test to match original game behavior
+ECL_INS it_dec(P3)
+{
+	enm->dir = p2->f;
+	enm->v = p3->f;
+	enm->deltav = -abs_f(enm->deltav);
 }
 
 void *ins_prg[] =
