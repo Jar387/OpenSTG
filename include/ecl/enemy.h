@@ -26,6 +26,16 @@ typedef struct {
 	int fp;			// function pointer
 	int flags;		// currently used as comparisons register
 	int curr_delay;		// remain ticks until activate
+	// movement info
+	v2f v;
+	float dir;
+	v2f deltav;
+	float delta_dir;
+	// clip
+	v2f clip_lu;
+	v2f clip_rd;
 } enemy_data;
+
+void tick_enemy();
 
 #endif

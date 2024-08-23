@@ -43,6 +43,7 @@ int main()
 		tick_background();
 		tick_player();
 		tick_ecl();
+		tick_enemy();
 		tick_bullets();
 		tick_items();
 		tick_sched();
