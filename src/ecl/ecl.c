@@ -323,29 +323,3 @@ void tick_ecl()
 	}
 	boss_data.ip++;
 }
-
-void et_on_fan_aim(int spr, int col, int way, int layer, double spd1,
-		   double spd2, double r1, double r2, int flags)
-{
-	create_buman();
-	bstyle(TRACE);
-	bshape(col, spr);
-	boffset(192, 96);	// TODO
-	bamount(way, layer);
-	bspeed(spd1, spd2);
-	bangle(rad2ang(r1), rad2ang(r2));
-	fire();
-}
-
-void et_on_fan(int spr, int col, int way, int layer, double spd1, double spd2,
-	       double r1, double r2, int flags)
-{
-	create_buman();
-	bstyle(DEFAULT);
-	bshape(col, spr);
-	boffset(192, 96);	// TODO
-	bamount(way, layer);
-	bspeed(spd1, spd2);
-	bangle(rad2ang(r1), rad2ang(r2));
-	fire();
-}

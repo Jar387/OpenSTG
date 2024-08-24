@@ -42,6 +42,9 @@ typedef struct {
 	float w;
 	float h;
 	float d;
+	// bullet offset
+	float launch_off_x;
+	float launch_off_y;
 } enemy_data;
 
 void tick_enemy();

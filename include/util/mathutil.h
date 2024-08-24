@@ -114,15 +114,17 @@ static inline double vec2ang(v2d vec)
 static inline float abs_f(float f)
 {
 	if (f < 0.0f) {
-		f = -f;
+		return -f;
 	}
+	return f;
 }
 
 static inline float abs_d(float d)
 {
 	if (d < 0.0f) {
-		d = -d;
+		return -d;
 	}
+	return d;
 }
 
 double player_angle(v2d src);

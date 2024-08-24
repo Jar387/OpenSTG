@@ -536,6 +536,145 @@ ECL_INS it_dec(P3)
 	enm->deltav = -abs_f(enm->deltav);
 }
 
+ECL_INS it_dec2(P3){
+
+}
+
+ECL_INS it_acc(P3){
+
+}
+
+ECL_INS it_acc2(P3){
+	
+}
+
+ECL_INS it_pt_lin(P4){
+
+}
+
+ECL_INS it_pt_dec(P4){
+	
+}
+
+ECL_INS it_pt_dec2(P4){
+	
+}
+
+ECL_INS it_pt_acc(P4){
+	
+}
+
+ECL_INS it_pt_acc2(P4){
+	
+}
+
+ECL_INS it_t_dec(P4){
+	
+}
+
+ECL_INS it_t_dec2(P4){
+	
+}
+
+ECL_INS it_t_acc(P4){
+	
+}
+
+ECL_INS it_t_acc2(P4){
+	
+}
+
+ECL_INS clip(P4){
+	enm->is_clip = 1;
+	enm->clip_lu.x = p1->f;
+	enm->clip_lu.y = p2->f;
+	enm->clip_rd.x = p3->f;
+	enm->clip_rd.y = p4->f;
+}
+
+ECL_INS unclip(VOID){
+	enm->is_clip = 0;
+}
+
+ECL_INS et_on_fan_aim(P9){
+	create_buman();
+	bstyle(TRACE);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS et_on_fan(P9){
+	create_buman();
+	bstyle(DEFAULT);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS et_on_cir_aim(P9){
+	create_buman();
+	bstyle(LAYER_DIF_TRACE);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS et_on_cir(P9){
+	create_buman();
+	bstyle(LAYER_DIF);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS et_on_random_r(P9){
+	create_buman();
+	bstyle(RANDOM_DIR);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS et_on_random_sp(P9){
+	create_buman();
+	bstyle(RANDOM_SPEED);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS et_on_random(P9){
+	create_buman();
+	bstyle(RANDOM);
+	bshape(p2->i, p1->i);
+	boffset(enm->x+enm->launch_off_x, enm->y+enm->launch_off_y);
+	bamount(p3->i, p4->i);
+	bspeed(p5->f, p6->f);
+	bangle(rad2ang(p7->f), rad2ang(p8->f));
+}
+
+ECL_INS interrupt(P2){
+	// int behave as jmp to sub
+	int ip = search_sub(p1->hash, &enm->fp);
+	if(ip==-1){
+		ABORT("bad sub")
+	}
+	enm->ip = ip - 1;
+}
+
 void *ins_prg[] =
     { nop, delete, jmp, loop, iset, fset, iset_r, iset_r2, fset_r, fset_r2,
 	get_x, get_y,
@@ -544,18 +683,18 @@ void *ins_prg[] =
 	ecl_atan2, norm_r, itest, ftest, jmp_l, jmp_le, jmp_e, jmp_g, jmp_ge,
 	jmp_n, call, ret,
 	call_l, call_le,	// spectre instruction
-	call_e, call_g, call_ge, call_n, pos, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL,
-	NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	call_e, call_g, call_ge, call_n, pos, NULL, dir, rot, spd, acc, rot_r,
+	rot_r2, rot_aim,
+	it_dec, it_dec2,
+	it_acc, it_acc2, it_pt_lin, it_pt_dec, it_pt_dec2, it_pt_acc, it_pt_acc2, it_t_dec, it_t_dec2, it_t_acc, it_t_acc2, clip,
+	unclip, et_on_fan_aim,
+	et_on_fan, et_on_cir_aim, et_on_cir, NULL, NULL, et_on_random_r, et_on_random_sp, et_on_random, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interrupt, NULL, NULL,
 	NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+	NULL, NULL, NULL, NULL, NULL
 };
