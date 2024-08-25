@@ -121,7 +121,7 @@ static void exec_ins(ecl_line * line, enemy_data * enm)
 	int param_count = ins_arg_count[call->opcode];
 	void *prg = ins_prg[call->opcode];
 	if (prg == NULL) {
-		warn("ins %i not found", call->opcode);
+		// warn("ins %i not found", call->opcode);
 		return;
 	}
 	switch (param_count) {
@@ -290,7 +290,9 @@ void tick_ecl()
 	case STAT_DEALY:{
 			int d;
 			sscanf(code->text, "+%d", &d);
-			boss_data.curr_delay = d;
+			if (is_step == 0) {
+				boss_data.curr_delay = d;
+			}
 			// generate binary cache
 			free(code->text);
 			long l = (long)d;
@@ -309,6 +311,9 @@ void tick_ecl()
 	case BIN_LABEL:
 		break;
 	case BIN_DELAY:{
+			if (is_step == 1) {
+				break;
+			}
 			long l = (long)(code->text);
 			int d = (int)l;
 			boss_data.curr_delay = d;

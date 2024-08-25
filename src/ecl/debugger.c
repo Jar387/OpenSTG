@@ -49,17 +49,27 @@ static void dump_stat(enemy_data * enm)
 	printf("\n");
 }
 
+static void dump_enemy()
+{
+
+}
+
 void exec_trig_debug(ecl_line * line, enemy_data * enm)
 {
 	if (is_debug == 0 || is_step == 0) {
 		return;
 	}
+	int c;
 	char cmd_buf;
 	printf("%i %i %s\n", line->src_line, enm->ip,
 	       get_debug_code(line->src_line));
 	while (1) {
 		printf("(debug) ");
 		scanf("%c", &cmd_buf);
+		if (cmd_buf != '\n') {
+			while ((c = getchar()) != '\n') {
+			}
+		}
 		switch (cmd_buf) {
 		case CMD_QUIT_TXT:
 			last_ins = CMD_QUIT;
@@ -72,19 +82,23 @@ void exec_trig_debug(ecl_line * line, enemy_data * enm)
 			last_ins = CMD_DMP;
 			dump_stat(enm);
 			break;
+		case CMD_CONT_TXT:
+			last_ins = CMD_CONT;
+			is_step = 0;
+			return;
 		case '\n':
 			switch (last_ins) {
 			case CMD_QUIT:
-				last_ins = CMD_QUIT;
 				exit(0);
 			case CMD_STEP:
-				last_ins = CMD_STEP;
 				is_step = 1;
 				return;
 			case CMD_DMP:
-				last_ins = CMD_DMP;
 				dump_stat(enm);
 				break;
+			case CMD_CONT:
+				is_step = 0;
+				return;
 			default:
 				break;
 			}
@@ -101,4 +115,9 @@ void init_debugger()
 	is_debug = 1;
 	is_step = 1;
 	info("debugger loaded successfully, raise SIGINT to enter debug mode");
+}
+
+int get_step()
+{
+	return is_step;
 }

@@ -24,7 +24,7 @@ int ins_arg_count[] =
 	0, 1, 14, 14, 1, 2, 2, 4, 1, 1, 3, 0, 7, 0, 1, 5, 2, 1, 1, 5, 3, 1, 1,
 	1, 1, 1, 2, 1,
 	1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 2, 1, 6, 1, 0, 0,
-	1
+	1, 0
 };
 
 int read_int_var(enemy_data * enm, int var_id)
@@ -177,7 +177,6 @@ void write_float_var(enemy_data * enm, int var_id, float data)
 
 ECL_INS nop(VOID)
 {
-	info("nop invoked");
 }
 
 ECL_INS delete(P1)
@@ -194,7 +193,6 @@ ECL_INS jmp(P2)
 		ABORT("bad symbol");
 	}
 	enm->ip = ip - 1;
-	info("aaa");
 }
 
 ECL_INS loop(P3)
@@ -697,6 +695,12 @@ ECL_INS interrupt(P2)
 	enm->ip = ip - 1;
 }
 
+ECL_INS breakpoint(VOID)
+{
+	printf("STOP AT MAGIC BREAKPOINT\n");
+	is_step = 1;
+}
+
 void *ins_prg[] =
     { nop, delete, jmp, loop, iset, fset, iset_r, iset_r2, fset_r, fset_r2,
 	get_x, get_y,
@@ -716,9 +720,10 @@ void *ins_prg[] =
 	NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, interrupt, NULL,
+	    NULL,
 	NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL
+	NULL, NULL, NULL, NULL, NULL, breakpoint
 };
