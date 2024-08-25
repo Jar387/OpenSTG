@@ -48,6 +48,7 @@ typedef struct vec2f_t {
 // openstg headers
 #include <ecl/boss.h>
 #include <ecl/buman.h>
+#include <ecl/debugger.h>
 #include <ecl/ecl.h>
 #include <ecl/enemy.h>
 #include <ecl/mapper.h>

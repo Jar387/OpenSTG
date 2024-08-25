@@ -2,12 +2,7 @@
 
 int tick = 0;
 
-void callback(int looptime, void *data)
-{
-
-}
-
-int main()
+int main(int argc, char *argv[])
 {
 	init_logger(INFO, NULL);
 	info("starting openstg engine");
@@ -35,7 +30,9 @@ int main()
 
 	set_background_style(SC_BACKGROUND);
 
-	add_periodic_task(1, &callback, NULL);
+	if (strcmp(argv[1], "--debug") == 0) {
+		init_debugger();
+	}
 
 	while (!should_close()) {
 		tick++;

@@ -2,6 +2,7 @@
 
 int line_count = 0;
 int sub_count = 0;
+int src_line = 0;
 int script_entry = -1;
 
 static void store_line(char *text, int type)
@@ -17,6 +18,7 @@ static void store_line(char *text, int type)
 	ecl_line line;
 	line.text = cpy_buffer;
 	line.type = type;
+	line.src_line = src_line;
 	put_obj(line_array_list, &line, line_count);
 	line_count++;
 }
@@ -28,6 +30,7 @@ static void store_hash(char *unhash, int type)
 	ecl_line line;
 	line.text = (char *)hash;
 	line.type = type;
+	line.src_line = src_line;
 	put_obj(line_array_list, &line, line_count);
 	line_count++;
 }
@@ -35,9 +38,13 @@ static void store_hash(char *unhash, int type)
 static void store_sub(char *name)
 {
 	ecl_sub sub;
+	char *name_buf = (char *)malloc(strlen(name) + 1);
+	strcpy(name_buf, name);
 	MD5((const unsigned char *)name, strlen(name),
 	    (unsigned char *)sub.hash);
 	sub.store_line = line_count;
+	sub.src_line = src_line;
+	sub.name = name_buf;
 	put_obj(sub_array_list, &sub, sub_count);
 	sub_count++;
 }
@@ -144,8 +151,11 @@ void load_script(char *path)
 	char buffer[256];
 	line_array_list = create_array(-1, sizeof(ecl_line));
 	sub_array_list = create_array(-1, sizeof(ecl_sub));
+	debug_code_list = create_array(-1, 256);
 	while (read_line(fp, buffer, 256) != -1) {
+		put_obj(debug_code_list, buffer, src_line);
 		parse_line(buffer, strlen(buffer));
+		src_line++;
 	}
 	sub_count--;
 	line_count--;
@@ -161,10 +171,15 @@ void load_script(char *path)
 void unload_script()
 {
 	for (int i = 0; i < line_count; i++) {
-		free(((ecl_line *) get_obj(line_array_list, i))->text);
+		free(get_line(i)->text);
+	}
+	for (int i = 0; i < src_line; i++) {
+		free(get_debug_code(i));
 	}
 	destroy_array(line_array_list);
 	destroy_array(sub_array_list);
+	destroy_array(debug_code_list);
 	line_array_list = NULL;
 	sub_array_list = NULL;
+	debug_code_list = NULL;
 }

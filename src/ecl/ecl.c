@@ -24,7 +24,7 @@ int invulnerable_frame;
 
 int check_ip_onbound(enemy_data * data)
 {
-	ecl_sub *sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
+	ecl_sub *sub = get_sub(data->fp + 1);
 	if (data->ip + 1 == sub->store_line) {
 		return 1;
 	}
@@ -33,10 +33,10 @@ int check_ip_onbound(enemy_data * data)
 
 int search_symbol(enemy_data * data, char *hash)
 {
-	ecl_sub *curr_sub = (ecl_sub *) get_obj(sub_array_list, data->fp);
-	ecl_sub *next_sub = (ecl_sub *) get_obj(sub_array_list, data->fp + 1);
+	ecl_sub *curr_sub = get_sub(data->fp);
+	ecl_sub *next_sub = get_sub(data->fp + 1);
 	for (int i = curr_sub->store_line; i < next_sub->store_line; i++) {
-		ecl_line *line = (ecl_line *) (get_obj(line_array_list, i));
+		ecl_line *line = get_line(i);
 		if (line->type != BIN_LABEL) {
 			continue;
 		}
@@ -50,7 +50,7 @@ int search_symbol(enemy_data * data, char *hash)
 int search_sub(char *hash, int *id)
 {
 	for (int i = 0; i < sub_count; i++) {
-		ecl_sub *sub = (ecl_sub *) get_obj(sub_array_list, i);
+		ecl_sub *sub = get_sub(i);
 		if (memcmp(hash, sub->hash, MD5_DIGEST_LENGTH) == 0) {
 			id[0] = i;
 			return sub->store_line;
@@ -284,7 +284,8 @@ void tick_ecl()
 		boss_data.curr_delay--;
 		return;
 	}
-	ecl_line *code = (ecl_line *) get_obj(line_array_list, boss_data.ip);
+	ecl_line *code = get_line(boss_data.ip);
+	exec_trig_debug(code, &boss_data);
 	switch (code->type) {
 	case STAT_DEALY:{
 			int d;

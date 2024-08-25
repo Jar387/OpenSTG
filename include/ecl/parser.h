@@ -16,6 +16,7 @@
 
 extern array_head *line_array_list;
 extern array_head *sub_array_list;
+extern array_head *debug_code_list;
 
 #define PARAM_TYPE_INT 1
 #define PARAM_TYPE_FLOAT 2
@@ -29,7 +30,8 @@ extern int script_entry;
 
 typedef struct {
 	int type;
-	char *text;		// also store delay cache as Uint32
+	int src_line;
+	char *text;		// used as multiple purpose including binary stuff
 } ecl_line;
 
 typedef struct {
@@ -50,10 +52,27 @@ typedef struct {
 
 typedef struct {
 	char hash[MD5_DIGEST_LENGTH];
+	char *name;		// for debug use
 	int store_line;
+	int src_line;
 } ecl_sub;
 
 void load_script(char *path);
 void unload_script();
+
+static inline ecl_sub *get_sub(int i)
+{
+	return (ecl_sub *) get_obj(sub_array_list, i);
+}
+
+static inline ecl_line *get_line(int i)
+{
+	return (ecl_line *) get_obj(line_array_list, i);
+}
+
+static inline char *get_debug_code(int i)
+{
+	return (char *)get_obj(debug_code_list, i);
+}
 
 #endif
