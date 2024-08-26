@@ -30,8 +30,10 @@ int main(int argc, char *argv[])
 
 	set_background_style(SC_BACKGROUND);
 
-	if (strcmp(argv[1], "--debug") == 0) {
-		init_debugger();
+	if (argv[1] != NULL) {
+		if (strcmp(argv[1], "--debug") == 0) {
+			init_debugger();
+		}
 	}
 
 	while (!should_close()) {

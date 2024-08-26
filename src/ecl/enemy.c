@@ -28,4 +28,5 @@ void tick_enemy()
 	enm->dir += enm->delta_dir;
  no_move:
 	// render enemy stuff
+	return;
 }
