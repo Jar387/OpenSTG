@@ -1,8 +1,8 @@
 #ifndef PLAYER_CFG_H
 #define PLAYER_CFG_H
 
-#define CFG_REIMU_A "../data/pl00a.cfg"
-#define CFG_REIMU_B "../data/pl00b.cfg"
+#define CFG_REIMU_A "data/pl00a.cfg"
+#define CFG_REIMU_B "data/pl00b.cfg"
 
 #define CFG_REIMU_A_ID 0
 #define CFG_REIMU_B_ID 1

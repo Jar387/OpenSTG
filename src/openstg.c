@@ -1,5 +1,7 @@
 #include <openstg.h>
 
+#undef main
+
 int tick = 0;
 
 int main(int argc, char *argv[])
@@ -29,6 +31,8 @@ int main(int argc, char *argv[])
 	load_script("data/stg6.ecl");
 
 	set_background_style(SC_BACKGROUND);
+
+	play_music(0);
 
 	if (argv[1] != NULL) {
 		if (strcmp(argv[1], "--debug") == 0) {
