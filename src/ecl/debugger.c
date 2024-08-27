@@ -49,9 +49,21 @@ static void dump_stat(enemy_data * enm)
 	printf("\n");
 }
 
-static void dump_enemy()
+static void dump_enemy(enemy_data * enm)
 {
-
+	printf("CURRENT ENEMY:\n");
+	printf("position:(%i,%i,%i)\n", enm->x, enm->y, enm->z);
+	printf("aim=%f\ttick=%i\tlife=%i\n", enm->aim, enm->tick, enm->life);
+	printf("v=%f\tdv=%f\tdir=%f\tddir=%f\n", enm->v, enm->deltav, enm->dir,
+	       enm->delta_dir);
+	if (enm->is_clip == 1) {
+		printf("clip:(%f,%f),(%f,%f)\n", enm->clip_lu.x, enm->clip_lu.y,
+		       enm->clip_rd.x, enm->clip_rd.y);
+	} else {
+		printf("no clip\n");
+	}
+	printf("hitbox:(%f,%f,%f)\n", enm->w, enm->h, enm->d);
+	printf("bullet offset:(%f,%f)\n", enm->launch_off_x, enm->launch_off_y);
 }
 
 void exec_trig_debug(ecl_line * line, enemy_data * enm)
@@ -81,6 +93,7 @@ void exec_trig_debug(ecl_line * line, enemy_data * enm)
 		case CMD_DMP_TXT:
 			last_ins = CMD_DMP;
 			dump_stat(enm);
+			dump_enemy(enm);
 			break;
 		case CMD_CONT_TXT:
 			last_ins = CMD_CONT;
@@ -95,6 +108,7 @@ void exec_trig_debug(ecl_line * line, enemy_data * enm)
 				return;
 			case CMD_DMP:
 				dump_stat(enm);
+				dump_enemy(enm);
 				break;
 			case CMD_CONT:
 				is_step = 0;

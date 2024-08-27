@@ -32,8 +32,6 @@ int main(int argc, char *argv[])
 
 	set_background_style(SC_BACKGROUND);
 
-	play_music(0);
-
 	if (argv[1] != NULL) {
 		if (strcmp(argv[1], "--debug") == 0) {
 			init_debugger();

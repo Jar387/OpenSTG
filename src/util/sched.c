@@ -37,7 +37,7 @@ void tick_sched()
 	list_foreach(sched_list, &sched_one);
 }
 
-void add_absolute_delay_task(int abs_frame, void (*callback) (int, void *),
+void add_absolute_delay_task(int abs_frame, void (*callback)(int, void *),
 			     void *data)
 {
 	task *t = (task *) malloc(sizeof(*t));
@@ -49,12 +49,12 @@ void add_absolute_delay_task(int abs_frame, void (*callback) (int, void *),
 	insert_tail(sched_list, &t->node);
 }
 
-void add_delay_task(int frame, void (*callback) (int, void *), void *data)
+void add_delay_task(int frame, void (*callback)(int, void *), void *data)
 {
 	add_absolute_delay_task(frame + tick, callback, data);
 }
 
-void add_periodic_task(int freq_frame, void (*callback) (int, void *),
+void add_periodic_task(int freq_frame, void (*callback)(int, void *),
 		       void *data)
 {
 	task *t = (task *) malloc(sizeof(*t));
@@ -69,7 +69,7 @@ void add_periodic_task(int freq_frame, void (*callback) (int, void *),
 }
 
 void add_periodic_times_task(int freq_frame, int loop_time,
-			     void (*callback) (int, void *), void *data)
+			     void (*callback)(int, void *), void *data)
 {
 	task *t = (task *) malloc(sizeof(*t));
 	memset(t, 0, sizeof(*t));

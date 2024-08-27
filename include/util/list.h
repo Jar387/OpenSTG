@@ -21,6 +21,6 @@ void insert_tail(list_head * head, list_node * data);
 void delete_object(list_head * head, list_node * obj);
 void delete_object_id(list_head * head, int id);
 list_node *query_object(list_head * head, int id);
-void list_foreach(list_head * head, void (*callback) (void *, int));
+void list_foreach(list_head * head, void (*callback)(void *, int));
 
 #endif

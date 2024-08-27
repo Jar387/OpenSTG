@@ -8,7 +8,7 @@ static void sc_bg_callback()
 {
 }
 
-static void (*callback) () = &nsc_bg_callback;
+static void (*callback)() = &nsc_bg_callback;
 
 void tick_background()
 {
